@@ -1,8 +1,7 @@
 # pyCarDisplay
 
 <div align="center", style="font-size: 50px">
-    <img src="https://github.com/MaksimEkin/pyCarDisplay
-/actions/workflows/unittests_ci.yml/badge.svg?branch=main"></img>
+    <img src="https://github.com/MaksimEkin/pyCarDisplay/actions/workflows/unittests_ci.yml/badge.svg?branch=main"></img>
     <img src="https://img.shields.io/hexpm/l/plug"></img>
     <img src="https://img.shields.io/badge/python-v3.8.5-blue"></img>
 </div>
