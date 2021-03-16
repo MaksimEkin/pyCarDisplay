@@ -1,17 +1,12 @@
 import PySimpleGUI as sg
-#import os
+
 
 class Display():
 
-	# need to pass list of
+	# need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
 	def __init__(o, image_frames_dict):
 		o.close = sg.WIN_CLOSED
-
-		#o.IMG_PATH = img_data_path
-		#o.DET_IMG_PATH = detected_images
 		o.speed = 0
-		#o.files = []
-
 		o.image_frames_dict = image_frames_dict
 		o.n_images = len(image_frames_dict)
 
@@ -35,12 +30,6 @@ class Display():
 		]
 
 	def play(o):
-		#o.files = os.listdir(o.IMG_PATH)
-		image_frames_dict = {
-		'0': {'image':'path/to/image', 'detected_object_images': ['path/to/detected/image1', 'path/to/detected/image1'] },
-		'1': {'image':'path/to/image', 'detected_object_images': ['path/to/detected/image1'] }
-		}
-
 		# Create the window
 		window = sg.Window("Autonomous Vehicle Object & Distance Detection", o.define_layout())
 		progress_bar = window['progressbar']
@@ -66,12 +55,9 @@ class Display():
 
 			# Default is to play the images
 			else:
-
 				# update main display
 				print("IMG = ",o.image_frames_dict[str(i)]["image"])
 				window.FindElement("IMG").Update(o.image_frames_dict[str(i)]["image"])
-
-
 
 				# update up to 5 of the images of detected objects
 				num = 1
@@ -84,7 +70,6 @@ class Display():
 				while num <=5:
 					window.FindElement("IMG"+str(num)).Update("")
 					num +=1
-
 
 				window.FindElement("frame").Update("Frame: "+str(i + 1))
 
