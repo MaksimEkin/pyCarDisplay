@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import os
+#import os
 
 class Display():
 
@@ -7,10 +7,10 @@ class Display():
 	def __init__(o, image_frames_dict):
 		o.close = sg.WIN_CLOSED
 
-		o.IMG_PATH = img_data_path
-		o.DET_IMG_PATH = detected_images
+		#o.IMG_PATH = img_data_path
+		#o.DET_IMG_PATH = detected_images
 		o.speed = 0
-		o.files = []
+		#o.files = []
 
 		o.image_frames_dict = image_frames_dict
 		o.n_images = len(image_frames_dict)
@@ -29,7 +29,7 @@ class Display():
 				o.img("", "IMG1"),
 				o.img("", "IMG2"),
 				o.img("", "IMG3"),
-				o.img("", "IMG4"),
+				o.img("", "IMG4"),#
 				o.img("", "IMG5")
 			]
 		]
@@ -49,45 +49,54 @@ class Display():
 		i = 0
 		while i < o.n_images:
 
-		    # check if pause or play were clicked or if window closed
-		    event, values = window.read(timeout=10)
+			# check if pause or play were clicked or if window closed
+			event, values = window.read(timeout=10)
 
 			# Window closed
-		    if event == o.close:
-		        i = o.n_images
+			if event == o.close:
+				i = o.n_images
 
-		    if event == 'Pause':
-		        while event != "Play" and event != o.close:
+			if event == 'Pause':
+				while event != "Play" and event != o.close:
 
 					# Read the window until the user clicks play or closes the window
-		            event, values = window.read(timeout=100)
-		            if event == o.close:
-		                i = o.n_images
+					event, values = window.read(timeout=100)
+					if event == o.close:
+						i = o.n_images
 
 			# Default is to play the images
-		    else:
+			else:
 
 				# update main display
-		        window.FindElement("IMG").Update(o.image_frames_dict[str(i)][image])
+				print("IMG = ",o.image_frames_dict[str(i)]["image"])
+				window.FindElement("IMG").Update(o.image_frames_dict[str(i)]["image"])
+
+
 
 				# update up to 5 of the images of detected objects
-				num = 0
+				num = 1
 				for detected_image in o.image_frames_dict[str(i)]["detected_object_images"]:
 					if num < 5:
-			            window.FindElement("IMG"+str(num)).Update(detected_image)
+						window.FindElement("IMG"+str(num)).Update(detected_image)
 						num += 1
 
-		        window.FindElement("frame").Update("Frame: "+str(i + 1))
+				# Reset objects no longer detected in frame
+				while num <=5:
+					window.FindElement("IMG"+str(num)).Update("")
+					num +=1
+
+
+				window.FindElement("frame").Update("Frame: "+str(i + 1))
 
 				# Speed and Kalman speed need to be updated with api data
-		        window.FindElement("speed").Update("True Speed: "+str(i + 3))
-		        window.FindElement("kspeed").Update("-- Kalman speed: " + str(i + 9))
+				window.FindElement("speed").Update("True Speed: "+str(i + 3))
+				window.FindElement("kspeed").Update("-- Kalman speed: " + str(i + 9))
 
-		        progress_bar.UpdateBar(i + 1)
-		        i += 1
+				progress_bar.UpdateBar(i + 1)
+				i += 1
 
 				# Loops the image play
-		        if i + 1 == o.n_images:
-		            i = 0
+				if i + 1 == o.n_images:
+					i = 0
 
 		window.close()
