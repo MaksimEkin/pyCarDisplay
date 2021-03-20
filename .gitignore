@@ -6,6 +6,9 @@ __pycache__/
 # Mac
 .DS_Store
 
+# Trained model
+*.tar
+
 # Data
 data/
 

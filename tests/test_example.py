@@ -1,4 +1,4 @@
-import sys; sys.path += ["../pyCarDisplay"]
+from pyCarDisplay.pyCarDisplay import CarDisplay
 import unittest
 
 

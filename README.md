@@ -12,18 +12,13 @@ Add Description here
 
 
 ## Installation
-### pip
+### Using *pip*
 ```pip install pyCarDisplay``` <-- This does not work yet
 
-### Setup.py
+### Using *setup.py*
 - Run ```setup.py``` on a Python 3.8.5 environment:
 	- ```python setup.py install```
 
-### Docker <-- this does not work yet
-1. Build the Docker container
-- ```docker build . -t pyCarDisplay```
-2. Run
-- ```docker run pyCarDisplay```
 
 ## Requirements
 - Python >= v3.8.5
