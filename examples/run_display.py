@@ -1,5 +1,4 @@
-import sys; sys.path += ["..\\pyCarDisplay\\utils"]
-from display_api import Display
+from pyCarDisplay.utils.display_api import Display
 import os
 
 DET_IMG_PATH = ""
