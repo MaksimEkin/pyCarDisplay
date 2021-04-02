@@ -11,7 +11,7 @@ from .sensors.imu_api import IMU
 from .sensors.kalman_filter_api import KalmanFilter
 
 from .detection.object_detection_api import ObjectDetection
-from .detection.depth_detection_api import DepthDetection
+#from .detection.depth_detection_api import DepthDetection
 
 
 class Car():
@@ -31,6 +31,11 @@ class Car():
 
                  # IMU parameters
                  R_covariance=0.1,
+                 add_noise=True,
+                 IMU_names=None,
+
+                 # Display API Required
+                 gui_speed=1,
 
                  # Other
                  random_state=42
@@ -39,6 +44,9 @@ class Car():
         self.car_images_path = car_images_path
         self.imu_sensor_path = imu_sensor_path
         self.verbose = verbose
+        self.add_noise = add_noise
+        self.IMU_names = IMU_names
+        self.gui_speed=gui_speed
 
         # Load the object detection API
         self.obj_detection_api = ObjectDetection(object_detection_model_path,
@@ -48,11 +56,13 @@ class Car():
                                                  norm_std)
 
         # Load the depth detection API
-        self.depth_detection_api = DepthDetection(depth_detection_model_path,
-                                                  verbose,
-                                                  img_resize_size,
-                                                  norm_mean,
-                                                  norm_std)
+        #self.depth_detection_api = DepthDetection(depth_detection_model_path,
+        #                                          verbose,
+        #                                          img_resize_size,
+        #                                          norm_mean,
+        #                                          norm_std)
+
+        #self.ml_synchronize_api = MLDataSynch()
 
         # Load the Kitti IMU data
         imu_df = DataLoader(imu_sensor_path, lidar_sensor_path).load_imu()
@@ -65,14 +75,58 @@ class Car():
         # Image processing API
         self.img_processing_api = ImageProcessing(self.car_images_path)
         self.path_to_all_images = self.img_processing_api.process_images_path()
-
+        self.total_frames = len(path_to_all_images)
         # Display API
-        self.display_api = Display()
+        '''Since this was refined to accept a single image dictionary
+        into the init function, this needs to be called for every image.
+        As a result, witou further refinement, this will be places in the run loop'''
+        self.display_api = Display(self.gui_speed, self.total_frames)
+
+
+    def set_frame(self, frame:int):
+        """"""
+        self.imu_sensor.set_frame(frame)
+
 
 
     def run(self):
         """"""
+        for curr_frame, curr_img_path in enumerate(self.path_to_all_images):
 
-        # TODO: process frames in a for loop and display them
+            # load the image: take picture
+            #
+            '''
+            # needs to be in the img_processing_api
+            from PIL import Image
+            original_image = Image.open(img_path, mode='r')
+            original_image = original_image.convert('RGB')
 
+            '''
+
+            image = self.img_processing_api.take_picture(curr_img_path)
+
+
+            # return data: {"annotated_image": PIL.Image,"box_info":{"text_size":list(),"box_location":list()} }
+            detected_dictionary = self.obj_detection_api.detect(image)
+
+            # return data: PIL.Image
+            #depth_image, depth_information = self.depth_detection_api.detect(image)
+
+            # return data: list
+            cropped_images = self.img_processing_api.synch(
+                detected_dictionary["box_info"]["box_location"]#,
+                #depth_image,
+                #depth_information
+            )
+
+            # object_detected_image:PIL.Image, depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int
+            self.display_api = Display(
+                detected_dictionary["annotated_image"],
+                #cropped_images,
+                self.imu_sensor.read_sensor(add_noise=self.add_noise, IMU_names=self.IMU_names),
+                {},
+                curr_frame
+            )
+
+        self.display_api.end()
         return -1

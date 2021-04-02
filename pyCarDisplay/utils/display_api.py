@@ -1,22 +1,26 @@
 import PySimpleGUI as sg
-
+from PIL import Image
+import pandas as pd
 
 class Display():
 
 	# need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
-	def __init__(o, image_frames_dict):
+	def __init__(o, speed:int, total_frames:int):
+
 		o.close = sg.WIN_CLOSED
-		o.speed = 0
-		o.image_frames_dict = image_frames_dict
-		o.n_images = len(image_frames_dict)
+		o.speed = speed
+		o.total_frames = total_frames
+
+		# Create the window
+		o.window = sg.Window("Autonomous Vehicle Object & Distance Detection", o.define_layout())
+		o.progress_bar = o.window['progressbar']
 
 	def img(o, path, key):
 		return sg.Image(path, key=key)
 
 	def define_layout(o):
 		return [
-            [sg.Button("Play"), sg.Button("Pause")],
-            [sg.ProgressBar(o.n_images, orientation='h', size=(50, 5), key='progressbar')],
+			[sg.ProgressBar(o.total_frames, orientation='h', size=(50, 5), key='progressbar')],
 			[sg.Text("Frame: 1", size=(50, 1), key="frame")],
 			[sg.Text("True Speed: " + str(o.speed), key="speed"), sg.Text("-- Kalman speed: " + str(o.speed), key="kspeed")],
 			[o.img("", "IMG")],
@@ -24,64 +28,36 @@ class Display():
 				o.img("", "IMG1"),
 				o.img("", "IMG2"),
 				o.img("", "IMG3"),
-				o.img("", "IMG4"),#
+				o.img("", "IMG4"),
 				o.img("", "IMG5")
 			]
 		]
 
-	def play(o):
-		# Create the window
-		window = sg.Window("Autonomous Vehicle Object & Distance Detection", o.define_layout())
-		progress_bar = window['progressbar']
+	def end(o):
+		o.window.close()
 
-		# Create an event loop
-		i = 0
-		while i < o.n_images:
+	def play(o, annotated_image:Image, cropped_depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int):
+		cropped_depth_images = ['heh', 'ehh']
+		# Reset objects no longer detected in frame
+		for _ in range(5):
+			o.window.FindElement("IMG"+str(num)).Update("")
 
-			# check if pause or play were clicked or if window closed
-			event, values = window.read(timeout=10)
+		# check if pause or play were clicked or if window closed
+		event, values = o.window.read(timeout=10)
 
-			# Window closed
-			if event == o.close:
-				i = o.n_images
+		# update main display_api
+		o.window.FindElement("IMG").Update(annotated_image)
 
-			if event == 'Pause':
-				while event != "Play" and event != o.close:
+		# update up to 5 of the images of detected objects
+		for num, detected_image in enumerate(cropped_depth_images):
+			if num <= 5:
+				o.window.FindElement("IMG"+str(num)).Update(detected_image)
+				num += 1
 
-					# Read the window until the user clicks play or closes the window
-					event, values = window.read(timeout=100)
-					if event == o.close:
-						i = o.n_images
+		o.window.FindElement("frame").Update("Frame: "+str(frame))
 
-			# Default is to play the images
-			else:
-				# update main display
-				print("IMG = ",o.image_frames_dict[str(i)]["image"])
-				window.FindElement("IMG").Update(o.image_frames_dict[str(i)]["image"])
+		# Speed and Kalman speed need to be updated with api data
+		o.window.FindElement("speed").Update("True Speed: "+str(imu_data.speed.values()[0]))
+		o.window.FindElement("kspeed").Update("-- Kalman speed: " + str(kalman_imu_data.speed.values()[0]))
 
-				# update up to 5 of the images of detected objects
-				num = 1
-				for detected_image in o.image_frames_dict[str(i)]["detected_object_images"]:
-					if num < 5:
-						window.FindElement("IMG"+str(num)).Update(detected_image)
-						num += 1
-
-				# Reset objects no longer detected in frame
-				while num <=5:
-					window.FindElement("IMG"+str(num)).Update("")
-					num +=1
-
-				window.FindElement("frame").Update("Frame: "+str(i + 1))
-
-				# Speed and Kalman speed need to be updated with api data
-				window.FindElement("speed").Update("True Speed: "+str(i + 3))
-				window.FindElement("kspeed").Update("-- Kalman speed: " + str(i + 9))
-
-				progress_bar.UpdateBar(i + 1)
-				i += 1
-
-				# Loops the image play
-				if i + 1 == o.n_images:
-					i = 0
-
-		window.close()
+		o.progress_bar.UpdateBar(frame + 1)

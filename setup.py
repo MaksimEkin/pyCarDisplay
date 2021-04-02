@@ -16,7 +16,7 @@ class BColors:
     UNDERLINE = '\033[4m'  
     
 # enforce pip version
-pkg_resources.require(['pip >= 21.0.1'])
+pkg_resources.require(['pip >= 20.0.0'])
 
 # add readme
 with open('README.md', 'r') as f:
