@@ -6,7 +6,7 @@ class Display():
 
 	# need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
 	def __init__(o, speed:int, total_frames:int):
-
+		o.cropped_img_displayed = 5
 		o.close = sg.WIN_CLOSED
 		o.speed = speed
 		o.total_frames = total_frames
@@ -40,20 +40,19 @@ class Display():
 		cropped_depth_images = ['heh', 'ehh']
 
 		# Reset objects no longer detected in frame
-		for _ in range(5):
-			o.window.FindElement("IMG" + str(num)).Update("")
+		for num in range(o.cropped_img_displayed):
+			o.window.FindElement("IMG" + str(num + 1)).Update("")
 
 		# check if pause or play were clicked or if window closed
-		event, values = o.window.read(timeout=10)
+		event, values = o.window.read(timeout = 10)
 
 		# update main display_api
 		o.window.FindElement("IMG").Update(annotated_image)
 
-		# update up to 5 of the images of detected objects
+		# update up to cropped_img_displayed number of the depth images of detected objects
 		for num, detected_image in enumerate(cropped_depth_images):
-			if num <= 5:
-				o.window.FindElement("IMG" + str(num)).Update(detected_image)
-				num += 1
+			if num < o.cropped_img_displayed:
+				o.window.FindElement("IMG" + str(num + 1)).Update(detected_image)
 
 		o.window.FindElement("frame").Update("Frame: " + str(frame))
 
