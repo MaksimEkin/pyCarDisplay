@@ -113,7 +113,7 @@ class Car():
             )
 
             # object_detected_image:PIL.Image, depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int
-            self.display_api = Display(
+            self.display_api.play(
                 detected_dictionary["annotated_image"],
                 #cropped_images,
                 self.imu_sensor.read_sensor(add_noise=self.add_noise, IMU_names=self.IMU_names),
