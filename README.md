@@ -38,6 +38,8 @@ from pyCarDisplay.pyCarDisplay import pyCarDisplay
 
 ## How to Cite RFoT?
 ```
+https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
+https://github.com/OniroAI/MonoDepth-PyTorch
 add citation here
 ```
 
