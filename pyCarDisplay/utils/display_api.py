@@ -38,9 +38,10 @@ class Display():
 
 	def play(o, annotated_image:Image, cropped_depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int):
 		cropped_depth_images = ['heh', 'ehh']
+
 		# Reset objects no longer detected in frame
 		for _ in range(5):
-			o.window.FindElement("IMG"+str(num)).Update("")
+			o.window.FindElement("IMG" + str(num)).Update("")
 
 		# check if pause or play were clicked or if window closed
 		event, values = o.window.read(timeout=10)
@@ -51,13 +52,13 @@ class Display():
 		# update up to 5 of the images of detected objects
 		for num, detected_image in enumerate(cropped_depth_images):
 			if num <= 5:
-				o.window.FindElement("IMG"+str(num)).Update(detected_image)
+				o.window.FindElement("IMG" + str(num)).Update(detected_image)
 				num += 1
 
-		o.window.FindElement("frame").Update("Frame: "+str(frame))
+		o.window.FindElement("frame").Update("Frame: " + str(frame))
 
 		# Speed and Kalman speed need to be updated with api data
-		o.window.FindElement("speed").Update("True Speed: "+str(imu_data.speed.values()[0]))
+		o.window.FindElement("speed").Update("True Speed: " + str(imu_data.speed.values()[0]))
 		o.window.FindElement("kspeed").Update("-- Kalman speed: " + str(kalman_imu_data.speed.values()[0]))
 
 		o.progress_bar.UpdateBar(frame + 1)
