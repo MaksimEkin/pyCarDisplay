@@ -13,6 +13,7 @@ from .sensors.kalman_filter_api import KalmanFilter
 from .detection.object_detection_api import ObjectDetection
 #from .detection.depth_detection_api import DepthDetection
 
+from PIL import Image
 
 class Car():
     def __init__(self,
@@ -40,7 +41,8 @@ class Car():
                  # Other
                  random_state=42
                  ):
-        """"""
+        """ Initialize car object data"""
+
         self.car_images_path = car_images_path
         self.imu_sensor_path = imu_sensor_path
         self.verbose = verbose
@@ -76,10 +78,8 @@ class Car():
         self.img_processing_api = ImageProcessing(self.car_images_path)
         self.path_to_all_images = self.img_processing_api.process_images_path()
         self.total_frames = len(path_to_all_images)
+
         # Display API
-        '''Since this was refined to accept a single image dictionary
-        into the init function, this needs to be called for every image.
-        As a result, witou further refinement, this will be places in the run loop'''
         self.display_api = Display(self.gui_speed, self.total_frames)
 
 
@@ -90,19 +90,12 @@ class Car():
 
 
     def run(self):
-        """"""
+        """Iterates the taken images and one by one performs object detection and depth detection on the objects
+            renders the imgaes taken on a display with the depth heatmaps as subimages."""
+
         for curr_frame, curr_img_path in enumerate(self.path_to_all_images):
 
-            # load the image: take picture
-            #
-            '''
-            # needs to be in the img_processing_api
-            from PIL import Image
-            original_image = Image.open(img_path, mode='r')
-            original_image = original_image.convert('RGB')
-
-            '''
-
+            # Simulate taking a picture (comes from files in a directory rather than camera)
             image = self.img_processing_api.take_picture(curr_img_path)
 
 
@@ -113,7 +106,7 @@ class Car():
             #depth_image, depth_information = self.depth_detection_api.detect(image)
 
             # return data: list
-            cropped_images = self.img_processing_api.synch(
+            cropped_images = self.img_processing_api.synch_objDet_depDet_data(
                 detected_dictionary["box_info"]["box_location"]#,
                 #depth_image,
                 #depth_information
