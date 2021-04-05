@@ -2,7 +2,7 @@
 
 """
 from torchvision import transforms
-from .__utils import *
+from .__utils_obj_detection import *
 from PIL import Image, ImageDraw, ImageFont
 
 class ObjectDetection():
