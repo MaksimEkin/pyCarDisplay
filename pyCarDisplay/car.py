@@ -23,7 +23,7 @@ class Car():
                  lidar_sensor_path:str,
                  object_detection_model_path:str,
                  depth_detection_model_path:str,
-                 
+
 
                  # Object detection hyper-parameters
                  img_resize_size=(300, 300),
@@ -37,7 +37,7 @@ class Car():
 
                  # Display API Required
                  gui_speed=1,
-                 
+
                  # Image processing API
                  image_extension="png",
 
@@ -53,7 +53,7 @@ class Car():
         self.add_noise = add_noise
         self.IMU_names = IMU_names
         self.gui_speed=gui_speed
-        
+
         if self.verbose:
             print("Car configurations:\n" + \
             "car_images_path = " + str(car_images_path) +"\n" + \
@@ -92,12 +92,12 @@ class Car():
         if self.verbose:
             print("Loading the IMU data...")
         imu_df = DataLoader(path_imu=imu_sensor_path, path_lidar=lidar_sensor_path).load_imu()
-        
+
         if self.verbose:
             print(imu_df.info())
         if len(imu_df) == 0:
             sys.exit("Failed to load the IMU data.")
-        
+
         self.imu_sensor = IMU(imu_df,
                               verbose,
                               R_covariance,
@@ -106,12 +106,12 @@ class Car():
 
         # Image processing API
         self.img_processing_api = ImageProcessing(
-            car_images_path=self.car_images_path, 
+            car_images_path=self.car_images_path,
             image_extension=image_extension)
         self.path_to_all_images = self.img_processing_api.all_images_path
         if self.verbose:
             print("Total image frames loaded:" + str(len(self.path_to_all_images)))
-        
+
         self.total_frames = len(self.path_to_all_images)
         assert self.total_frames == len(imu_df)
 
@@ -128,13 +128,13 @@ class Car():
     def run(self, verbose=None):
         """Iterates the taken images and one by one performs object detection and depth detection on the objects
             renders the imgaes taken on a display with the depth heatmaps as subimages."""
-        
+
         # if verbose is being changed
         if verbose != None:
             self.verbose = verbose
-        
+
         for curr_frame, curr_img_path in enumerate(self.path_to_all_images):
-            
+
             if self.verbose:
                 print("Frame:" + str(curr_frame))
 
@@ -158,19 +158,22 @@ class Car():
                 #depth_image,
                 #depth_information
             #)
-            
+
             curr_imu_data = self.imu_sensor.read_sensor(add_noise=self.add_noise, name=self.IMU_names)
             if self.verbose:
                 print(curr_imu_data["data"])
 
             # object_detected_image:PIL.Image, depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int
-            #self.display_api.play(
-            #    detected_dictionary["annotated_image"],
-            #    #cropped_depth_images,
-            #    curr_imu_data
-            #    {},
-            #    curr_frame
-            #)
+            cropped_depth_images = []
+
+            detected_dictionary["annotated_image"].show()
+            self.display_api.play(
+                detected_dictionary["annotated_image"],
+                cropped_depth_images,
+                curr_imu_data,
+                {},
+                curr_frame
+            )
 
         self.display_api.end()
         return -1

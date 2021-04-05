@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 import pandas as pd
 from PIL import Image
-
+import io
 
 class Display():
 
@@ -27,20 +27,20 @@ class Display():
             return contents
 
 
-    def update_window(key, data1, data2=''):
+    def update_window(o, key, data1, data2=''):
         if data2:
             o.window.FindElement(key).Update(data=data1, size=data2)
         else:
             o.window.FindElement(key).Update(data1)
 
 
-    def depth_images_update(cropped_depth_images):
+    def depth_images_update(o, cropped_depth_images):
         for num, detected_image in enumerate(cropped_depth_images):
             if num < o.cropped_img_displayed:
-                o.update_window("IMG" + str(num + 1), format_pil_img(detected_image), detected_image.size)
+                o.update_window("IMG" + str(num + 1), o.format_pil_img(detected_image), detected_image.size)
 
 
-    def speed_update(imu_data, kalman_imu_data):
+    def speed_update(o, imu_data, kalman_imu_data):
         gold_speed = "True Speed: " + str(imu_data.speed.values()[0])
         o.update_window("speed", gold_speed)
 
@@ -48,7 +48,7 @@ class Display():
         o.update_window("kspeed", kalman_speed)
 
 
-    def reset_depth_images(cropped_depth_images):
+    def reset_depth_images(o, cropped_depth_images):
         for num in range(o.cropped_img_displayed):
             o.update_window("IMG" + str(num + 1), "")
 
@@ -74,7 +74,7 @@ class Display():
         o.window.close()
 
 
-    def play(o, annotated_image: Image, cropped_depth_images: list, depths: list, imu_data: pd.DataFrame,
+    def play(o, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
              kalman_imu_data: pd.DataFrame, frame: int):
         cropped_depth_images = ['heh', 'ehh']
 
@@ -86,7 +86,7 @@ class Display():
         o.reset_depth_images(cropped_depth_images)
 
         # update main display_api with detected objects
-        o.update_window("IMG", format_pil_img(annotated_image), annotated_image.size)
+        o.update_window("IMG", o.format_pil_img(annotated_image), annotated_image.size)
 
         # update up to cropped_img_displayed number of the depth images of detected objects
         o.depth_images_update(cropped_depth_images)
