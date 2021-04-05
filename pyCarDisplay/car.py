@@ -166,12 +166,12 @@ class Car():
             # object_detected_image:PIL.Image, depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int
             cropped_depth_images = []
 
-            detected_dictionary["annotated_image"].show()
+            #detected_dictionary["annotated_image"].show()
             self.display_api.play(
                 detected_dictionary["annotated_image"],
                 cropped_depth_images,
                 curr_imu_data,
-                {},
+                {'data':[45.456]},
                 curr_frame
             )
 
