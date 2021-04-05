@@ -134,10 +134,13 @@ class Car():
 
             # Simulate taking a picture (comes from files in a directory rather than camera)
             image = self.img_processing_api.take_picture(curr_frame)
-
+            if self.verbose:
+                print(image)
 
             # return data: {"annotated_image": PIL.Image,"box_info":{"text_size":list(),"box_location":list()} }
             detected_dictionary = self.obj_detection_api.detect(image)
+            if self.verbose:
+                print(detected_dictionary)
 
             # return data: PIL.Image
             #depth_image, depth_information = self.depth_detection_api.detect(image)

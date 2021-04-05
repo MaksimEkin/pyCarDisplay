@@ -69,7 +69,7 @@ class ObjectDetection():
 
     def detect(self,
                original_image:Image,
-               suppress:list,
+               suppress=None,
                min_score=0.2,
                max_overlap=0.5,
                top_k=200):
@@ -96,10 +96,10 @@ class ObjectDetection():
 
         """
 
-        return self.__detect(original_image, min_score=min_score, max_overlap=max_overlap, top_k=top_k) # .show()
+        return self.__detect_helper(original_image, min_score=min_score, max_overlap=max_overlap, top_k=top_k, suppress=suppress) # .show()
 
 
-    def __detect_helper(self, original_image, min_score, max_overlap, top_k, suppress=None):
+    def __detect_helper(self, original_image, min_score, max_overlap, top_k, suppress):
         """
         Detect objects in an image with a trained SSD300, and visualize the results.
 
@@ -146,7 +146,11 @@ class ObjectDetection():
         # If no objects found, the detected labels will be set to ['0.'], i.e. ['background'] in SSD300.detect_objects() in model.py
         if det_labels == ['background']:
             # Just return original image
-            return original_image
+            box_info = {
+            "text_size":[],
+            "box_location":[]
+            }
+            return {"annotated_image":original_image, "box_info":box_info, "detected":False}
 
         # Annotate
         annotated_image = original_image
@@ -196,4 +200,4 @@ class ObjectDetection():
             "box_location":box_locations
             }
 
-        return {"annotated_image":annotated_image, "box_info":box_info}
+        return {"annotated_image":annotated_image, "box_info":box_info, "detected":True}
