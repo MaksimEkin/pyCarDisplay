@@ -16,7 +16,7 @@ class BColors:
     UNDERLINE = '\033[4m'  
     
 # enforce pip version
-pkg_resources.require(['pip >= 21.0.1'])
+pkg_resources.require(['pip >= 20.0.0'])
 
 # add readme
 with open('README.md', 'r') as f:
@@ -40,15 +40,16 @@ setup(
     url='https://github.com/MaksimEkin/pyCarDisplay',
     packages=find_packages(),
     classifiers=[
-        'Development Status :: ' + str(__version__) + ' - Beta',
+        'Development Status :: ' + str(__version__),
         'Programming Language :: Python :: 3.8.5',
-        'Topic :: Machine Learning :: Libraries'
+        'Topic :: Automated Car :: Libraries'
     ],
     python_requires='>=3.8.5',
     install_requires=INSTALL_REQUIRES,
     license='License :: Apache2 License',
     zip_safe=False
 )
+
     
 # Done
 print(f'{BColors.OKGREEN}\tFinished installing.{BColors.ENDC}')
