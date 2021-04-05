@@ -26,9 +26,9 @@ class Display():
 
 	def update_window(key, data1, data2=''):
 		if data2:
-			o.window.FindElement(key).Update(data1)
-		else:
 			o.window.FindElement(key).Update(data=data1, size=data2)
+		else:
+			o.window.FindElement(key).Update(data1)
 
 	def depth_images_update(cropped_depth_images)
 		for num, detected_image in enumerate(cropped_depth_images):
