@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import pandas as pd
 from PIL import Image
 import io
+from io import StringIO
 
 class Display():
 
@@ -19,13 +20,23 @@ class Display():
     def img(o, path, key):
         return sg.Image(path, key=key)
 
-    def format_pil_img(o, image):
+    def format_pil_img(o, image: Image):
+        return None
+        '''
+        image.show()
 
         with io.BytesIO() as output:
+            tempBuff = StringIO()
+            tempBuff.write(image)
+            tempBuff.seek(0)
+            Image.open(tempBuff)
+
+            print("Line 26", image)
             image.save(output, format="PNG")
             contents = output.getvalue()
             return contents
-
+        return io.BytesIO(image).getvalue()
+        '''
 
     def update_window(o, key, data1, data2=''):
         if data2:
@@ -41,10 +52,14 @@ class Display():
 
 
     def speed_update(o, imu_data, kalman_imu_data):
-        gold_speed = "True Speed: " + str(imu_data.speed.values()[0])
-        o.update_window("speed", gold_speed)
+        print("Examine imu=", imu_data['data'][0])
+        print("Examine Kalman=", kalman_imu_data['data'][0])
 
-        kalman_speed = "-- Kalman speed: " + str(kalman_imu_data.speed.values()[0])
+        gold_speed = "True Speed: " + str(imu_data['data'][0])
+        print("gold_speed", gold_speed)
+        o.window.FindElement("speed").Update(gold_speed)
+
+        kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'][0])
         o.update_window("kspeed", kalman_speed)
 
 
@@ -57,8 +72,8 @@ class Display():
         return [
             [sg.ProgressBar(o.total_frames, orientation='h', size=(50, 5), key='progressbar')],
             [sg.Text("Frame: 1", size=(50, 1), key="frame")],
-            [sg.Text("True Speed: " + str(o.speed), key="speed"),
-             sg.Text("-- Kalman speed: " + str(o.speed), key="kspeed")],
+            [sg.Text("True Speed:" + " " * 30 + str(o.speed), key="speed")],
+            [sg.Text("Kalman speed:"+ " " * 20 + str(o.speed), key="kspeed")],
             [o.img("", "IMG")],
             [
                 o.img("", "IMG1"),
@@ -69,27 +84,32 @@ class Display():
             ]
         ]
 
-
     def end(o):
         o.window.close()
-
 
     def play(o, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
              kalman_imu_data: pd.DataFrame, frame: int):
         cropped_depth_images = ['heh', 'ehh']
+        print(type(annotated_image))
 
         # check if pause or play were clicked or if window closed
         """May need to relocate this"""
-        event, values = o.window.read(timeout=10)
+        event, values = o.window.read(timeout=1)
 
         # Reset objects no longer detected in frame
         o.reset_depth_images(cropped_depth_images)
 
         # update main display_api with detected objects
-        o.update_window("IMG", o.format_pil_img(annotated_image), annotated_image.size)
+        #annotated_image.show()
+        with io.BytesIO() as output:
+            annotated_image.save(output, format="PNG")
+            contents = output.getvalue()
+        o.update_window("IMG", contents, annotated_image.size)
 
         # update up to cropped_img_displayed number of the depth images of detected objects
-        o.depth_images_update(cropped_depth_images)
+        ##for num, detected_image in enumerate(cropped_depth_images):
+            ##if num < o.cropped_img_displayed:
+                #o.update_window("IMG" + str(num + 1), detected_image, detected_image.size)
 
         # current picture frame
         o.update_window("frame", "Frame: " + str(frame))
