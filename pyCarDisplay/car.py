@@ -13,6 +13,7 @@ from .sensors.kalman_filter_api import KalmanFilter
 from .detection.object_detection_api import ObjectDetection
 #from .detection.depth_detection_api import DepthDetection
 
+from tabulate import tabulate
 from PIL import Image
 import sys
 
@@ -158,7 +159,9 @@ class Car():
             
             curr_imu_data = self.imu_sensor.read_sensor(add_noise=self.add_noise, name=self.IMU_names)
             if self.verbose:
-                print(curr_imu_data)
+                imu_df = curr_imu_data["data"]
+                pdtabulate=lambda imu_df:tabulate(imu_df,headers='keys',tablefmt='psql')
+                print(pdtabulate(imu_df))
 
             # object_detected_image:PIL.Image, depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int
             #self.display_api.play(

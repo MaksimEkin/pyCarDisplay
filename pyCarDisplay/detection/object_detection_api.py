@@ -181,9 +181,6 @@ class ObjectDetection():
             textbox_location = [box_location[0], box_location[1] - text_size[1], box_location[0] + text_size[0] + 4.,
                                 box_location[1]]
 
-            if self.verbose:
-                print(str(text_size[0]) + ' * ' + str(text_size[1]) + '\nx = ' + str(box_location[0]) + '\ny = ' + str(box_location[1]))
-
             draw.rectangle(xy=textbox_location, fill=label_color_map[det_labels[i]])
             draw.text(xy=text_location, text=det_labels[i].upper(), fill='white',
                       font=font)
