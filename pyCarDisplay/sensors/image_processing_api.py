@@ -1,14 +1,16 @@
 """
 """
+import glob
 from PIL import Image
 
 class ImageProcessing():
-    def __init__(self, car_images_path:str):
-        self.img_path = car_images_path
-        self.img = None
+    def __init__(self, car_images_path:str, image_extension="png"):
+        self.images_directory = car_images_path
+        self.all_images_path = glob.glob(str(self.images_directory)+"*."+str(image_extension))
+        
 
-    def take_picture(self):
-        return Image.open(self.img_path, mode='r').convert('RGB')
+    def take_picture(self, frame:int):
+        return Image.open(self.all_images_path[frame], mode='r').convert('RGB')
 
     def synch_objDet_depDet_data(box_locations, depth_image):
         """Takes in object locations in a snapshot and the depth image to return depth heatmap of the objects.

@@ -36,13 +36,21 @@ class ObjectDetection():
         None.
 
         """
-
+        self.verbose = verbose
+        self.model_path = model_path
+            
+            
         # Use GPU if available
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.verbose = verbose
+        if self.verbose:
+            print("Object detection is using: " + str(self.device))
+        
 
         # Load model checkpoint
-        checkpoint = torch.load(self.model_path, map_location=device)
+        if self.verbose:
+            print("Object detection API is loading the model: " + str(self.model_path))
+            
+        checkpoint = torch.load(self.model_path, map_location=self.device)
         start_epoch = checkpoint['epoch'] + 1
 
         if self.verbose:

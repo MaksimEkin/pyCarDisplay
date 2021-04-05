@@ -23,7 +23,6 @@ class DataLoader(object):
         
         self.path_lidar = path_lidar
         self.path_imu = path_imu
-
         
         self.lidar_data = None
         self.imu_data = None
