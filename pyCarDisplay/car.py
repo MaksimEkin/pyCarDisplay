@@ -131,6 +131,9 @@ class Car():
             renders the imgaes taken on a display with the depth heatmaps as subimages."""
 
         for curr_frame, curr_img_path in enumerate(self.path_to_all_images):
+            
+            if self.verbose:
+                print("Frame:" + str(curr_frame))
 
             # Simulate taking a picture (comes from files in a directory rather than camera)
             image = self.img_processing_api.take_picture(curr_frame)
@@ -141,6 +144,7 @@ class Car():
             detected_dictionary = self.obj_detection_api.detect(image)
             if self.verbose:
                 print(detected_dictionary)
+                print("Object detected:" + str(len(detected_dictionary["box_info"["text_size"]])))
 
             # return data: PIL.Image
             #depth_image, depth_information = self.depth_detection_api.detect(image)
