@@ -133,7 +133,7 @@ class Car():
         for curr_frame, curr_img_path in enumerate(self.path_to_all_images):
 
             # Simulate taking a picture (comes from files in a directory rather than camera)
-            image = self.img_processing_api.take_picture(curr_img_path)
+            image = self.img_processing_api.take_picture(curr_frame)
 
 
             # return data: {"annotated_image": PIL.Image,"box_info":{"text_size":list(),"box_location":list()} }
