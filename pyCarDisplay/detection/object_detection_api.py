@@ -155,7 +155,7 @@ class ObjectDetection():
         # Annotate
         annotated_image = original_image
         draw = ImageDraw.Draw(annotated_image)
-        font = ImageFont.truetype("./calibril.ttf", 15)
+        font = ImageFont.truetype("Arial", 15)
 
         # Suppress specific classes, if needed
         text_sizes = list()
