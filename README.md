@@ -18,6 +18,7 @@ Add Description here
 ### Using *setup.py*
 - Run ```setup.py``` on a Python 3.8.5 environment:
 	- ```python setup.py install```
+    
 
 
 ## Requirements
@@ -25,7 +26,7 @@ Add Description here
 
 ## Usage
 ```python
-from pyCarDisplay.pyCarDisplay import pyCarDisplay
+from pyCarDisplay.pyCarDisplay import CarDisplay
 
 # ADD INSTRUCTIONS HERE
 ```

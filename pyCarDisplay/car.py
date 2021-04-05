@@ -14,6 +14,7 @@ from .detection.object_detection_api import ObjectDetection
 #from .detection.depth_detection_api import DepthDetection
 
 from PIL import Image
+import sys
 
 class Car():
     def __init__(self,
@@ -23,7 +24,7 @@ class Car():
                  lidar_sensor_path:str,
                  object_detection_model_path:str,
                  depth_detection_model_path:str,
-                 verbose:bool,
+                 
 
                  # Object detection hyper-parameters
                  img_resize_size=(300, 300),
@@ -37,9 +38,13 @@ class Car():
 
                  # Display API Required
                  gui_speed=1,
+                 
+                 # Image processing API
+                 image_extension="png",
 
                  # Other
-                 random_state=42
+                 random_state=42,
+                 verbose=False
                  ):
         """ Initialize car object data"""
 
@@ -49,6 +54,24 @@ class Car():
         self.add_noise = add_noise
         self.IMU_names = IMU_names
         self.gui_speed=gui_speed
+        
+        if self.verbose:
+            print("Car configurations:\n" + \
+            "car_images_path = " + str(car_images_path) +"\n" + \
+            "imu_sensor_path = " + str(imu_sensor_path) +"\n" + \
+            "lidar_sensor_path = " + str(lidar_sensor_path) + "\n" + \
+            "object_detection_model_path = " + str(object_detection_model_path) +"\n"+ \
+            "depth_detection_model_path = " + str(depth_detection_model_path) +"\n"+ \
+            "img_resize_size = " + str(img_resize_size) + "\n"+\
+            "norm_mean = " + str(norm_mean) +"\n"+\
+            "norm_std = " + str(norm_std) +"\n"+\
+            "R_covariance = " + str(R_covariance) + "\n"+\
+            "add_noise = " + str(add_noise) +"\n"+\
+            "IMU_names = " + str(IMU_names) +"\n"+\
+            "gui_speed = " + str(gui_speed) + "\n"+\
+            "random_state = " + str(random_state) +"\n"+\
+            "image_extension = " + str(image_extension) +"\n"+\
+            "verbose = " + str(verbose))
 
         # Load the object detection API
         self.obj_detection_api = ObjectDetection(object_detection_model_path,
@@ -67,7 +90,15 @@ class Car():
         #self.ml_synchronize_api = MLDataSynch()
 
         # Load the Kitti IMU data
-        imu_df = DataLoader(imu_sensor_path, lidar_sensor_path).load_imu()
+        if self.verbose:
+            print("Loading the IMU data...")
+        imu_df = DataLoader(path_imu=imu_sensor_path, path_lidar=lidar_sensor_path).load_imu()
+        
+        if self.verbose:
+            print(imu_df.info())
+        if len(imu_df) == 0:
+            sys.exit("Failed to load the IMU data.")
+        
         self.imu_sensor = IMU(imu_df,
                               verbose,
                               R_covariance,
@@ -75,9 +106,15 @@ class Car():
             )
 
         # Image processing API
-        self.img_processing_api = ImageProcessing(self.car_images_path)
-        self.path_to_all_images = self.img_processing_api.process_images_path()
-        self.total_frames = len(path_to_all_images)
+        self.img_processing_api = ImageProcessing(
+            car_images_path=self.car_images_path, 
+            image_extension=image_extension)
+        self.path_to_all_images = self.img_processing_api.all_images_path
+        if self.verbose:
+            print("Total image frames loaded:" + str(len(self.path_to_all_images)))
+        
+        self.total_frames = len(self.path_to_all_images)
+        assert self.total_frames == len(imu_df)
 
         # Display API
         self.display_api = Display(self.gui_speed, self.total_frames)

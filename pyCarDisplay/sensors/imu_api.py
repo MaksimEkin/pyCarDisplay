@@ -18,6 +18,8 @@ class IMU:
         np.random.seed(random_state)
         if self.verbose:
             print("Initilized IMU")
+            print("Current frame:" + str(self.frame))
+            print("Total number of frames:" + str(len(self.imu_data)))
             
     def get_R(self):
         return self.R_covariance
