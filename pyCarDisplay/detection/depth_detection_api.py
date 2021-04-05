@@ -2,7 +2,7 @@
 
 """
 from torchvision import transforms
-from .__utils import *
+from .__utils_depth_detection import *
 from PIL import Image, ImageDraw, ImageFont
 import numpy
 import matplotlib
