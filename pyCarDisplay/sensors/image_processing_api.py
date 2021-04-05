@@ -25,9 +25,10 @@ class ImageProcessing():
         """
 
         croped_depth_images = []
-
-        for box in box_locations:
-            x, y, h, w = box
-            croped_depth_images.append(depth_image.copy().crop((x, y, x + w, y + h)))
+    
+        if box_locations:
+            for box in box_locations:
+                x, y, h, w = box
+                croped_depth_images.append(depth_image.copy().crop((x, y, x + w, y + h)))
 
         return cropped_depth_images
