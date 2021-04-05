@@ -144,7 +144,7 @@ class Car():
             detected_dictionary = self.obj_detection_api.detect(image)
             if self.verbose:
                 print(detected_dictionary)
-                print("Object detected:" + str(len(detected_dictionary["box_info"["text_size"]])))
+                print("Object detected:" + str(len(detected_dictionary["box_info"]["text_size"])))
 
             # return data: PIL.Image
             #depth_image, depth_information = self.depth_detection_api.detect(image)
