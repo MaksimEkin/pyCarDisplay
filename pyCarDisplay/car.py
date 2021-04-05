@@ -125,10 +125,14 @@ class Car():
 
 
 
-    def run(self):
+    def run(self, verbose=None):
         """Iterates the taken images and one by one performs object detection and depth detection on the objects
             renders the imgaes taken on a display with the depth heatmaps as subimages."""
-
+        
+        # if verbose is being changed
+        if verbose != None:
+            self.verbose = verbose
+        
         for curr_frame, curr_img_path in enumerate(self.path_to_all_images):
             
             if self.verbose:
