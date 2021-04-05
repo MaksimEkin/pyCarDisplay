@@ -36,21 +36,13 @@ class ObjectDetection():
         None.
 
         """
-        self.verbose = verbose
-        self.model_path = model_path
-            
-            
+
         # Use GPU if available
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        if self.verbose:
-            print("Object detection is using: " + str(self.device))
-        
+        self.verbose = verbose
 
         # Load model checkpoint
-        if self.verbose:
-            print("Object detection API is loading the model: " + str(self.model_path))
-            
-        checkpoint = torch.load(self.model_path, map_location=self.device)
+        checkpoint = torch.load(self.model_path, map_location=device)
         start_epoch = checkpoint['epoch'] + 1
 
         if self.verbose:
@@ -69,7 +61,7 @@ class ObjectDetection():
 
     def detect(self,
                original_image:Image,
-               suppress=None,
+               suppress:list,
                min_score=0.2,
                max_overlap=0.5,
                top_k=200):
@@ -96,10 +88,10 @@ class ObjectDetection():
 
         """
 
-        return self.__detect_helper(original_image, min_score=min_score, max_overlap=max_overlap, top_k=top_k, suppress=suppress) # .show()
+        return self.__detect(original_image, min_score=min_score, max_overlap=max_overlap, top_k=top_k) # .show()
 
 
-    def __detect_helper(self, original_image, min_score, max_overlap, top_k, suppress):
+    def __detect_helper(self, original_image, min_score, max_overlap, top_k, suppress=None):
         """
         Detect objects in an image with a trained SSD300, and visualize the results.
 
@@ -146,16 +138,12 @@ class ObjectDetection():
         # If no objects found, the detected labels will be set to ['0.'], i.e. ['background'] in SSD300.detect_objects() in model.py
         if det_labels == ['background']:
             # Just return original image
-            box_info = {
-            "text_size":[],
-            "box_location":[]
-            }
-            return {"annotated_image":original_image, "box_info":box_info, "detected":False}
+            return original_image
 
         # Annotate
         annotated_image = original_image
         draw = ImageDraw.Draw(annotated_image)
-        font = ImageFont.truetype("Arial", 15)
+        font = ImageFont.truetype("./calibril.ttf", 15)
 
         # Suppress specific classes, if needed
         text_sizes = list()
@@ -181,6 +169,9 @@ class ObjectDetection():
             textbox_location = [box_location[0], box_location[1] - text_size[1], box_location[0] + text_size[0] + 4.,
                                 box_location[1]]
 
+            if self.verbose:
+                print(str(text_size[0]) + ' * ' + str(text_size[1]) + '\nx = ' + str(box_location[0]) + '\ny = ' + str(box_location[1]))
+
             draw.rectangle(xy=textbox_location, fill=label_color_map[det_labels[i]])
             draw.text(xy=text_location, text=det_labels[i].upper(), fill='white',
                       font=font)
@@ -197,4 +188,4 @@ class ObjectDetection():
             "box_location":box_locations
             }
 
-        return {"annotated_image":annotated_image, "box_info":box_info, "detected":True}
+        return {"annotated_image":annotated_image, "box_info":box_info}
