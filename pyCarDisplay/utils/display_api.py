@@ -9,11 +9,11 @@ class Display():
     # need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
 
     def __init__(o, speed: int, total_frames: int):
-        o.cropped_img_displayed = 5
-        o.close = sg.WIN_CLOSED
-        o.speed = speed
-        o.total_frames = total_frames
-        o.verbose = False
+        self.cropped_img_displayed = 5
+        self.close = sg.WIN_CLOSED
+        self.speed = speed
+        self.total_frames = total_frames
+        self.verbose = False
         # Create the window
         self.window = sg.Window("Autonomous Vehicle Object & Distance Detection", self.define_layout())
         self.progress_bar = self.window['progressbar']
@@ -30,21 +30,21 @@ class Display():
     def depth_images_update(self, cropped_depth_images):
         for num, detected_image in enumerate(cropped_depth_images):
 
-            if num < o.cropped_img_displayed:
-                o.update_window("IMG" + str(num + 1), o.format_pil_img(detected_image), detected_image.size)
+            if num < self.cropped_img_displayed:
+                self.update_window("IMG" + str(num + 1), self.format_pil_img(detected_image), detected_image.size)
 
 
     def speed_update(o, imu_data, kalman_imu_data):
-        if o.verbose:
+        if self.verbose:
             print("Examine imu=", imu_data['data'][0])
             print("Examine Kalman=", kalman_imu_data['data'][0])
 
     def speed_update(self, imu_data, kalman_imu_data):
         gold_speed = "True Speed: " + str(imu_data['data'][0])
 
-        if o.verbose:
+        if self.verbose:
             print("gold_speed", gold_speed)
-        o.window.FindElement("speed").Update(gold_speed)
+        self.window.FindElement("speed").Update(gold_speed)
 
         kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'][0])
         self.update_window("kspeed", kalman_speed)
@@ -78,8 +78,8 @@ class Display():
 
         cropped_depth_images = ['heh', 'ehh']
 
-        o.verbose = verbose
-        if o.verbose:
+        self.verbose = verbose
+        if self.verbose:
             print(type(annotated_image))
 
         # check if pause or play were clicked or if window closed
