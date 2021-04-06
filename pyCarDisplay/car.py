@@ -173,8 +173,7 @@ class Car():
                 curr_imu_data,
                 {'data':[45.456]},
                 curr_frame,
-                self.verbose,
-                self.IMU_name
+                self.verbose
             )
 
         self.display_api.end()
