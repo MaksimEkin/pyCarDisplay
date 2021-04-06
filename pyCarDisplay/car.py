@@ -37,6 +37,7 @@ class Car():
 
                  # Display API Required
                  gui_speed=1,
+                 theme = "DarkGrey1",
 
                  # Image processing API
                  image_extension="png",
@@ -116,7 +117,7 @@ class Car():
         assert self.total_frames == len(imu_df)
 
         # Display API
-        self.display_api = Display(self.gui_speed, self.total_frames)
+        self.display_api = Display(self.gui_speed, self.total_frames, theme)
 
 
     def set_frame(self, frame:int):

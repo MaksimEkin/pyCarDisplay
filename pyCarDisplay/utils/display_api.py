@@ -8,14 +8,14 @@ class Display():
 
     # need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
 
-    def __init__(self, speed: int, total_frames: int):
+    def __init__(self, speed: int, total_frames: int, theme:str):
         self.cropped_img_displayed = 5
         self.close = sg.WIN_CLOSED
         self.speed = speed
         self.total_frames = total_frames
         self.verbose = False
         # Create the window
-        self.theme = sg.theme("DarkGrey1")
+        self.theme = sg.theme(theme)
         self.window = sg.Window("Autonomous Vehicle Object & Distance Detection", self.define_layout())
         self.progress_bar = self.window['progressbar']
 
