@@ -46,7 +46,7 @@ class Display():
 
 
     def speed_update(o, imu_data, kalman_imu_data):
-        if self.verbose:
+        if o.verbose:
             print("Examine imu=", imu_data['data'][0])
             print("Examine Kalman=", kalman_imu_data['data'][0])
 >>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
