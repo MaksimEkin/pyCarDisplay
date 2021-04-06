@@ -7,7 +7,7 @@ class ImageProcessing():
     def __init__(self, car_images_path:str, image_extension="png"):
         self.images_directory = car_images_path
         self.all_images_path = glob.glob(str(self.images_directory)+"*."+str(image_extension))
-        
+        #ini_list.sort(key = lambda x: x.split()[1])
 
     def take_picture(self, frame:int):
         return Image.open(self.all_images_path[frame], mode='r').convert('RGB')

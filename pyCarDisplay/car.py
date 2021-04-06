@@ -33,7 +33,7 @@ class Car():
                  # IMU parameters
                  R_covariance=0.1,
                  add_noise=True,
-                 IMU_names=None,
+                 IMU_name=None,
 
                  # Display API Required
                  gui_speed=1,
@@ -51,7 +51,7 @@ class Car():
         self.imu_sensor_path = imu_sensor_path
         self.verbose = verbose
         self.add_noise = add_noise
-        self.IMU_names = IMU_names
+        self.IMU_name = IMU_name
         self.gui_speed=gui_speed
 
         if self.verbose:
@@ -66,7 +66,7 @@ class Car():
             "norm_std = " + str(norm_std) +"\n"+\
             "R_covariance = " + str(R_covariance) + "\n"+\
             "add_noise = " + str(add_noise) +"\n"+\
-            "IMU_names = " + str(IMU_names) +"\n"+\
+            "IMU_name = " + str(IMU_name) +"\n"+\
             "gui_speed = " + str(gui_speed) + "\n"+\
             "random_state = " + str(random_state) +"\n"+\
             "image_extension = " + str(image_extension) +"\n"+\
@@ -159,7 +159,7 @@ class Car():
                 #depth_information
             #)
 
-            curr_imu_data = self.imu_sensor.read_sensor(add_noise=self.add_noise, name=self.IMU_names)
+            curr_imu_data = self.imu_sensor.read_sensor(add_noise=self.add_noise, name=self.IMU_name)
             if self.verbose:
                 print(curr_imu_data["data"])
 
@@ -173,7 +173,8 @@ class Car():
                 curr_imu_data,
                 {'data':[45.456]},
                 curr_frame,
-                self.verbose
+                self.verbose,
+                self.IMU_name
             )
 
         self.display_api.end()

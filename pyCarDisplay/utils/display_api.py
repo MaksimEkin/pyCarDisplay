@@ -3,6 +3,7 @@ import pandas as pd
 from PIL import Image
 import io
 from io import StringIO
+from tabulate import tabulate
 
 class Display():
 
@@ -51,18 +52,22 @@ class Display():
                 o.update_window("IMG" + str(num + 1), o.format_pil_img(detected_image), detected_image.size)
 
 
-    def speed_update(o, imu_data, kalman_imu_data):
-        if o.verbose:
-            print("Examine imu=", imu_data['data'][0])
-            print("Examine Kalman=", kalman_imu_data['data'][0])
-
-        gold_speed = "True Speed: " + str(imu_data['data'][0])
+    def speed_update(o, imu_data, kalman_imu_data, imu_name):
+        
+        if isinstance(imu_data, pd.DataFrame):
+            display_imu_data = tabulate(imu_data, headers='keys', tablefmt='psql')
+        else:
+            display_imu_data = tabulate(pd.DataFrame({str(imu_name):imu_data}), headers='keys', tablefmt='psql')
         
         if o.verbose:
-            print("gold_speed", gold_speed)
+            print("Examine imu=", display_imu_data)
+            print("Examine Kalman=", kalman_imu_data['data'])
+
+        gold_speed = display_imu_data
+        
         o.window.FindElement("speed").Update(gold_speed)
 
-        kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'][0])
+        kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'])
         o.update_window("kspeed", kalman_speed)
 
 
@@ -91,7 +96,7 @@ class Display():
         o.window.close()
 
     def play(o, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
-             kalman_imu_data: pd.DataFrame, frame: int, verbose:bool):
+             kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, imu_name:str):
         
         
         cropped_depth_images = ['heh', 'ehh']
@@ -123,5 +128,5 @@ class Display():
         o.update_window("frame", "Frame: " + str(frame))
 
         # current Speed and Kalman speed updated with api data
-        o.speed_update(imu_data, kalman_imu_data)
+        o.speed_update(imu_data, kalman_imu_data, imu_name)
         o.progress_bar.UpdateBar(frame + 1)
