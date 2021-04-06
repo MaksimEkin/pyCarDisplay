@@ -7,12 +7,21 @@ from io import StringIO
 class Display():
 
     # need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
+<<<<<<< HEAD
     def __init__(self, speed: int, total_frames: int):
         self.cropped_img_displayed = 5
         self.close = sg.WIN_CLOSED
         self.speed = speed
         self.total_frames = total_frames
 
+=======
+    def __init__(o, speed: int, total_frames: int):
+        o.cropped_img_displayed = 5
+        o.close = sg.WIN_CLOSED
+        o.speed = speed
+        o.total_frames = total_frames
+        o.verbose = False
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
         # Create the window
         self.window = sg.Window("Autonomous Vehicle Object & Distance Detection", self.define_layout())
         self.progress_bar = self.window['progressbar']
@@ -28,12 +37,30 @@ class Display():
 
     def depth_images_update(self, cropped_depth_images):
         for num, detected_image in enumerate(cropped_depth_images):
+<<<<<<< HEAD
             if num < self.cropped_img_displayed:
                 self.update_window("IMG" + str(num + 1), self.format_pil_img(detected_image), detected_image.size)
+=======
+            if num < o.cropped_img_displayed:
+                o.update_window("IMG" + str(num + 1), o.format_pil_img(detected_image), detected_image.size)
+
+
+    def speed_update(o, imu_data, kalman_imu_data):
+        if self.verbose:
+            print("Examine imu=", imu_data['data'][0])
+            print("Examine Kalman=", kalman_imu_data['data'][0])
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
 
     def speed_update(self, imu_data, kalman_imu_data):
         gold_speed = "True Speed: " + str(imu_data['data'][0])
+<<<<<<< HEAD
         self.window.FindElement("speed").Update(gold_speed)
+=======
+        
+        if o.verbose:
+            print("gold_speed", gold_speed)
+        o.window.FindElement("speed").Update(gold_speed)
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
 
         kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'][0])
         self.update_window("kspeed", kalman_speed)
@@ -61,10 +88,20 @@ class Display():
     def end(self):
         self.window.close()
 
+<<<<<<< HEAD
     def play(self, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
              kalman_imu_data: pd.DataFrame, frame: int):
+=======
+    def play(o, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
+             kalman_imu_data: pd.DataFrame, frame: int, verbose:bool):
+        
+        
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
         cropped_depth_images = ['heh', 'ehh']
-        print(type(annotated_image))
+        
+        o.verbose = verbose
+        if o.verbose:
+            print(type(annotated_image))
 
         # check if pause or play were clicked or if window closed
         """May need to relocate this"""

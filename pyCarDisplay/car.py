@@ -172,7 +172,8 @@ class Car():
                 cropped_depth_images,
                 curr_imu_data,
                 {'data':[45.456]},
-                curr_frame
+                curr_frame,
+                self.verbose
             )
 
         self.display_api.end()
