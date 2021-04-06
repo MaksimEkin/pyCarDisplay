@@ -15,9 +15,9 @@ class Display():
         self.total_frames = total_frames
         self.verbose = False
         # Create the window
+        self.theme = sg.theme("DarkGrey1")
         self.window = sg.Window("Autonomous Vehicle Object & Distance Detection", self.define_layout())
         self.progress_bar = self.window['progressbar']
-        self.theme = sg.theme("DarkTeal2")
 
     def img(self, path, key):
         return sg.Image(path, key=key)
@@ -41,18 +41,14 @@ class Display():
             print("Examine Kalman=", kalman_imu_data['data'][0])
 
     def grid_update(self, imu_data, kalman_imu_data):
-        #gold_speed = "True Speed: " + str(imu_data['data'][0])
 
-        #if self.verbose:
-            #print("gold_speed", gold_speed)
-        ###self.window.FindElement("speed").Update(gold_speed)
-
-        #kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'][0])
-        #self.update_window("kspeed", kalman_speed)
-        row = 0
-        for col, data in enumerate(imu_data['data']):
-            self.update_window(str(row)+","+str(col), imu_data['data'][data])
-
+        for row,(key, df) in enumerate(imu_data.items()):
+            if not isinstance(df, pd.DataFrame):
+                df = pd.DataFrame(df)
+                if key == "noise":
+                    df = df.T
+            for col, entry in enumerate(list(df.iloc[0].values)):
+                self.update_window(str(row) + "," + str(col), round(entry,2))
 
 
     def reset_depth_images(self, cropped_depth_images):
