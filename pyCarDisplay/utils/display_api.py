@@ -8,46 +8,40 @@ from tabulate import tabulate
 class Display():
 
     # need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
+<<<<<<< HEAD
+    def __init__(self, speed: int, total_frames: int):
+        self.cropped_img_displayed = 5
+        self.close = sg.WIN_CLOSED
+        self.speed = speed
+        self.total_frames = total_frames
+
+=======
     def __init__(o, speed: int, total_frames: int):
         o.cropped_img_displayed = 5
         o.close = sg.WIN_CLOSED
         o.speed = speed
         o.total_frames = total_frames
         o.verbose = False
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
         # Create the window
-        o.window = sg.Window("Autonomous Vehicle Object & Distance Detection", o.define_layout())
-        o.progress_bar = o.window['progressbar']
+        self.window = sg.Window("Autonomous Vehicle Object & Distance Detection", self.define_layout())
+        self.progress_bar = self.window['progressbar']
 
-    def img(o, path, key):
+    def img(self, path, key):
         return sg.Image(path, key=key)
 
-    def format_pil_img(o, image: Image):
-        return None
-        '''
-        image.show()
-
-        with io.BytesIO() as output:
-            tempBuff = StringIO()
-            tempBuff.write(image)
-            tempBuff.seek(0)
-            Image.open(tempBuff)
-
-            print("Line 26", image)
-            image.save(output, format="PNG")
-            contents = output.getvalue()
-            return contents
-        return io.BytesIO(image).getvalue()
-        '''
-
-    def update_window(o, key, data1, data2=''):
+    def update_window(self, key, data1, data2=''):
         if data2:
-            o.window.FindElement(key).Update(data=data1, size=data2)
+            self.window.FindElement(key).Update(data=data1, size=data2)
         else:
-            o.window.FindElement(key).Update(data1)
+            self.window.FindElement(key).Update(data1)
 
-
-    def depth_images_update(o, cropped_depth_images):
+    def depth_images_update(self, cropped_depth_images):
         for num, detected_image in enumerate(cropped_depth_images):
+<<<<<<< HEAD
+            if num < self.cropped_img_displayed:
+                self.update_window("IMG" + str(num + 1), self.format_pil_img(detected_image), detected_image.size)
+=======
             if num < o.cropped_img_displayed:
                 o.update_window("IMG" + str(num + 1), o.format_pil_img(detected_image), detected_image.size)
 
@@ -60,13 +54,27 @@ class Display():
             display_imu_data = tabulate(pd.DataFrame({str(imu_name):imu_data}), headers='keys', tablefmt='psql')
         
         if o.verbose:
+<<<<<<< HEAD
             print("Examine imu=", display_imu_data)
             print("Examine Kalman=", kalman_imu_data['data'])
 
         gold_speed = display_imu_data
+=======
+            print("Examine imu=", imu_data['data'][0])
+            print("Examine Kalman=", kalman_imu_data['data'][0])
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
+
+    def speed_update(self, imu_data, kalman_imu_data):
+        gold_speed = "True Speed: " + str(imu_data['data'][0])
+<<<<<<< HEAD
+        self.window.FindElement("speed").Update(gold_speed)
+=======
+>>>>>>> 09d01177205150000a35d3e9fbb06c2b0d1c6c0e
         
         o.window.FindElement("speed").Update(gold_speed)
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
 
+<<<<<<< HEAD
         kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'])
         o.update_window("kspeed", kalman_speed)
 
@@ -74,31 +82,43 @@ class Display():
     def reset_depth_images(o, cropped_depth_images):
         for num in range(o.cropped_img_displayed):
             o.update_window("IMG" + str(num + 1), "")
+=======
+        kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'][0])
+        self.update_window("kspeed", kalman_speed)
+>>>>>>> 09d01177205150000a35d3e9fbb06c2b0d1c6c0e
 
+    def reset_depth_images(self, cropped_depth_images):
+        for num in range(self.cropped_img_displayed):
+            self.update_window("IMG" + str(num + 1), "")
 
-    def define_layout(o):
+    def define_layout(self):
         return [
-            [sg.ProgressBar(o.total_frames, orientation='h', size=(50, 5), key='progressbar')],
+            [sg.ProgressBar(self.total_frames, orientation='h', size=(50, 5), key='progressbar')],
             [sg.Text("Frame: 1", size=(50, 1), key="frame")],
-            [sg.Text("True Speed:" + " " * 30 + str(o.speed), key="speed")],
-            [sg.Text("Kalman speed:"+ " " * 20 + str(o.speed), key="kspeed")],
-            [o.img("", "IMG")],
+            [sg.Text("True Speed:" + " " * 30 + str(self.speed), key="speed")],
+            [sg.Text("Kalman speed:"+ " " * 20 + str(self.speed), key="kspeed")],
+            [self.img("", "IMG")],
             [
-                o.img("", "IMG1"),
-                o.img("", "IMG2"),
-                o.img("", "IMG3"),
-                o.img("", "IMG4"),
-                o.img("", "IMG5")
+                self.img("", "IMG1"),
+                self.img("", "IMG2"),
+                self.img("", "IMG3"),
+                self.img("", "IMG4"),
+                self.img("", "IMG5")
             ]
         ]
 
-    def end(o):
-        o.window.close()
+    def end(self):
+        self.window.close()
 
+<<<<<<< HEAD
+    def play(self, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
+             kalman_imu_data: pd.DataFrame, frame: int):
+=======
     def play(o, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
              kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, imu_name:str):
         
         
+>>>>>>> ba0a8dc4e080f0daed0d03dcbb3e6f0fe71ef578
         cropped_depth_images = ['heh', 'ehh']
         
         o.verbose = verbose
@@ -107,26 +127,31 @@ class Display():
 
         # check if pause or play were clicked or if window closed
         """May need to relocate this"""
-        event, values = o.window.read(timeout=1)
+        event, values = self.window.read(timeout=1)
 
         # Reset objects no longer detected in frame
-        o.reset_depth_images(cropped_depth_images)
+        self.reset_depth_images(cropped_depth_images)
 
         # update main display_api with detected objects
         #annotated_image.show()
-        with io.BytesIO() as output:
+        with iself.BytesIO() as output:
             annotated_image.save(output, format="PNG")
             contents = output.getvalue()
-        o.update_window("IMG", contents, annotated_image.size)
+        self.update_window("IMG", contents, annotated_image.size)
 
         # update up to cropped_img_displayed number of the depth images of detected objects
         ##for num, detected_image in enumerate(cropped_depth_images):
-            ##if num < o.cropped_img_displayed:
-                #o.update_window("IMG" + str(num + 1), detected_image, detected_image.size)
+            ##if num < self.cropped_img_displayed:
+                #self.update_window("IMG" + str(num + 1), detected_image, detected_image.size)
 
         # current picture frame
-        o.update_window("frame", "Frame: " + str(frame))
+        self.update_window("frame", "Frame: " + str(frame))
 
         # current Speed and Kalman speed updated with api data
+<<<<<<< HEAD
         o.speed_update(imu_data, kalman_imu_data, imu_name)
         o.progress_bar.UpdateBar(frame + 1)
+=======
+        self.speed_update(imu_data, kalman_imu_data)
+        self.progress_bar.UpdateBar(frame + 1)
+>>>>>>> 09d01177205150000a35d3e9fbb06c2b0d1c6c0e
