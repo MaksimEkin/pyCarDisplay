@@ -22,7 +22,7 @@ from midas.midas_net_custom import MidasNet_small
 from midas.transforms import Resize, NormalizeImage, PrepareForNet
 
 class DepthDetection():
-	 def __init__(self, input_path:str, output_path:str, model_path:str, model_type="large", optimize=True):
+	def __init__(self, verbose:bool, model_path:str, model_type="large"):
         """
 
         Parameters
@@ -41,42 +41,14 @@ class DepthDetection():
         -------
         None.
         """
-
-		 # Use GPU if available
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.verbose = verbose
-
-        # Load model checkpoint
-        checkpoint = torch.load(self.model_path, map_location=device)
-        start_epoch = checkpoint['epoch'] + 1
-
-        if self.verbose:
-            print('\nLoaded checkpoint from epoch %d.\n' % start_epoch)
-
-        self.model = checkpoint['model']
-        self.model = self.model.to(device)
-        self.model.eval()
-
-
-        # Transforms
-        self.resize = transforms.Resize(img_resize_size)
-        self.to_tensor = transforms.ToTensor()
-        self.normalize = transforms.Normalize(mean=norm_mean,
-                                              std=norm_std)
-
-    def run(input_path, output_path, model_path, model_type="large", optimize=True):
-        """Run MonoDepthNN to compute depth maps.
-
-        Args:
-            input_path (str): path to input folder
-            output_path (str): path to output folder
-            model_path (str): path to saved model
-        """
-        print("initialize")
-
+        
+        self.model_path = model_path
+        self.model_type = model_type
+        self.optimize = optimize
         # select device
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print("device: %s" % device)
+        if verbose:
+            print("device: %s" % device)
 
         # load network
         if model_type == "large":
@@ -86,7 +58,8 @@ class DepthDetection():
             model = MidasNet_small(model_path, features=64, backbone="efficientnet_lite3", exportable=True, non_negative=True, blocks={'expand': True})
             net_w, net_h = 256, 256
         else:
-            print(f"model_type '{model_type}' not implemented, use: --model_type large")
+            if verbose:
+                print(f"model_type '{model_type}' not implemented, use: --model_type large")
             assert False
 
         transform = Compose(
@@ -105,62 +78,84 @@ class DepthDetection():
             ]
         )
 
-        model.eval()
+        #model.eval()
+
+    def run(self, verbose:bool, pil_image:Image, optimize=True):
+        """Run MiDaS to compute depth maps.
+
+        Args:
+            input_path (str): path to input folder
+            model_path (str): path to saved model
+        """
+        if verbose:
+            print("initialize")
+
+        
 
         if optimize==True:
             rand_example = torch.rand(1, 3, net_h, net_w)
             model(rand_example)
-            traced_script_module = torch.jit.trace(model, rand_example)
-            model = traced_script_module
+            traced_script_module = torch.jit.trace(self.model, rand_example)
+            self.model = traced_script_module
 
             if device == torch.device("cuda"):
-                model = model.to(memory_format=torch.channels_last)  
-                model = model.half()
+                self.model = self.model.to(memory_format=torch.channels_last)  
+                self.model = self.model.half()
 
-        model.to(device)
+        self.model.to(device)
 
         # get input
-        img_names = glob.glob(os.path.join(input_path, "*"))
-        num_images = len(img_names)
+        #img_names = glob.glob(os.path.join(input_path, "*"))
+        num_images = 1 #len(img_names)
 
         # create output folder
-        os.makedirs(output_path, exist_ok=True)
+        #os.makedirs(output_path, exist_ok=True)
 
-        print("start processing")
+        if verbose:
+            print("start processing")
 
-        for ind, img_name in enumerate(img_names):
+        #for ind, img_name in enumerate(img_names):
 
-            print("  processing {} ({}/{})".format(img_name, ind + 1, num_images))
+            #print("  processing {} ({}/{})".format(img_name, ind + 1, num_images))
 
             # input
 
-            img = utils.read_image(img_name)
-            img_input = transform({"image": img})["image"]
+            #img = utils.read_image(img_name)
+        # use numpy to convert the pil_image into a numpy array
+        pil_image=np.array(pil_image)
 
-            # compute
-            with torch.no_grad():
-                sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
-                if optimize==True and device == torch.device("cuda"):
-                    sample = sample.to(memory_format=torch.channels_last)  
-                    sample = sample.half()
-                prediction = model.forward(sample)
-                prediction = (
-                    torch.nn.functional.interpolate(
-                        prediction.unsqueeze(1),
-                        size=img.shape[:2],
-                        mode="bicubic",
-                        align_corners=False,
-                    )
-                    .squeeze()
-                    .cpu()
-                    .numpy()
+        # convert to a openCV2 image, notice the COLOR_RGB2BGR which means that 
+        # the color is converted from RGB to BGR format
+        #img=cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
+        img_input = transform({"image": pil_image})["image"]
+
+        # compute
+        with torch.no_grad():
+            sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
+            if optimize==True and device == torch.device("cuda"):
+                sample = sample.to(memory_format=torch.channels_last)  
+                sample = sample.half()
+            prediction = self.model.forward(sample)
+            prediction = (
+                torch.nn.functional.interpolate(
+                    prediction.unsqueeze(1),
+                    size=pil_image.shape[:2],
+                    mode="bicubic",
+                    align_corners=False,
                 )
-
-            # output
-            filename = os.path.join(
-                output_path, os.path.splitext(os.path.basename(img_name))[0]
+                .squeeze()
+                .cpu()
+                .numpy()
             )
-            return_val = utils.write_depth(filename, prediction, bits=2)
 
-        print("finished")
-        return return_val
+        # output
+        #filename = os.path.join(
+        #    output_path, os.path.splitext(os.path.basename(img_name))[0]
+        #)
+        #return_val = utils.write_depth(img_input, prediction, bits=2)
+
+        #color_coverted = cv2.cvtColor(img_input, cv2.COLOR_BGR2RGB)
+        #pil_image=Image.fromarray(color_coverted)
+        if verbose:
+            print("finished")
+        return prediction

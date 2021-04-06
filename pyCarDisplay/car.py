@@ -11,7 +11,7 @@ from .sensors.imu_api import IMU
 from .sensors.kalman_filter_api import KalmanFilter
 
 from .detection.object_detection_api import ObjectDetection
-#from .detection.depth_detection_api import DepthDetection
+from .detection.depth_detection_api import DepthDetection
 from PIL import Image
 import sys
 
@@ -80,11 +80,9 @@ class Car():
                                                  norm_std)
 
         # Load the depth detection API
-        #self.depth_detection_api = DepthDetection(depth_detection_model_path,
-        #                                          verbose,
-        #                                          img_resize_size,
-        #                                          norm_mean,
-        #                                          norm_std)
+        self.depth_detection_api = DepthDetection(self.verbose,
+                                                  depth_detection_model_path,
+                                                  depth_detection_model_type)
 
         #self.ml_synchronize_api = MLDataSynch()
 
@@ -150,7 +148,7 @@ class Car():
                 print("Object detected:" + str(len(detected_dictionary["box_info"]["text_size"])))
 
             # return data: PIL.Image
-            #depth_image, depth_information = self.depth_detection_api.detect(image)
+            depth_image = self.depth_detection_api.run(self.verbose, image, True)
 
             # return data: list
             #cropped_depth_images = self.img_processing_api.synch_objDet_depDet_data(
