@@ -12,7 +12,7 @@ class Display():
         o.close = sg.WIN_CLOSED
         o.speed = speed
         o.total_frames = total_frames
-
+        o.verbose = False
         # Create the window
         o.window = sg.Window("Autonomous Vehicle Object & Distance Detection", o.define_layout())
         o.progress_bar = o.window['progressbar']
@@ -52,11 +52,14 @@ class Display():
 
 
     def speed_update(o, imu_data, kalman_imu_data):
-        print("Examine imu=", imu_data['data'][0])
-        print("Examine Kalman=", kalman_imu_data['data'][0])
+        if self.verbose:
+            print("Examine imu=", imu_data['data'][0])
+            print("Examine Kalman=", kalman_imu_data['data'][0])
 
         gold_speed = "True Speed: " + str(imu_data['data'][0])
-        print("gold_speed", gold_speed)
+        
+        if o.verbose:
+            print("gold_speed", gold_speed)
         o.window.FindElement("speed").Update(gold_speed)
 
         kalman_speed = "Kalman speed: " + str(kalman_imu_data['data'][0])
@@ -88,9 +91,14 @@ class Display():
         o.window.close()
 
     def play(o, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
-             kalman_imu_data: pd.DataFrame, frame: int):
+             kalman_imu_data: pd.DataFrame, frame: int, verbose:bool):
+        
+        
         cropped_depth_images = ['heh', 'ehh']
-        print(type(annotated_image))
+        
+        o.verbose = verbose
+        if o.verbose:
+            print(type(annotated_image))
 
         # check if pause or play were clicked or if window closed
         """May need to relocate this"""
