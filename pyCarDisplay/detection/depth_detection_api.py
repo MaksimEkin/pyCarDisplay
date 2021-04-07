@@ -13,35 +13,34 @@ import easydict
 import os
 import glob
 import torch
-import utils
 import cv2
 import argparse
 from torchvision.transforms import Compose
-from midas.midas_net import MidasNet
-from midas.midas_net_custom import MidasNet_small
-from midas.transforms import Resize, NormalizeImage, PrepareForNet
+from .midas.midas_net import MidasNet
+from .midas.midas_net_custom import MidasNet_small
+from .midas.transforms import Resize, NormalizeImage, PrepareForNet
 
 class DepthDetection():
-	def __init__(self, verbose:bool, model_path:str, model_type="large"):
+    def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True):
         """
 
         Parameters
         ----------
         data_dir: path to the dataset folder
-		model_path: path to save the trained model
-		pretrained:
-		output_directory: where save dispairities for tested images
-		input_height
-		input_width
-		model: model for encoder (resnet18 or resnet50)
-		mode: train or test
-		input_channels Number of channels in input tensor (3 for RGB images)
-		num_workers Number of workers to use in dataloader
+        model_path: path to save the trained model
+        pretrained:
+        output_directory: where save dispairities for tested images
+        input_height
+        input_width
+        model: model for encoder (resnet18 or resnet50)
+        mode: train or test
+        input_channels Number of channels in input tensor (3 for RGB images)
+        num_workers Number of workers to use in dataloader
         Returns
         -------
         None.
         """
-        
+
         self.model_path = model_path
         self.model_type = model_type
         self.optimize = optimize
@@ -56,7 +55,7 @@ class DepthDetection():
             net_w, net_h = 384, 384
         elif model_type == "small":
             model = MidasNet_small(model_path, features=64, backbone="efficientnet_lite3", exportable=True, non_negative=True, blocks={'expand': True})
-            net_w, net_h = 256, 256
+            net_w, net_h = 256, 256 # Self-ize these variables
         else:
             if verbose:
                 print(f"model_type '{model_type}' not implemented, use: --model_type large")
@@ -90,7 +89,7 @@ class DepthDetection():
         if verbose:
             print("initialize")
 
-        
+
 
         if optimize==True:
             rand_example = torch.rand(1, 3, net_h, net_w)

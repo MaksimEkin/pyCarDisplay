@@ -23,6 +23,7 @@ class Car():
                  lidar_sensor_path:str,
                  object_detection_model_path:str,
                  depth_detection_model_path:str,
+                 depth_detection_model_type:str,
 
 
                  # Object detection hyper-parameters
@@ -44,7 +45,8 @@ class Car():
 
                  # Other
                  random_state=42,
-                 verbose=False
+                 verbose=False,
+                 optimize=True
                  ):
         """ Initialize car object data"""
 
