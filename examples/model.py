@@ -2,7 +2,7 @@
 # TODO CITE
 #
 from torch import nn
-from pyCarDisplay.detection.__utils import *
+from pyCarDisplay.detection.__utils_obj_detection import *
 import torch.nn.functional as F
 from math import sqrt
 from itertools import product as product

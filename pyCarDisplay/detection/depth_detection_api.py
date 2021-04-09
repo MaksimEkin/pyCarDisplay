@@ -5,6 +5,7 @@ from torchvision import transforms
 from PIL import Image, ImageDraw, ImageFont
 import numpy
 import matplotlib
+import cv2
 
 """Compute depth maps for images in the input folder.
 """
