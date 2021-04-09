@@ -2,11 +2,42 @@
 <html>
 <head>
 	<head>
-    <meta http-equiv="refresh" content="4; URL=https://maksimekin.github.io/pyCarDisplay/html/index.html" />
+    <meta http-equiv="refresh" content="5; URL=https://maksimekin.github.io/pyCarDisplay/html/index.html" />
     </head>
 	<title>pyCarDisplay Documentation</title>
 </head>
 	<body>
-	<p>If you are not redirected in five seconds, <a href="https://maksimekin.github.io/pyCarDisplay/html/index.html">click here</a>.</p>
+	<p>If you are not redirected in <span id="seconds">5</span> seconds, <a href="https://maksimekin.github.io/pyCarDisplay/html/index.html">click here</a>.</p>
 	</body>
+
+	<script type="text/javascript">
+		// Countdown timer for redirecting to another URL after several seconds
+
+		var seconds = 5; // seconds for HTML
+		var foo; // variable for clearInterval() function
+
+		function redirect() {
+		    document.location.href = 'https://maksimekin.github.io/pyCarDisplay/html/index.html';
+		}
+
+		function updateSecs() {
+		    document.getElementById("seconds").innerHTML = seconds;
+		    seconds--;
+		    if (seconds == -1) {
+		        clearInterval(foo);
+		        redirect();
+		    }
+		}
+
+		function countdownTimer() {
+		    foo = setInterval(function () {
+		        updateSecs()
+		    }, 1000);
+		}
+
+		countdownTimer();
+
+
+	</script>
+
 </html>
