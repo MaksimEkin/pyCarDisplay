@@ -110,7 +110,7 @@ class Display():
              kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, ):
 
 
-        cropped_depth_images = ['heh', 'ehh']
+        #cropped_depth_images = ['heh', 'ehh']
 
         self.verbose = verbose
         if self.verbose:
@@ -121,7 +121,7 @@ class Display():
         event, values = self.window.read(timeout=1)
 
         # Reset objects no longer detected in frame
-        self.reset_depth_images(cropped_depth_images)
+        #self.reset_depth_images(cropped_depth_images)
 
         # update main display_api with detected objects
         #annotated_image.show()
@@ -129,6 +129,11 @@ class Display():
             annotated_image.save(output, format="PNG")
             contents = output.getvalue()
         self.update_window("IMG", contents, annotated_image.size)
+
+        with io.BytesIO() as output:
+            cropped_depth_images.save(output, format="PNG")
+            contents = output.getvalue()
+        self.update_window("IMG1", contents, cropped_depth_images.size)
 
         # update up to cropped_img_displayed number of the depth images of detected objects
         ##for num, detected_image in enumerate(cropped_depth_images):

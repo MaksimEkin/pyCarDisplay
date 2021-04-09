@@ -14,6 +14,8 @@ from .detection.object_detection_api import ObjectDetection
 from .detection.depth_detection_api import DepthDetection
 from PIL import Image
 import sys
+from matplotlib import cm
+import numpy as np
 
 class Car():
     def __init__(self,
@@ -159,6 +161,17 @@ class Car():
 
             # return data: PIL.Image
             depth_image = self.depth_detection_api.run(self.verbose, image, True)
+            #print("depth_image=", depth_image)
+
+            depth_min = depth_image.min()
+            depth_max = depth_image.max()
+
+            max_val = (2 * (81)) - 1
+            out = max_val * (depth_image - depth_min) / (depth_max - depth_min)
+            #pil_depth_image = Image.fromarray(np.uint8(cm.gist_earth(np.log2(out))*255), 'RGBA')
+            pil_depth_image = Image.fromarray(np.log2(out), 'RGBA')
+
+
 
             # return data: list
             #cropped_depth_images = self.img_processing_api.synch_objDet_depDet_data(
@@ -177,7 +190,8 @@ class Car():
             #detected_dictionary["annotated_image"].show()
             self.display_api.play(
                 detected_dictionary["annotated_image"],
-                cropped_depth_images,
+                #cropped_depth_images,
+                pil_depth_image,
                 curr_imu_data,
                 {'data':[45.456]},
                 curr_frame,
