@@ -1,14 +1,11 @@
 """
-
+Compute depth maps for images in the input folder.
 """
 from torchvision import transforms
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 import matplotlib
 import cv2
-
-"""Compute depth maps for images in the input folder.
-"""
 import os
 import glob
 import torch
@@ -17,7 +14,7 @@ from torchvision.transforms import Compose
 from .midas.midas_net import MidasNet
 from .midas.midas_net_custom import MidasNet_small
 from .midas.transforms import Resize, NormalizeImage, PrepareForNet
-import cv2
+import sys
 
 class DepthDetection():
     def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True, model=None, device=None, transform=None):
@@ -25,29 +22,32 @@ class DepthDetection():
 
         Parameters
         ----------
-        data_dir: path to the dataset folder
-        model_path: path to save the trained model
-        pretrained:
-        output_directory: where save dispairities for tested images
-        input_height
-        input_width
-        model: model for encoder (resnet18 or resnet50)
-        mode: train or test
-        input_channels Number of channels in input tensor (3 for RGB images)
-        num_workers Number of workers to use in dataloader
+        verbose:Prints out information regarding API activity is set to True.
+        model_path:The path to the depth detection ML model file.
+        model_type:Set to either large or small. Option must match the file specified in model_path.
+        optimize:Currently does nothing.
+        model:If specified, defines the model to use for depth detection.
+        
         Returns
         -------
         None.
         """
 
-        model = None
         self.model_path = model_path
         self.model_type = model_type
         self.optimize = optimize
         # select device
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        if verbose:
-            print("device: %s" % self.device)
+        # Use GPU if available
+        if device == "cpu":
+            self.device = torch.device("cpu")
+        else:
+            if torch.cuda.is_available():
+                self.device = torch.device("cuda")
+            else:
+                sys.exit("No cuda device found!")
+        
+        if self.verbose:
+            print("Object detection is using: " + str(self.device))
 
         # load network
         if model_type == "large":
@@ -77,8 +77,6 @@ class DepthDetection():
             ]
         )
 
-        #model.eval()
-
     def run(self, verbose:bool, pil_image:Image, optimize=True):
         """Run MiDaS to compute depth maps.
 
@@ -89,46 +87,17 @@ class DepthDetection():
         if verbose:
             print("initialize")
 
-
-
-        #if optimize==True:
-        #    rand_example = torch.rand(1, 3, self.net_h, self.net_w)
-        #    model(rand_example)
-        #    traced_script_module = torch.jit.trace(self.model, rand_example)
-        #    self.model = traced_script_module
-
-        #    if device == torch.device("cuda"):
-        #        self.model = self.model.to(memory_format=torch.channels_last)  
-        #        self.model = self.model.half()
-
         self.model.to(self.device)
 
-        # get input
-        #img_names = glob.glob(os.path.join(input_path, "*"))
-        num_images = 1 #len(img_names)
-
-        # create output folder
-        #os.makedirs(output_path, exist_ok=True)
+        num_images = 1
 
         if verbose:
             print("start processing")
 
-        #for ind, img_name in enumerate(img_names):
-
-            #print("  processing {} ({}/{})".format(img_name, ind + 1, num_images))
-
-            # input
-
-            #img = utils.read_image(img_name)
-        # use numpy to convert the pil_image into a numpy array
         pil_image=np.array(pil_image)
 
-        # convert to a openCV2 image, notice the COLOR_RGB2BGR which means that 
-        # the color is converted from RGB to BGR format
-        #img=cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
         img_input = self.transform({"image": pil_image})["image"]
 
-        # compute
         with torch.no_grad():
             sample = torch.from_numpy(img_input).to(self.device).unsqueeze(0)
             if optimize==True and self.device == torch.device("cuda"):
@@ -147,14 +116,6 @@ class DepthDetection():
                 .numpy()
             )
 
-        # output
-        #filename = os.path.join(
-        #    output_path, os.path.splitext(os.path.basename(img_name))[0]
-        #)
-        #return_val = utils.write_depth(img_input, prediction, bits=2)
-
-        #color_coverted = cv2.cvtColor(img_input, cv2.COLOR_BGR2RGB)
-        #pil_image=Image.fromarray(color_coverted)
         if verbose:
             print("finished")
         return prediction
