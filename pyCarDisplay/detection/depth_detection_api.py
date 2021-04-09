@@ -36,6 +36,8 @@ class DepthDetection():
         self.model_path = model_path
         self.model_type = model_type
         self.optimize = optimize
+        self.verbose = verbose
+        
         # select device
         # Use GPU if available
         if device == "cpu":

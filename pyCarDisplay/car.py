@@ -158,7 +158,7 @@ class Car():
                 print("Object detected:" + str(len(detected_dictionary["box_info"]["text_size"])))
 
             # return data: PIL.Image
-            depth_image = self.depth_detection_api.run(self.verbose, image, True, device=self.device)
+            depth_image = self.depth_detection_api.run(self.verbose, image, True)
 
             # return data: list
             #cropped_depth_images = self.img_processing_api.synch_objDet_depDet_data(
