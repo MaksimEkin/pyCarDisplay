@@ -1,3 +1,6 @@
+"""
+Hi, great file! Gopod job team!
+"""
 import PySimpleGUI as sg
 import pandas as pd
 from PIL import Image
@@ -5,7 +8,9 @@ import io
 from io import StringIO
 
 class Display():
-
+    """
+    Hello There
+    """
     # need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
 
     def __init__(self, speed: int, total_frames: int, theme:str):
@@ -20,7 +25,23 @@ class Display():
         self.progress_bar = self.window['progressbar']
 
     def img(self, path, key):
-        return sg.Image(path, key=key)
+        """
+        Simplification of PySimpleGUI function
+
+        Parameters
+        ----------
+        path : str
+            path to the pil image.
+        key : str
+            name to find the image in the application window.
+
+        Returns
+        -------
+            image_element: Pysimple Gui image element
+
+        """
+        image_element = sg.Image(path, key=key)
+        return image_element
 
     def update_window(self, key, data1, data2=''):
         if data2:
