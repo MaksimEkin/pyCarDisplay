@@ -5,6 +5,7 @@ from torchvision import transforms
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 import matplotlib
+import cv2
 import os
 import glob
 import torch
@@ -13,7 +14,6 @@ from torchvision.transforms import Compose
 from .midas.midas_net import MidasNet
 from .midas.midas_net_custom import MidasNet_small
 from .midas.transforms import Resize, NormalizeImage, PrepareForNet
-import cv2
 import sys
 
 class DepthDetection():

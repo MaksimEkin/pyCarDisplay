@@ -48,7 +48,8 @@ class Car():
                  # Other
                  random_state=42,
                  verbose=False,
-                 optimize=True
+                 optimize=True,
+                 device="cpu"
                  ):
         """ Initialize car object data"""
 
@@ -82,7 +83,9 @@ class Car():
                                                  verbose,
                                                  img_resize_size,
                                                  norm_mean,
-                                                 norm_std)
+                                                 norm_std,
+                                                 device
+                                                )
 
         # Load the depth detection API
         self.depth_detection_api = DepthDetection(self.verbose,
