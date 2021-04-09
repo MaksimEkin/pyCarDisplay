@@ -1,21 +1,18 @@
 """
-
+Citation other information here
 """
 from .car import Car
 
 class CarDisplay():
     """
-    CarDisplay
+    CarDisplay information here
     """
 
     def __init__(self, **parameters):
         """
 
-        Parameters
-        ----------
-        parameters
+        :param parameters:
         """
-        """Initilize the CarDisplay class."""
 
         # TODO: Perform any parameter/path checks here
         self.car = Car(**parameters)
@@ -32,7 +29,18 @@ class CarDisplay():
         return vars(self.car)
 
     def set_params(self, verbose=True, **parameters):
-        """Sets the vehicle parameters."""
+        """
+
+        Parameters
+        ----------
+        verbose : bool
+
+        parameters :
+
+        Returns
+        -------
+
+        """
         if verbose:
             print("Changing the vehicle parameters does not reload the\
                   data and ML models. Please re-start the program to change\
