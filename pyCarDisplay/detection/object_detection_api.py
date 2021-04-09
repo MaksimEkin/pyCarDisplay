@@ -5,6 +5,7 @@ TODO CITE
 from torchvision import transforms
 from .__utils_obj_detection import *
 from PIL import Image, ImageDraw, ImageFont
+import sys
 
 class ObjectDetection():
     def __init__(self,
@@ -13,6 +14,7 @@ class ObjectDetection():
                  img_resize_size=(300, 300),
                  norm_mean=[0.485, 0.456, 0.406],
                  norm_std=[0.229, 0.224, 0.225],
+                 device="cpu"
                  ):
         """
 
@@ -42,7 +44,14 @@ class ObjectDetection():
             
             
         # Use GPU if available
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        if device == "cpu":
+            self.device = torch.device("cpu")
+        else:
+            if torch.cuda.is_available():
+                self.device = torch.device("cuda")
+            else:
+                sys.exit("No cuda device found!")
+        
         if self.verbose:
             print("Object detection is using: " + str(self.device))
         
