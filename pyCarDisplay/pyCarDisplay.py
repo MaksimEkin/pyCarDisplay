@@ -4,8 +4,17 @@
 from .car import Car
 
 class CarDisplay():
+    """
+    CarDisplay
+    """
 
     def __init__(self, **parameters):
+        """
+
+        Parameters
+        ----------
+        parameters
+        """
         """Initilize the CarDisplay class."""
 
         # TODO: Perform any parameter/path checks here

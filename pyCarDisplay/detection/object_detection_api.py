@@ -1,5 +1,6 @@
 """
 
+TODO CITE
 """
 from torchvision import transforms
 from .__utils_obj_detection import *
@@ -198,3 +199,4 @@ class ObjectDetection():
             }
 
         return {"annotated_image":annotated_image, "box_info":box_info, "detected":True}
+

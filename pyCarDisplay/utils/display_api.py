@@ -62,14 +62,16 @@ class Display():
         'af', 'al', 'au', 'wx', 'wy', 'wz', 'wf', 'wl', 'wu', 'pos_accuracy',
         'vel_accuracy', 'navstat', 'numsats', 'posmode', 'velmode', 'orimode']
 
-        header =  [[sg.Text(h, size=(6,1)) for h in headings]]
-        input_rows = [[sg.Input(size=(6,1), pad=(8,0), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
+        row_names = ["data", "noise", "true", "Kalman"]
+
+        header =  [[sg.Text("", size=(6,1))] + [sg.Text(h, size=(6,1)) for h in headings]]
+        input_rows = [[sg.Text(row_names[row], size=(6,1))] + [sg.Input(size=(6,1), pad=(8,0), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
 
         return [
             [sg.ProgressBar(self.total_frames, orientation='h', size=(50, 5), key='progressbar')],
             [sg.Text("Frame: 1", size=(50, 1), key="frame")],
-            [sg.Text("True Speed:" + " " * 30 + str(self.speed), key="speed")],
-            [sg.Text("Kalman speed:"+ " " * 20 + str(self.speed), key="kspeed")],
+            #[sg.Text("True Speed:" + " " * 30 + str(self.speed), key="speed")],
+            #[sg.Text("Kalman speed:"+ " " * 20 + str(self.speed), key="kspeed")],
             [self.img("", "IMG")],
             [
                 self.img("", "IMG1"),
