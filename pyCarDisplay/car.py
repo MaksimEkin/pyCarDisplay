@@ -90,7 +90,9 @@ class Car():
         # Load the depth detection API
         self.depth_detection_api = DepthDetection(self.verbose,
                                                   depth_detection_model_path,
-                                                  depth_detection_model_type)
+                                                  depth_detection_model_type,
+                                                  device=device 
+                                                 )
 
         #self.ml_synchronize_api = MLDataSynch()
 
