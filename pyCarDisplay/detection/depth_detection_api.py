@@ -17,7 +17,7 @@ from .midas.transforms import Resize, NormalizeImage, PrepareForNet
 import sys
 
 class DepthDetection():
-    def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True, model=None, device=None, transform=None):
+    def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True, model=None, device="cpu", transform=None):
         """
 
         Parameters
