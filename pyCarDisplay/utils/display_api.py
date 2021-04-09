@@ -1,19 +1,30 @@
 """
-Hi, great file! Gopod job team!
+Autonomous vehicle display application window
 """
 import PySimpleGUI as sg
 import pandas as pd
 from PIL import Image
 import io
-from io import StringIO
 
 class Display():
     """
-    Hello There
+    Creates and updates the application window created with PySimpleGui using the Autonomous vehicle information
+    for images and environmental observations
     """
-    # need to pass a frame dictionary that contains dictionaries of image paths and detected image lists
 
     def __init__(self, speed: int, total_frames: int, theme:str):
+        """
+        Initializes the display class
+
+        Parameters
+        ----------
+        speed : int
+            speed of the autonomous vehicle
+        total_frames :
+            number of saved images to iterate
+        theme :
+            color of the PySimpleGui window as defined in https://user-images.githubusercontent.com/46163555/70382042-796da500-1923-11ea-8432-80d08cd5f503.jpg
+        """
         self.cropped_img_displayed = 5
         self.close = sg.WIN_CLOSED
         self.speed = speed
@@ -44,12 +55,40 @@ class Display():
         return image_element
 
     def update_window(self, key, data1, data2=''):
+        """
+        Changes the displyed element to show updated information
+
+        Parameters
+        ----------
+        key : str
+            locates the app element in the window to change
+        data1 : str
+            value to set the element with
+        data2 : str
+
+        Returns
+        -------
+        None
+        """
+
         if data2:
             self.window.FindElement(key).Update(data=data1, size=data2)
         else:
             self.window.FindElement(key).Update(data1)
 
     def depth_images_update(self, cropped_depth_images):
+        """
+        Iterates the cropped image list and updates the display with the predefined limit on image count
+
+        Parameters
+        ----------
+        cropped_depth_images : list
+            list of PIL images cropped from the depth detection image
+
+        Returns
+        -------
+        None
+        """
         for num, detected_image in enumerate(cropped_depth_images):
 
             if num < self.cropped_img_displayed:
@@ -62,21 +101,52 @@ class Display():
             print("Examine Kalman=", kalman_imu_data['data'][0])
 
     def grid_update(self, imu_data, kalman_imu_data):
+        """
+        Sets the tabled grid with all of the updated Inertial Measurment Unit (IMU) Data and Kalman filter data
+
+        Parameters
+        ----------
+        imu_data :
+        kalman_imu_data :
+
+        Returns
+        -------
+        None
+        """
 
         for row,(key, df) in enumerate(imu_data.items()):
             if not isinstance(df, pd.DataFrame):
                 df = pd.DataFrame(df)
                 if key == "noise":
                     df = df.T
+
             for col, entry in enumerate(list(df.iloc[0].values)):
                 self.update_window(str(row) + "," + str(col), round(entry,2))
 
 
     def reset_depth_images(self, cropped_depth_images):
+        """
+        Iterates all of the cropped image elements in the window and sets them to empty
+        Parameters
+        ----------
+        cropped_depth_images : list
+
+        Returns
+        -------
+        None
+        """
         for num in range(self.cropped_img_displayed):
             self.update_window("IMG" + str(num + 1), "")
 
     def define_layout(self):
+        """
+        Sets the layout for the PySimpleGui application window
+
+        Returns
+        -------
+        elements : list
+            List of List contains window elements
+        """
 
         headings = ['lat', 'lon', 'alt', 'roll',
         'pitch', 'yaw', 'vn', 've','vf', 'vl', 'vu', 'ax', 'ay', 'az',
@@ -88,7 +158,7 @@ class Display():
         header =  [[sg.Text("", size=(6,1))] + [sg.Text(h, size=(6,1)) for h in headings]]
         input_rows = [[sg.Text(row_names[row], size=(6,1))] + [sg.Input(size=(6,1), pad=(8,0), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
 
-        return [
+        elements =  [
             [sg.ProgressBar(self.total_frames, orientation='h', size=(50, 5), key='progressbar')],
             [sg.Text("Frame: 1", size=(50, 1), key="frame")],
             #[sg.Text("True Speed:" + " " * 30 + str(self.speed), key="speed")],
@@ -103,14 +173,37 @@ class Display():
             ],
         ] + header + input_rows
 
+        return elements
+
     def end(self):
+        """
+        Closes the application windows using pysimplegui
+
+        Returns
+        -------
+        None
+        """
         self.window.close()
 
-    def play(self, annotated_image: Image, cropped_depth_images: list, imu_data: pd.DataFrame,
+    def play(self, annotated_image: Image, cropped_depth_images: Image, imu_data: pd.DataFrame,
              kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, ):
+        """
+        Takes in autonomous car information and displays the images from the object and depth detection moddels,and
+        other data about travel path
 
+        Parameters
+        ----------
+        annotated_image : Image
+        cropped_depth_images : Image
+        imu_data :
+        kalman_imu_data :
+        frame : int
+        verbose : bool
 
-        #cropped_depth_images = ['heh', 'ehh']
+        Returns
+        -------
+        None
+        """
 
         self.verbose = verbose
         if self.verbose:
@@ -135,16 +228,10 @@ class Display():
             contents = output.getvalue()
         self.update_window("IMG1", contents, cropped_depth_images.size)
 
-        # update up to cropped_img_displayed number of the depth images of detected objects
-        ##for num, detected_image in enumerate(cropped_depth_images):
-            ##if num < self.cropped_img_displayed:
-                #self.update_window("IMG" + str(num + 1), detected_image, detected_image.size)
-
         # current picture frame
         self.update_window("frame", "Frame: " + str(frame))
 
         # current Speed and Kalman speed updated with api data
         self.grid_update(imu_data, kalman_imu_data)
-        #self.update_window("0,3", str(frame))
 
         self.progress_bar.UpdateBar(frame + 1)

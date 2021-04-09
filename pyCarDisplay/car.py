@@ -18,6 +18,9 @@ from matplotlib import cm
 import numpy as np
 
 class Car():
+    """
+
+    """
     def __init__(self,
                  # Required
                  car_images_path:str,
@@ -130,14 +133,33 @@ class Car():
 
 
     def set_frame(self, frame:int):
-        """"""
+        """
+
+        Parameters
+        ----------
+        frame :
+
+        Returns
+        -------
+
+        """
         self.imu_sensor.set_frame(frame)
 
 
 
     def run(self, verbose=None):
-        """Iterates the taken images and one by one performs object detection and depth detection on the objects
-            renders the imgaes taken on a display with the depth heatmaps as subimages."""
+        """
+        Iterates the taken images and one by one performs object detection and depth detection on the objects
+        renders the imgaes taken on a display with the depth heatmaps as subimages.
+
+        Parameters
+        ----------
+        verbose :
+
+        Returns
+        -------
+
+        """
 
         # if verbose is being changed
         if verbose != None:
