@@ -3,7 +3,7 @@
 """
 from torchvision import transforms
 from PIL import Image, ImageDraw, ImageFont
-import numpy
+import numpy as np
 import matplotlib
 
 """Compute depth maps for images in the input folder.
@@ -16,9 +16,10 @@ from torchvision.transforms import Compose
 from .midas.midas_net import MidasNet
 from .midas.midas_net_custom import MidasNet_small
 from .midas.transforms import Resize, NormalizeImage, PrepareForNet
+import cv2
 
 class DepthDetection():
-    def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True):
+    def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True, model=None, device=None, transform=None):
         """
 
         Parameters
@@ -38,31 +39,32 @@ class DepthDetection():
         None.
         """
 
+        model = None
         self.model_path = model_path
         self.model_type = model_type
         self.optimize = optimize
         # select device
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if verbose:
-            print("device: %s" % device)
+            print("device: %s" % self.device)
 
         # load network
         if model_type == "large":
-            model = MidasNet(model_path, non_negative=True)
-            net_w, net_h = 384, 384
+            self.model = MidasNet(model_path, non_negative=True)
+            self.net_w, self.net_h = 384, 384
         elif model_type == "small":
-            model = MidasNet_small(model_path, features=64, backbone="efficientnet_lite3", exportable=True, non_negative=True, blocks={'expand': True})
-            net_w, net_h = 256, 256 # Self-ize these variables
+            self.model = MidasNet_small(model_path, features=64, backbone="efficientnet_lite3", exportable=True, non_negative=True, blocks={'expand': True})
+            self.net_w, self.net_h = 256, 256 # Self-ize these variables
         else:
             if verbose:
                 print(f"model_type '{model_type}' not implemented, use: --model_type large")
             assert False
 
-        transform = Compose(
+        self.transform = Compose(
             [
                 Resize(
-                    net_w,
-                    net_h,
+                    self.net_w,
+                    self.net_h,
                     resize_target=None,
                     keep_aspect_ratio=True,
                     ensure_multiple_of=32,
@@ -88,17 +90,17 @@ class DepthDetection():
 
 
 
-        if optimize==True:
-            rand_example = torch.rand(1, 3, net_h, net_w)
-            model(rand_example)
-            traced_script_module = torch.jit.trace(self.model, rand_example)
-            self.model = traced_script_module
+        #if optimize==True:
+        #    rand_example = torch.rand(1, 3, self.net_h, self.net_w)
+        #    model(rand_example)
+        #    traced_script_module = torch.jit.trace(self.model, rand_example)
+        #    self.model = traced_script_module
 
-            if device == torch.device("cuda"):
-                self.model = self.model.to(memory_format=torch.channels_last)  
-                self.model = self.model.half()
+        #    if device == torch.device("cuda"):
+        #        self.model = self.model.to(memory_format=torch.channels_last)  
+        #        self.model = self.model.half()
 
-        self.model.to(device)
+        self.model.to(self.device)
 
         # get input
         #img_names = glob.glob(os.path.join(input_path, "*"))
@@ -123,12 +125,12 @@ class DepthDetection():
         # convert to a openCV2 image, notice the COLOR_RGB2BGR which means that 
         # the color is converted from RGB to BGR format
         #img=cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
-        img_input = transform({"image": pil_image})["image"]
+        img_input = self.transform({"image": pil_image})["image"]
 
         # compute
         with torch.no_grad():
-            sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
-            if optimize==True and device == torch.device("cuda"):
+            sample = torch.from_numpy(img_input).to(self.device).unsqueeze(0)
+            if optimize==True and self.device == torch.device("cuda"):
                 sample = sample.to(memory_format=torch.channels_last)  
                 sample = sample.half()
             prediction = self.model.forward(sample)
