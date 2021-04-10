@@ -40,8 +40,8 @@ add citation here
 ```
 
 ## Generating updated Documetation
-- cd docs
-- make html
+- ```cd docs```
+- ```make html```
 - click index.html
 
 ## References
