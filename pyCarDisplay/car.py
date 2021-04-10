@@ -56,7 +56,9 @@ class Car():
                  optimize=True,
                  device="cpu"
                  ):
-        """ Initialize car object data"""
+        """ 
+        Initialize car object data
+        """
 
         self.car_images_path = car_images_path
         self.imu_sensor_path = imu_sensor_path
@@ -99,7 +101,8 @@ class Car():
                                                   device=device 
                                                  )
 
-        #self.ml_synchronize_api = MLDataSynch()
+        # Initialize a Kalman Filter (P, H, F for speed sensor1 and 2, Q_covariance's mean)
+        self.kalman_filter = KalmanFilter(P=1, H=1, F=1, Q_covariance=0.1)
 
         # Load the Kitti IMU data
         if self.verbose:
@@ -134,14 +137,16 @@ class Car():
 
     def set_frame(self, frame:int):
         """
-
+        Sets the car's current frome to the most recent image reading
+        
         Parameters
         ----------
-        frame :
+        frame : int
+            picture frame number of current image
 
         Returns
         -------
-
+        None
         """
         self.imu_sensor.set_frame(frame)
 
@@ -154,11 +159,12 @@ class Car():
 
         Parameters
         ----------
-        verbose :
+        verbose : Bool
+            Flag to print more information at runtime
 
         Returns
         -------
-
+        None
         """
 
         # if verbose is being changed
