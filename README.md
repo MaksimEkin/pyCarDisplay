@@ -39,6 +39,11 @@ https://github.com/OniroAI/MonoDepth-PyTorch
 add citation here
 ```
 
+## Generating updated Documetation
+- cd docs
+- make html
+- click index.html
+
 ## References
 ```
 add references here
