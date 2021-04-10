@@ -36,10 +36,10 @@ from pyCarDisplay.pyCarDisplay import CarDisplay
 ```
 https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
 https://github.com/OniroAI/MonoDepth-PyTorch
-add citation here
+https://github.com/keygggl/AutonomousVehicle_LiDARandSLAM
 ```
 
-## Generating updated Documetation
+## Generating Updated Documetation
 - ```cd docs```
 - ```make html```
 - click index.html
