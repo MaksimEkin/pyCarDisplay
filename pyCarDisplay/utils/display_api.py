@@ -206,9 +206,7 @@ class Display():
         """
 
         self.verbose = verbose
-        if self.verbose:
-            print(type(annotated_image))
-
+        
         # check if pause or play were clicked or if window closed
         """May need to relocate this"""
         event, values = self.window.read(timeout=1)

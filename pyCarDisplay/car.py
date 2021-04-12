@@ -200,8 +200,6 @@ class Car():
             #pil_depth_image = Image.fromarray(np.uint8(cm.gist_earth(np.log2(out))*255), 'RGBA')
             pil_depth_image = Image.fromarray(np.log2(out), 'RGBA')
 
-
-
             # return data: list
             #cropped_depth_images = self.img_processing_api.synch_objDet_depDet_data(
             #    detected_dictionary["box_info"]["box_location"]#,
@@ -210,8 +208,6 @@ class Car():
             #)
 
             curr_imu_data = self.imu_sensor.read_sensor(add_noise=self.add_noise, name=self.IMU_name)
-            if self.verbose:
-                print(curr_imu_data["data"])
 
             # object_detected_image:PIL.Image, depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int
             cropped_depth_images = []

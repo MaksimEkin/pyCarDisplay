@@ -7,6 +7,7 @@ from .__utils_obj_detection import *
 from PIL import Image, ImageDraw, ImageFont
 import sys
 from termcolor import colored
+import os
 
 class ObjectDetection():
     def __init__(self,
@@ -40,6 +41,7 @@ class ObjectDetection():
         None.
 
         """
+        sys.path.append(os.system("pwd"))
         self.verbose = verbose
         self.model_path = model_path
             
