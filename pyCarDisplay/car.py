@@ -18,6 +18,9 @@ from matplotlib import cm
 import numpy as np
 
 class Car():
+    """
+
+    """
     def __init__(self,
                  # Required
                  car_images_path:str,
@@ -53,7 +56,9 @@ class Car():
                  optimize=True,
                  device="cpu"
                  ):
-        """ Initialize car object data"""
+        """ 
+        Initialize car object data
+        """
 
         self.car_images_path = car_images_path
         self.imu_sensor_path = imu_sensor_path
@@ -96,7 +101,8 @@ class Car():
                                                   device=device 
                                                  )
 
-        #self.ml_synchronize_api = MLDataSynch()
+        # Initialize a Kalman Filter (P, H, F for speed sensor1 and 2, Q_covariance's mean)
+        self.kalman_filter = KalmanFilter(P=1, H=1, F=1, Q_covariance=0.1)
 
         # Load the Kitti IMU data
         if self.verbose:
@@ -130,14 +136,36 @@ class Car():
 
 
     def set_frame(self, frame:int):
-        """"""
+        """
+        Sets the car's current frome to the most recent image reading
+        
+        Parameters
+        ----------
+        frame : int
+            picture frame number of current image
+
+        Returns
+        -------
+        None
+        """
         self.imu_sensor.set_frame(frame)
 
 
 
     def run(self, verbose=None):
-        """Iterates the taken images and one by one performs object detection and depth detection on the objects
-            renders the imgaes taken on a display with the depth heatmaps as subimages."""
+        """
+        Iterates the taken images and one by one performs object detection and depth detection on the objects
+        renders the imgaes taken on a display with the depth heatmaps as subimages.
+
+        Parameters
+        ----------
+        verbose : Bool
+            Flag to print more information at runtime
+
+        Returns
+        -------
+        None
+        """
 
         # if verbose is being changed
         if verbose != None:
@@ -187,7 +215,31 @@ class Car():
             # object_detected_image:PIL.Image, depth_images:list, depths:list, imu_data:pd.DataFrame, kalman_imu_data:pd.DataFrame, frame:int
             cropped_depth_images = []
 
-            #detected_dictionary["annotated_image"].show()
+            #Kalman filter from old code, needs to be adapted to this section
+            """
+            for time in range(0, run_time):
+                if time == 0:
+                    # First, set the initial fused speed data to the vehicle's true speed
+                    speed_true[time] = vehicle.speed
+                    speed_fused[time] = speed_true[time]
+        
+                else:
+                    sensor_1_read = imu_sensor_1.read_sensor("ax", advance_frame=False)
+                    sensor_2_read = imu_sensor_2.read_sensor("ax", advance_frame=False)
+
+                    # Kalman: Predict Step: Based on the previous best estimation to predict the current speed
+                    speed_predict = kalman_filter.Predict(sensor_1_read["data"], speed_fused[time-1], delta_time)
+
+                    # Kalman: Update Step:
+                    sensor_1_read_2 = imu_sensor_1.read_sensor("vf")
+                    sensor_2_read_2 = imu_sensor_2.read_sensor("vf")
+                    speed_fused[time] = kalman_filter.Update(sensor_1_read_2["data"], imu_sensor_1.get_R(), speed_predict)
+                    speed_fused[time] = kalman_filter.Update(sensor_2_read_2["data"], imu_sensor_2.get_R(), speed_fused[time])
+
+                    # Then, use Kalman Filter to fuse the data from different sensors from time 2 to run_time    
+                    speed_true[time] = sensor_1_read_2["true"]
+            """
+            
             self.display_api.play(
                 detected_dictionary["annotated_image"],
                 #cropped_depth_images,
