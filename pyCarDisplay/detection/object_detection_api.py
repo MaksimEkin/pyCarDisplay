@@ -6,6 +6,7 @@ from torchvision import transforms
 from .__utils_obj_detection import *
 from PIL import Image, ImageDraw, ImageFont
 import sys
+from termcolor import colored
 
 class ObjectDetection():
     def __init__(self,
@@ -42,7 +43,6 @@ class ObjectDetection():
         self.verbose = verbose
         self.model_path = model_path
             
-            
         # Use GPU if available
         if device == "cpu":
             self.device = torch.device("cpu")
@@ -53,18 +53,18 @@ class ObjectDetection():
                 sys.exit("No cuda device found!")
         
         if self.verbose:
-            print("Object detection is using: " + str(self.device))
+            print(colored("Object detection is using: " + str(self.device), "yellow"))
         
 
         # Load model checkpoint
         if self.verbose:
-            print("Object detection API is loading the model: " + str(self.model_path))
+            print(colored("Object detection API is loading the model: " + str(self.model_path), "blue"))
             
         checkpoint = torch.load(self.model_path, map_location=self.device)
         start_epoch = checkpoint['epoch'] + 1
 
         if self.verbose:
-            print('\nLoaded checkpoint from epoch %d.\n' % start_epoch)
+            print(colored('Loaded checkpoint from epoch %d.\n' % start_epoch, "yellow"))
 
         self.model = checkpoint['model']
         self.model = self.model.to(device)

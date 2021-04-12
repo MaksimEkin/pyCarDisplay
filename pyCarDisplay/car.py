@@ -16,6 +16,7 @@ from PIL import Image
 import sys
 from matplotlib import cm
 import numpy as np
+from termcolor import colored
 
 class Car():
     """
@@ -68,7 +69,7 @@ class Car():
         self.gui_speed=gui_speed
 
         if self.verbose:
-            print("Car configurations:\n" + \
+            print(colored("Car configurations:\n" + \
             "car_images_path = " + str(car_images_path) +"\n" + \
             "imu_sensor_path = " + str(imu_sensor_path) +"\n" + \
             "lidar_sensor_path = " + str(lidar_sensor_path) + "\n" + \
@@ -83,7 +84,7 @@ class Car():
             "gui_speed = " + str(gui_speed) + "\n"+\
             "random_state = " + str(random_state) +"\n"+\
             "image_extension = " + str(image_extension) +"\n"+\
-            "verbose = " + str(verbose))
+            "verbose = " + str(verbose), "cyan"))
 
         # Load the object detection API
         self.obj_detection_api = ObjectDetection(object_detection_model_path,
@@ -102,11 +103,11 @@ class Car():
                                                  )
 
         # Initialize a Kalman Filter (P, H, F for speed sensor1 and 2, Q_covariance's mean)
-        self.kalman_filter = KalmanFilter(P=1, H=1, F=1, Q_covariance=0.1)
+        #self.kalman_filter = KalmanFilter(P=1, H=1, F=1, Q_covariance=0.1)
 
         # Load the Kitti IMU data
         if self.verbose:
-            print("Loading the IMU data...")
+            print(colored("Loading the IMU data...", "blue"))
         imu_df = DataLoader(path_imu=imu_sensor_path, path_lidar=lidar_sensor_path).load_imu()
 
         if self.verbose:
@@ -126,7 +127,7 @@ class Car():
             image_extension=image_extension)
         self.path_to_all_images = self.img_processing_api.all_images_path
         if self.verbose:
-            print("Total image frames loaded:" + str(len(self.path_to_all_images)))
+            print(colored("Total image frames loaded:" + str(len(self.path_to_all_images)), "yellow"))
 
         self.total_frames = len(self.path_to_all_images)
         assert self.total_frames == len(imu_df)

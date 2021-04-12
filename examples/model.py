@@ -7,10 +7,9 @@ import torch.nn.functional as F
 from math import sqrt
 from itertools import product as product
 import torchvision
+import os
 
-#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
-
+device = torch.device(os.environ["PYCARDISPLAY_DEVICE"])
 
 class VGGBase(nn.Module):
     """

@@ -8,8 +8,7 @@ import random
 import xml.etree.ElementTree as ET
 import torchvision.transforms.functional as FT
 
-#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
+device = torch.device(os.environ["PYCARDISPLAY_DEVICE"])
 
 # Label map
 voc_labels = ('aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow', 'diningtable',

@@ -15,6 +15,7 @@ from .midas.midas_net import MidasNet
 from .midas.midas_net_custom import MidasNet_small
 from .midas.transforms import Resize, NormalizeImage, PrepareForNet
 import sys
+from termcolor import colored
 
 class DepthDetection():
     def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True, model=None, device="cpu", transform=None):
@@ -49,7 +50,7 @@ class DepthDetection():
                 sys.exit("No cuda device found!")
         
         if self.verbose:
-            print("Object detection is using: " + str(self.device))
+            print(colored("Depth detection is using: " + str(self.device), "yellow"))
 
         # load network
         if model_type == "large":

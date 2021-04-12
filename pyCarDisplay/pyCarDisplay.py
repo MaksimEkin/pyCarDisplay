@@ -1,7 +1,8 @@
 """
 Citation other information here
 """
-from .car import Car
+import os
+from termcolor import colored
 
 class CarDisplay():
     """
@@ -13,10 +14,25 @@ class CarDisplay():
 
         :param parameters:
         """
-
+        
+        # Set environment variables
+        if "device" in list(parameters.keys()):
+            os.environ["PYCARDISPLAY_DEVICE"] = parameters["device"]
+        else:
+            os.environ["PYCARDISPLAY_DEVICE"] = "cpu"
+            
+        # show the envrionment variable
+        if "verbose" in list(parameters.keys()):
+            if parameters["verbose"]:
+                print(
+                    colored("Environment variable is set. PYCARDISPLAY_DEVICE =" + 
+                            str(os.environ["PYCARDISPLAY_DEVICE"]),
+                            "yellow"))
+        
         # TODO: Perform any parameter/path checks here
+        from .car import Car
         self.car = Car(**parameters)
-
+            
 
     def start(self, **parameters):
         """Start the vehicle."""
