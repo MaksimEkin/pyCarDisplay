@@ -15,12 +15,11 @@ and display the results on a GUI.
 
 
 ## Installation
-### Using *pip*
 ```shell
 pip install pyCarDisplay
 ```
+or
 
-### Using *setup.py*
 ```shell
 git clone https://github.com/MaksimEkin/pyCarDisplay
 cd pyCarDisplay
