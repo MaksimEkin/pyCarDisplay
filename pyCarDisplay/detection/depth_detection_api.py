@@ -87,15 +87,10 @@ class DepthDetection():
             input_path (str): path to input folder
             model_path (str): path to saved model
         """
-        if verbose:
-            print("initialize")
 
         self.model.to(self.device)
 
         num_images = 1
-
-        if verbose:
-            print("start processing")
 
         pil_image=np.array(pil_image)
 
@@ -118,7 +113,5 @@ class DepthDetection():
                 .cpu()
                 .numpy()
             )
-
-        if verbose:
-            print("finished")
+            
         return prediction
