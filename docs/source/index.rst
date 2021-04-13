@@ -22,7 +22,7 @@ Prerequisites
 
 Installation
 ========================================
-.. code-block:: console
+.. code-block:: shell
 
    git clone https://github.com/MaksimEkin/pyCarDisplay
    cd pyCarDisplay
@@ -30,7 +30,7 @@ Installation
 
 or
 
-.. code-block:: console
+.. code-block:: shell
 
     git clone https://github.com/MaksimEkin/pyCarDisplay
     cd pyCarDisplay
