@@ -17,8 +17,6 @@ and display the results on a GUI.
 ## Installation
 ### Using *pip*
 ```shell
-git clone https://github.com/MaksimEkin/pyCarDisplay
-cd pyCarDisplay
 pip install pyCarDisplay
 ```
 

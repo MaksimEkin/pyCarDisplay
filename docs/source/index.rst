@@ -24,8 +24,6 @@ Installation
 ========================================
 .. code-block:: shell
 
-   git clone https://github.com/MaksimEkin/pyCarDisplay
-   cd pyCarDisplay
    pip install pyCarDisplay
 
 or
