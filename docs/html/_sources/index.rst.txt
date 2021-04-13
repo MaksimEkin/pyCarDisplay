@@ -70,11 +70,9 @@ Dependencies
     pandas>=1.2.3
     Pillow>=8.1.2
     PySimpleGUI>=4.37.0
-    Sphinx>=3.5.2
     torch>=1.8.0
     torchaudio>=0.8.0
     torchvision>=0.9.0
-    tabulate>=0.8.9
     matplotlib>=3.4.1
     opencv-python>=4.5.1
     termcolor>=1.1.0

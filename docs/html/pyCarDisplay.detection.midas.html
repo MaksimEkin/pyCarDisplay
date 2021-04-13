@@ -1,182 +1,141 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="pyCarDisplay.sensors package" href="pyCarDisplay.sensors.html" /><link rel="prev" title="pyCarDisplay.detection package" href="pyCarDisplay.detection.html" />
 
-
-<!DOCTYPE html>
-<html class="writer-html5" lang="Python" >
-<head>
-  <meta charset="utf-8" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>pyCarDisplay.detection.midas package &mdash; pyCarDisplay 1.0.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
+    <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
+        <title>pyCarDisplay.detection.midas package - pyCarDisplay 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
     
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
 
-    
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pyCarDisplay.sensors package" href="pyCarDisplay.sensors.html" />
-    <link rel="prev" title="pyCarDisplay.detection package" href="pyCarDisplay.detection.html" /> 
-</head>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
 
-<body class="wy-body-for-nav">
 
-   
-  <div class="wy-grid-for-nav">
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="index.html" class="icon icon-home"> pyCarDisplay
-          
-
-          
-          </a>
-
-          
-            
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyCarDisplay</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="pyCarDisplay.html">pyCarDisplay package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="pyCarDisplay.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="pyCarDisplay.detection.html">pyCarDisplay.detection package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyCarDisplay.sensors.html">pyCarDisplay.sensors package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyCarDisplay.utils.html">pyCarDisplay.utils package</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyCarDisplay.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyCarDisplay.html#module-pyCarDisplay.car">pyCarDisplay.car module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyCarDisplay.html#module-pyCarDisplay.pyCarDisplay">pyCarDisplay.pyCarDisplay module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyCarDisplay.html#module-pyCarDisplay.version">pyCarDisplay.version module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyCarDisplay.html#module-pyCarDisplay">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-            
-          
-        </div>
-        
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">pyCarDisplay 1.0.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">pyCarDisplay</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="modules.html">pyCarDisplay</a> &raquo;</li>
-        
-          <li><a href="pyCarDisplay.html">pyCarDisplay package</a> &raquo;</li>
-        
-          <li><a href="pyCarDisplay.detection.html">pyCarDisplay.detection package</a> &raquo;</li>
-        
-      <li>pyCarDisplay.detection.midas package</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-          
-            <a href="_sources/pyCarDisplay.detection.midas.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-    
-  </ul>
-
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
-  <hr/>
+  
+  <span class="sidebar-brand-text">pyCarDisplay 1.0.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">pyCarDisplay</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="pyCarDisplay.html">pyCarDisplay package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current has-children"><a class="reference internal" href="pyCarDisplay.detection.html">pyCarDisplay.detection package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">pyCarDisplay.detection.midas package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyCarDisplay.sensors.html">pyCarDisplay.sensors package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCarDisplay.utils.html">pyCarDisplay.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
-  <div class="section" id="pycardisplay-detection-midas-package">
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <div class="section" id="pycardisplay-detection-midas-package">
 <h1>pyCarDisplay.detection.midas package<a class="headerlink" href="#pycardisplay-detection-midas-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
@@ -197,14 +156,11 @@
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.base_model.BaseModel.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.base_model.BaseModel.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 </div>
 <div class="section" id="module-pyCarDisplay.detection.midas.blocks">
 <span id="pycardisplay-detection-midas-blocks-module"></span><h2>pyCarDisplay.detection.midas.blocks module<a class="headerlink" href="#module-pyCarDisplay.detection.midas.blocks" title="Permalink to this headline">¶</a></h2>
@@ -227,14 +183,11 @@
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.blocks.FeatureFusionBlock.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.FeatureFusionBlock.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 <dl class="py class">
 <dt id="pyCarDisplay.detection.midas.blocks.FeatureFusionBlock_custom">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.blocks.</span></code><code class="sig-name descname"><span class="pre">FeatureFusionBlock_custom</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deconv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_corners</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/blocks.html#FeatureFusionBlock_custom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.FeatureFusionBlock_custom" title="Permalink to this definition">¶</a></dt>
@@ -254,14 +207,11 @@
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.blocks.FeatureFusionBlock_custom.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.FeatureFusionBlock_custom.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 <dl class="py class">
 <dt id="pyCarDisplay.detection.midas.blocks.Interpolate">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.blocks.</span></code><code class="sig-name descname"><span class="pre">Interpolate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/blocks.html#Interpolate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.Interpolate" title="Permalink to this definition">¶</a></dt>
@@ -284,14 +234,11 @@ mode (str): interpolation mode</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.blocks.Interpolate.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.Interpolate.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 <dl class="py class">
 <dt id="pyCarDisplay.detection.midas.blocks.ResidualConvUnit">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.blocks.</span></code><code class="sig-name descname"><span class="pre">ResidualConvUnit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/blocks.html#ResidualConvUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.ResidualConvUnit" title="Permalink to this definition">¶</a></dt>
@@ -313,14 +260,11 @@ mode (str): interpolation mode</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.blocks.ResidualConvUnit.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.ResidualConvUnit.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 <dl class="py class">
 <dt id="pyCarDisplay.detection.midas.blocks.ResidualConvUnit_custom">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.blocks.</span></code><code class="sig-name descname"><span class="pre">ResidualConvUnit_custom</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/blocks.html#ResidualConvUnit_custom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.ResidualConvUnit_custom" title="Permalink to this definition">¶</a></dt>
@@ -342,14 +286,11 @@ mode (str): interpolation mode</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.blocks.ResidualConvUnit_custom.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.blocks.ResidualConvUnit_custom.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 </div>
 <div class="section" id="module-pyCarDisplay.detection.midas.midas_net">
 <span id="pycardisplay-detection-midas-midas-net-module"></span><h2>pyCarDisplay.detection.midas.midas_net module<a class="headerlink" href="#module-pyCarDisplay.detection.midas.midas_net" title="Permalink to this headline">¶</a></h2>
@@ -379,14 +320,11 @@ backbone (str, optional): Backbone network for encoder. Defaults to resnet50</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.midas_net.MidasNet.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.midas_net.MidasNet.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 </div>
 <div class="section" id="module-pyCarDisplay.detection.midas.midas_net_custom">
 <span id="pycardisplay-detection-midas-midas-net-custom-module"></span><h2>pyCarDisplay.detection.midas.midas_net_custom module<a class="headerlink" href="#module-pyCarDisplay.detection.midas.midas_net_custom" title="Permalink to this headline">¶</a></h2>
@@ -416,19 +354,15 @@ backbone (str, optional): Backbone network for encoder. Defaults to resnet50</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py attribute">
 <dt id="pyCarDisplay.detection.midas.midas_net_custom.MidasNet_small.training">
 <code class="sig-name descname"><span class="pre">training</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#pyCarDisplay.detection.midas.midas_net_custom.MidasNet_small.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 <dl class="py function">
 <dt id="pyCarDisplay.detection.midas.midas_net_custom.fuse_model">
 <code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.midas_net_custom.</span></code><code class="sig-name descname"><span class="pre">fuse_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/midas_net_custom.html#fuse_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.midas_net_custom.fuse_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </div>
 <div class="section" id="module-pyCarDisplay.detection.midas.transforms">
 <span id="pycardisplay-detection-midas-transforms-module"></span><h2>pyCarDisplay.detection.midas.transforms module<a class="headerlink" href="#module-pyCarDisplay.detection.midas.transforms" title="Permalink to this headline">¶</a></h2>
@@ -438,14 +372,12 @@ backbone (str, optional): Backbone network for encoder. Defaults to resnet50</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Normlize image by given mean and std.</p>
 </dd></dl>
-
 <dl class="py class">
 <dt id="pyCarDisplay.detection.midas.transforms.PrepareForNet">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.transforms.</span></code><code class="sig-name descname"><span class="pre">PrepareForNet</span></code><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/transforms.html#PrepareForNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.transforms.PrepareForNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Prepare sample for usage as network input.</p>
 </dd></dl>
-
 <dl class="py class">
 <dt id="pyCarDisplay.detection.midas.transforms.Resize">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.transforms.</span></code><code class="sig-name descname"><span class="pre">Resize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_aspect_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_multiple_of</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lower_bound'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_interpolation_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/transforms.html#Resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.transforms.Resize" title="Permalink to this definition">¶</a></dt>
@@ -470,10 +402,10 @@ Defaults to False.</p>
 <dt>ensure_multiple_of (int, optional):</dt><dd><p>Output width and height is constrained to be multiple of this parameter.
 Defaults to 1.</p>
 </dd>
-<dt>resize_method (str, optional):</dt><dd><p>&quot;lower_bound&quot;: Output will be at least as large as the given size.
-&quot;upper_bound&quot;: Output will be at max as large as the given size. (Output size might be smaller than given size.)
-&quot;minimal&quot;: Scale as least as possible.  (Output size might be smaller than given size.)
-Defaults to &quot;lower_bound&quot;.</p>
+<dt>resize_method (str, optional):</dt><dd><p>"lower_bound": Output will be at least as large as the given size.
+"upper_bound": Output will be at max as large as the given size. (Output size might be smaller than given size.)
+"minimal": Scale as least as possible.  (Output size might be smaller than given size.)
+Defaults to "lower_bound".</p>
 </dd>
 </dl>
 </dd>
@@ -482,14 +414,11 @@ Defaults to &quot;lower_bound&quot;.</p>
 <dt id="pyCarDisplay.detection.midas.transforms.Resize.constrain_to_multiple_of">
 <code class="sig-name descname"><span class="pre">constrain_to_multiple_of</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/transforms.html#Resize.constrain_to_multiple_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.transforms.Resize.constrain_to_multiple_of" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 <dl class="py method">
 <dt id="pyCarDisplay.detection.midas.transforms.Resize.get_size">
 <code class="sig-name descname"><span class="pre">get_size</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/transforms.html#Resize.get_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.transforms.Resize.get_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 </dd></dl>
-
 <dl class="py function">
 <dt id="pyCarDisplay.detection.midas.transforms.apply_min_size">
 <code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.midas.transforms.</span></code><code class="sig-name descname"><span class="pre">apply_min_size</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_interpolation_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/midas/transforms.html#apply_min_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.midas.transforms.apply_min_size" title="Permalink to this definition">¶</a></dt>
@@ -502,59 +431,89 @@ size (tuple): image size</p>
 </dd>
 </dl>
 </dd></dl>
-
 </div>
 <div class="section" id="module-pyCarDisplay.detection.midas">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyCarDisplay.detection.midas" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="pyCarDisplay.sensors.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">pyCarDisplay.sensors package</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="pyCarDisplay.detection.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">pyCarDisplay.detection package</div>
+                
+              </div>
+            </a>
+        </div>
 
-           </div>
-           
-          </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="pyCarDisplay.sensors.html" class="btn btn-neutral float-right" title="pyCarDisplay.sensors package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="pyCarDisplay.detection.html" class="btn btn-neutral float-left" title="pyCarDisplay.detection package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <div class="related-information">
+              Copyright &#169; 2021, Ryan Barron, Maksim Eren, Charles Varga, Wei Wang
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="_sources/pyCarDisplay.detection.midas.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">pyCarDisplay.detection.midas package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pyCarDisplay.detection.midas.base_model">pyCarDisplay.detection.midas.base_model module</a></li>
+<li><a class="reference internal" href="#module-pyCarDisplay.detection.midas.blocks">pyCarDisplay.detection.midas.blocks module</a></li>
+<li><a class="reference internal" href="#module-pyCarDisplay.detection.midas.midas_net">pyCarDisplay.detection.midas.midas_net module</a></li>
+<li><a class="reference internal" href="#module-pyCarDisplay.detection.midas.midas_net_custom">pyCarDisplay.detection.midas.midas_net_custom module</a></li>
+<li><a class="reference internal" href="#module-pyCarDisplay.detection.midas.transforms">pyCarDisplay.detection.midas.transforms module</a></li>
+<li><a class="reference internal" href="#module-pyCarDisplay.detection.midas">Module contents</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Ryan Barron, Maksim Eren, Charles Varga, Wei Wang.
-
-    </p>
-  </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
-</footer>
+          </div>
         </div>
       </div>
-
-    </section>
-
-  </div>
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-  
-  
-    
-   
-
-</body>
+      
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

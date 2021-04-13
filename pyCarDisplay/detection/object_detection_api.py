@@ -3,7 +3,7 @@ This is the object detection module.
 
 This code is borrowed from sgrvinod's GitHub repository named
 a-PyTorch-Tutorial-to-Object-Detection, and modified to work with pyCarDisplay.
-It preserved the main functionality of the unmodified version.
+It preserves the original functionality, but wrapped around a class.
 
 Reference:
     Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
