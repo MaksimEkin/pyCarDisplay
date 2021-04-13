@@ -56,7 +56,7 @@ display.start()
 ```
 
 ## Dependencies
-```shell
+```console
 numpy>=1.20.1
 pandas>=1.2.3
 Pillow>=8.1.2
