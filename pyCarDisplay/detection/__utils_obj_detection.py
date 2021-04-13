@@ -4,7 +4,8 @@ This is the object detection utility module.
 This code is borrowed from sgrvinod's GitHub repository named
 a-PyTorch-Tutorial-to-Object-Detection.
 
-Reference: https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
+Reference:
+    Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
 """
 import json
 import os
