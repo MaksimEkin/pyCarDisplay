@@ -38,15 +38,37 @@ python setup.py install
 from pyCarDisplay.pyCarDisplay import CarDisplay
 
 display = CarDisplay(
-    car_images_path="../data/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/",
-    imu_sensor_path='../data/2011_09_26/2011_09_26_drive_0005_sync/oxts/data/',
-    object_detection_model_path='../data/checkpoint_ssd300.pth.tar',
-    depth_detection_model_path='../data/model-f6b98070.pt',
+    # Kitti dataset:
+    # https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0005/2011_09_26_drive_0005_sync.zip
+    car_images_path="2011_09_26/2011_09_26_drive_0005_sync/image_02/data/",
+    imu_sensor_path="2011_09_26/2011_09_26_drive_0005_sync/oxts/data/",
+    # Object detection model downloaded from:
+    # https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe
+    object_detection_model_path="checkpoint_ssd300.pth.tar",
+    # Depth detection model downloaded from:
+    # https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt
+    depth_detection_model_path="model-f6b98070.pt",
     verbose=True,
     device="cpu"
 )
 
-display.start(verbose=True)
+display.start()
+```
+
+## Dependencies
+```shell
+numpy>=1.20.1
+pandas>=1.2.3
+Pillow>=8.1.2
+PySimpleGUI>=4.37.0
+Sphinx>=3.5.2
+torch>=1.8.0
+torchaudio>=0.8.0
+torchvision>=0.9.0
+tabulate>=0.8.9
+matplotlib>=3.4.1
+opencv-python>=4.5.1
+termcolor>=1.1.0
 ```
 
 ## Documentation
