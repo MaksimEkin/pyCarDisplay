@@ -155,19 +155,68 @@
             
   <div class="section" id="welcome-to-pycardisplay-s-documentation">
 <h1>Welcome to pyCarDisplay's documentation!<a class="headerlink" href="#welcome-to-pycardisplay-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Add summary here.</p>
+<p>Python Library for Simulating Autonomous Vehicle: pyCarDisplay.
+pyCarDisplay is developed to read the Kitti dataset, and simulate an automated car.
+It can perform object detection, depth detection, IMU sensor simulation, Kalman Filtering,
+and display the results on a GUI.</p>
 </div>
-<div class="section" id="capabilities">
-<h1>Capabilities<a class="headerlink" href="#capabilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Python &gt;= v3.8.5</p></li>
+<li><p>Download the <a class="reference external" href="https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe">pre-trained PyTorch object detection model</a> (Provided by <a class="reference external" href="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection">sgrvinod</a>).</p></li>
+<li><p>Download the <a class="reference external" href="https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt">pre-trained PyTorch depth detection model</a> (Provided by <a class="reference external" href="https://github.com/OniroAI/MonoDepth-PyTorch">OniroAI</a>).</p></li>
+<li><p>Download a set of raw sampels from the <a class="reference external" href="http://www.cvlibs.net/datasets/kitti/raw_data.php">Kitti dataset</a></p></li>
+</ul>
 </div>
 <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install pyCarDisplay</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone https://github.com/MaksimEkin/pyCarDisplay</span>
+<span class="go">cd pyCarDisplay</span>
+<span class="go">pip install pyCarDisplay</span>
 </pre></div>
 </div>
+<p>or</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone https://github.com/MaksimEkin/pyCarDisplay</span>
+<span class="go">cd pyCarDisplay</span>
+<span class="go">python setup.py install</span>
+</pre></div>
+</div>
+<p>The simulator also needs, at minimum, the pre-trained models and Kitti dataset
+samples. Please see the prerequisites.</p>
 </div>
 <div class="section" id="example-usage">
 <h1>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyCarDisplay.pyCarDisplay</span> <span class="kn">import</span> <span class="n">CarDisplay</span>
+
+<span class="n">display</span> <span class="o">=</span> <span class="n">CarDisplay</span><span class="p">(</span>
+    <span class="n">car_images_path</span><span class="o">=</span><span class="s2">&quot;../data/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/&quot;</span><span class="p">,</span>
+    <span class="n">imu_sensor_path</span><span class="o">=</span><span class="s1">&#39;../data/2011_09_26/2011_09_26_drive_0005_sync/oxts/data/&#39;</span><span class="p">,</span>
+    <span class="n">object_detection_model_path</span><span class="o">=</span><span class="s1">&#39;../data/checkpoint_ssd300.pth.tar&#39;</span><span class="p">,</span>
+    <span class="n">depth_detection_model_path</span><span class="o">=</span><span class="s1">&#39;../data/model-f6b98070.pt&#39;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. <a class="reference external" href="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection">https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection</a></p></li>
+<li><p>“MiDaS,” Pytorch.org. [Online]. Available: <a class="reference external" href="https://pytorch.org/hub/intelisl_midas_v2/">https://pytorch.org/hub/intelisl_midas_v2/</a>. [Accessed: 27-Mar-2021].</p></li>
+<li><ol class="upperalpha simple" start="18">
+<li><ol class="upperalpha simple" start="5">
+<li><p>Kalman, A New Approach to Linear Filtering and Prediction Problems, Research Institute for Advanced Study, 2 Baltimore, Md. <a class="reference external" href="https://www.cs.unc.edu/~welch/kalman/media/pdf/Kalman1960.pdf">https://www.cs.unc.edu/~welch/kalman/media/pdf/Kalman1960.pdf</a></p></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>A Geiger, P Lenz, C Stiller, and R Urtasun. 2013. Vision meets robotics: The KITTI dataset. Int. J. Rob. Res. 32, 11 (September 2013), 1231–1237. DOI:https://doi.org/10.1177/0278364913491297</p></li>
+<li><p>Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., … Chintala, S. (2019). PyTorch: An Imperative Style, High-Performance Deep Learning Library. In Advances in Neural Information Processing Systems 32 (pp. 8024–8035). Curran Associates, Inc. Retrieved from <a class="reference external" href="http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf">http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf</a></p></li>
+</ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>

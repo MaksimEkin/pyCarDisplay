@@ -14,10 +14,10 @@ and display the results on a GUI.
 
 Prerequisites
 ========================================
-- Python >= v3.8.5
-- Trained PyTorch Object Detection Model: https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe (Provided by [sgrvinod](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection))
-- Trained PyTorch Depth Detection Model: https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt (Provided by [OniroAI](https://github.com/OniroAI/MonoDepth-PyTorch))
-- Kitti Dataset Samples: http://www.cvlibs.net/datasets/kitti/raw_data.php
+* Python >= v3.8.5
+* Download the `pre-trained PyTorch object detection model <https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe>`_ (Provided by `sgrvinod <https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection>`_).
+* Download the `pre-trained PyTorch depth detection model <https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt>`_ (Provided by `OniroAI <https://github.com/OniroAI/MonoDepth-PyTorch>`_).
+* Download a set of raw sampels from the `Kitti dataset <http://www.cvlibs.net/datasets/kitti/raw_data.php>`_
 
 
 Installation
@@ -60,8 +60,12 @@ Example Usage
 
 References
 ========================================
-1- https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
-2- https://github.com/OniroAI/MonoDepth-PyTorch
+* Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
+* “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].
+* R. E. Kalman, A New Approach to Linear Filtering and Prediction Problems, Research Institute for Advanced Study, 2 Baltimore, Md. https://www.cs.unc.edu/~welch/kalman/media/pdf/Kalman1960.pdf
+* A Geiger, P Lenz, C Stiller, and R Urtasun. 2013. Vision meets robotics: The KITTI dataset. Int. J. Rob. Res. 32, 11 (September 2013), 1231–1237. DOI:https://doi.org/10.1177/0278364913491297
+* Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., … Chintala, S. (2019). PyTorch: An Imperative Style, High-Performance Deep Learning Library. In Advances in Neural Information Processing Systems 32 (pp. 8024–8035). Curran Associates, Inc. Retrieved from http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf
+
 
 
 .. toctree::
