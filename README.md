@@ -50,7 +50,7 @@ display.start(verbose=True)
 ```
 
 ## Documentation
-The documentation of **pyCarDisplay** can be found [here](https://maksimekin.github.io/pyCarDisplay/html/index.html)
+The documentation of **pyCarDisplay** can be found [here](https://maksimekin.github.io/pyCarDisplay/html/index.html).
 
 
 ## How to Cite pyCarDisplay?
