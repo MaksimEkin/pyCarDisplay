@@ -8,43 +8,63 @@
 
 <br>
 
-Add Description here
+Python Library for Simulating Autonomous Vehicle: pyCarDisplay.
+pyCarDisplay is developed to read the Kitti dataset, and simulate an automated car.
+It can perform object detection, depth detection, IMU sensor simulation, Kalman Filtering,
+and display the results on a GUI.
 
 
 ## Installation
 ### Using *pip*
-```pip install pyCarDisplay``` <-- This does not work yet
+```
+   git clone https://github.com/MaksimEkin/pyCarDisplay
+   cd pyCarDisplay
+   pip install pyCarDisplay
+```
 
 ### Using *setup.py*
-- Run ```setup.py``` on a Python 3.8.5 environment:
-	- ```python setup.py install```
-    
+```
+    git clone https://github.com/MaksimEkin/pyCarDisplay
+    cd pyCarDisplay
+    python setup.py install
+```
 
-
-## Requirements
+## Prerequisites
 - Python >= v3.8.5
+- Trained PyTorch Object Detection Model: https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe (Provided by [sgrvinod](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection))
+- Trained PyTorch Depth Detection Model: https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt (Provided by [OniroAI](https://github.com/OniroAI/MonoDepth-PyTorch))
+- Kitti Dataset Samples: http://www.cvlibs.net/datasets/kitti/raw_data.php
+
 
 ## Usage
 ```python
 from pyCarDisplay.pyCarDisplay import CarDisplay
 
-# ADD INSTRUCTIONS HERE
+display = CarDisplay(
+    car_images_path="../data/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/",
+    imu_sensor_path='../data/2011_09_26/2011_09_26_drive_0005_sync/oxts/data/',
+    object_detection_model_path='../data/checkpoint_ssd300.pth.tar',
+    depth_detection_model_path='../data/model-f6b98070.pt',
+    verbose=True,
+    device="cpu"
+)
+
+display.start(verbose=True)
 ```
 
 
-## How to Cite RFoT?
+## How to Cite pyCarDisplay?
 ```
-https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
-https://github.com/OniroAI/MonoDepth-PyTorch
-https://github.com/keygggl/AutonomousVehicle_LiDARandSLAM
+@electronic{cmsc611_2021_umbc,
+  author = {R. {Barron} and M. E. {Eren} and C. {Varga} and W. {Wang}},
+  title = {pyCarDisplay},
+  url = "https://github.com/MaksimEkin/pyCarDisplay"
+}
 ```
 
-## Generating Updated Documetation
-- ```cd docs```
-- ```make html```
-- click index.html
 
 ## References
 ```
-add references here
+1- https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
+2- https://github.com/OniroAI/MonoDepth-PyTorch
 ```
