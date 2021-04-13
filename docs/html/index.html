@@ -188,12 +188,15 @@ samples. Please see the prerequisites.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyCarDisplay.pyCarDisplay</span> <span class="kn">import</span> <span class="n">CarDisplay</span>
 
 <span class="n">display</span> <span class="o">=</span> <span class="n">CarDisplay</span><span class="p">(</span>
-    <span class="c1"># Kitti dataset path: https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0005/2011_09_26_drive_0005_sync.zip</span>
+    <span class="c1"># Kitti dataset:</span>
+    <span class="c1"># https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0005/2011_09_26_drive_0005_sync.zip</span>
     <span class="n">car_images_path</span><span class="o">=</span><span class="s2">&quot;2011_09_26/2011_09_26_drive_0005_sync/image_02/data/&quot;</span><span class="p">,</span>
     <span class="n">imu_sensor_path</span><span class="o">=</span><span class="s2">&quot;2011_09_26/2011_09_26_drive_0005_sync/oxts/data/&quot;</span><span class="p">,</span>
-    <span class="c1"># Object detection model downloaded from https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe</span>
+    <span class="c1"># Object detection model downloaded from:</span>
+    <span class="c1"># https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe</span>
     <span class="n">object_detection_model_path</span><span class="o">=</span><span class="s2">&quot;checkpoint_ssd300.pth.tar&quot;</span><span class="p">,</span>
-    <span class="c1"># Depth detection model downloaded from https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt</span>
+    <span class="c1"># Depth detection model downloaded from:</span>
+    <span class="c1"># https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt</span>
     <span class="n">depth_detection_model_path</span><span class="o">=</span><span class="s2">&quot;model-f6b98070.pt&quot;</span><span class="p">,</span>
     <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span>
