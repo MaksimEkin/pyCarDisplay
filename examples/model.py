@@ -1,6 +1,14 @@
-#
-# TODO CITE
-#
+"""
+This is the model instance needed to load the PyTorch model.
+
+This code is borrowed from sgrvinod's GitHub repository named
+a-PyTorch-Tutorial-to-Object-Detection, and modified to work with pyCarDisplay.
+It preserves the original functionality, but wrapped around a class.
+
+Reference:
+    Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
+
+"""
 from torch import nn
 from pyCarDisplay.detection.__utils_obj_detection import *
 import torch.nn.functional as F
