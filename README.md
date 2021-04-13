@@ -29,8 +29,8 @@ python setup.py install
 ## Prerequisites
 - Python >= v3.8.5
 - Download the [pre-trained PyTorch object detection mode](https://drive.google.com/open?id=1bvJfF6r_zYl2xZEpYXxgb7jLQHFZ01Qe) (Provided by [sgrvinod](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection)).
-- Download the [pre-trained PyTorch depth detection model](https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt) (Provided by [OniroAI](https://github.com/OniroAI/MonoDepth-PyTorch))
-- Download a set of raw sampels from the [Kitti dataset](http://www.cvlibs.net/datasets/kitti/raw_data.php)
+- Download the [pre-trained PyTorch depth detection model](https://github.com/intel-isl/MiDaS/releases/download/v2_1/model-f6b98070.pt) (Provided by [OniroAI](https://github.com/OniroAI/MonoDepth-PyTorch)).
+- Download a set of raw sampels from the [Kitti dataset](http://www.cvlibs.net/datasets/kitti/raw_data.php).
 
 
 ## Usage
