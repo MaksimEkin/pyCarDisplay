@@ -152,7 +152,7 @@
             
   <h1>Source code for pyCarDisplay.utils.kitti_data_loader_api</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">See config.py in the root directory to specify the path to the dataset.</span>
+<span class="sd">Parses the Kitti dataset&#39;s IMU data into a Pandas DataFrame format.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -162,73 +162,125 @@
 
 <div class="viewcode-block" id="DataLoader"><a class="viewcode-back" href="../../../pyCarDisplay.utils.html#pyCarDisplay.utils.kitti_data_loader_api.DataLoader">[docs]</a><span class="k">class</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_lidar</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">path_imu</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        If path is empty string, path in the config file is used for the dataset.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initilize the parser.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path_lidar : str, optional</span>
+<span class="sd">            path to the lidar data. The default is &quot;&quot;.</span>
+<span class="sd">        path_imu : str, optional</span>
+<span class="sd">            path to the imu data. The default is &quot;&quot;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># IMU columns</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imu_columns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;alt&quot;</span><span class="p">,</span> <span class="s2">&quot;roll&quot;</span><span class="p">,</span> <span class="s2">&quot;pitch&quot;</span><span class="p">,</span> <span class="s2">&quot;yaw&quot;</span><span class="p">,</span> <span class="s2">&quot;vn&quot;</span><span class="p">,</span> <span class="s2">&quot;ve&quot;</span><span class="p">,</span> <span class="s2">&quot;vf&quot;</span><span class="p">,</span> 
-            <span class="s2">&quot;vl&quot;</span><span class="p">,</span> <span class="s2">&quot;vu&quot;</span><span class="p">,</span> <span class="s2">&quot;ax&quot;</span><span class="p">,</span> <span class="s2">&quot;ay&quot;</span><span class="p">,</span> <span class="s2">&quot;az&quot;</span><span class="p">,</span> <span class="s2">&quot;af&quot;</span><span class="p">,</span> <span class="s2">&quot;al&quot;</span><span class="p">,</span> <span class="s2">&quot;au&quot;</span><span class="p">,</span> <span class="s2">&quot;wx&quot;</span><span class="p">,</span> <span class="s2">&quot;wy&quot;</span><span class="p">,</span> <span class="s2">&quot;wz&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;wf&quot;</span><span class="p">,</span> <span class="s2">&quot;wl&quot;</span><span class="p">,</span> <span class="s2">&quot;wu&quot;</span><span class="p">,</span> <span class="s2">&quot;pos_accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;vel_accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;navstat&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;numsats&quot;</span><span class="p">,</span> <span class="s2">&quot;posmode&quot;</span><span class="p">,</span> <span class="s2">&quot;velmode&quot;</span><span class="p">,</span> <span class="s2">&quot;orimode&quot;</span>
-                <span class="p">]</span>
-        
-        
+            <span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;alt&quot;</span><span class="p">,</span> <span class="s2">&quot;roll&quot;</span><span class="p">,</span> <span class="s2">&quot;pitch&quot;</span><span class="p">,</span> <span class="s2">&quot;yaw&quot;</span><span class="p">,</span> <span class="s2">&quot;vn&quot;</span><span class="p">,</span> <span class="s2">&quot;ve&quot;</span><span class="p">,</span> <span class="s2">&quot;vf&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;vl&quot;</span><span class="p">,</span> <span class="s2">&quot;vu&quot;</span><span class="p">,</span> <span class="s2">&quot;ax&quot;</span><span class="p">,</span> <span class="s2">&quot;ay&quot;</span><span class="p">,</span> <span class="s2">&quot;az&quot;</span><span class="p">,</span> <span class="s2">&quot;af&quot;</span><span class="p">,</span> <span class="s2">&quot;al&quot;</span><span class="p">,</span> <span class="s2">&quot;au&quot;</span><span class="p">,</span> <span class="s2">&quot;wx&quot;</span><span class="p">,</span> <span class="s2">&quot;wy&quot;</span><span class="p">,</span> <span class="s2">&quot;wz&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wf&quot;</span><span class="p">,</span> <span class="s2">&quot;wl&quot;</span><span class="p">,</span> <span class="s2">&quot;wu&quot;</span><span class="p">,</span> <span class="s2">&quot;pos_accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;vel_accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;navstat&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;numsats&quot;</span><span class="p">,</span> <span class="s2">&quot;posmode&quot;</span><span class="p">,</span> <span class="s2">&quot;velmode&quot;</span><span class="p">,</span> <span class="s2">&quot;orimode&quot;</span>
+        <span class="p">]</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">path_lidar</span> <span class="o">=</span> <span class="n">path_lidar</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_imu</span> <span class="o">=</span> <span class="n">path_imu</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span> <span class="o">=</span> <span class="kc">None</span>
-        
-        
+
 <div class="viewcode-block" id="DataLoader.load_lidar"><a class="viewcode-back" href="../../../pyCarDisplay.utils.html#pyCarDisplay.utils.kitti_data_loader_api.DataLoader.load_lidar">[docs]</a>    <span class="k">def</span> <span class="nf">load_lidar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns Pandas DataFrame of LiDaR data.</span>
-<span class="sd">        </span>
-<span class="sd">        Paramters</span>
-<span class="sd">            sample_size: float, percent of the data to be returned.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sample_size : float, optional</span>
+<span class="sd">            percent of the data to be returned. The default is 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        lidar_df : pd.DataFrame</span>
+<span class="sd">            lidar data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># get all LiDaR data in the data directory</span>
         <span class="n">lidar_data</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_lidar</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;*.bin&quot;</span><span class="p">)</span>
-        
+
         <span class="n">lidar_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lidar_data</span><span class="p">):</span>
             <span class="n">lidar_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__load_lidar_helper</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
             <span class="n">temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">lidar_dict</span><span class="p">)</span>
             <span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
             <span class="n">lidar_df</span> <span class="o">=</span> <span class="n">lidar_df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span> <span class="o">=</span> <span class="n">lidar_df</span>
         <span class="k">return</span> <span class="n">lidar_df</span></div>
-    
+
 <div class="viewcode-block" id="DataLoader.load_imu"><a class="viewcode-back" href="../../../pyCarDisplay.utils.html#pyCarDisplay.utils.kitti_data_loader_api.DataLoader.load_imu">[docs]</a>    <span class="k">def</span> <span class="nf">load_imu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns Pandas DataFrame of IMU data.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        imu_df : pd.DataFrame</span>
+<span class="sd">            IMU data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># get all IMU data in the data directory</span>
-        <span class="n">lidar_data</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_imu</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;*.txt&quot;</span><span class="p">)</span>  
-        
+        <span class="n">lidar_data</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_imu</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;*.txt&quot;</span><span class="p">)</span>
+
         <span class="n">imu_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lidar_data</span><span class="p">):</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_columns</span><span class="p">)</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                               <span class="n">delimiter</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_columns</span><span class="p">)</span>
             <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
             <span class="n">imu_df</span> <span class="o">=</span> <span class="n">imu_df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
-            
+
         <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span> <span class="o">=</span> <span class="n">imu_df</span>
         <span class="k">return</span> <span class="n">imu_df</span></div>
-    
+
 <div class="viewcode-block" id="DataLoader.get_params"><a class="viewcode-back" href="../../../pyCarDisplay.utils.html#pyCarDisplay.utils.kitti_data_loader_api.DataLoader.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the object variables.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            self.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__load_lidar_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to load the lidar data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file : str</span>
+<span class="sd">            current file.</span>
+<span class="sd">        sample_size : float</span>
+<span class="sd">            percentage of the lidar points to be loaded.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            lidar coordinates. point cloud.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">pointcloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
-                             <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+                                 <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">sample_size</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">pointcloud</span> <span class="o">=</span> <span class="n">pointcloud</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pointcloud</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">pointcloud</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">sample_size</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="p">:]</span>
-            
+            <span class="n">pointcloud</span> <span class="o">=</span> <span class="n">pointcloud</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pointcloud</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span>
+                <span class="n">pointcloud</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">sample_size</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="p">:]</span>
+
         <span class="n">x</span> <span class="o">=</span> <span class="n">pointcloud</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># x position of point</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">pointcloud</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># y position of point</span>
         <span class="n">z</span> <span class="o">=</span> <span class="n">pointcloud</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># z position of point</span>
@@ -236,7 +288,7 @@
         <span class="n">r</span> <span class="o">=</span> <span class="n">pointcloud</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># reflectance value of point</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Map Distance from sensor</span>
 
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span><span class="n">z</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span><span class="n">d</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">}</span></div>
 </pre></div>
 
            </div>

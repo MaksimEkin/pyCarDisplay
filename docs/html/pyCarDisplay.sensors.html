@@ -209,39 +209,96 @@ and the depth rendering of the depth detection model.</p>
 </div>
 <div class="section" id="module-pyCarDisplay.sensors.imu_api">
 <span id="pycardisplay-sensors-imu-api-module"></span><h2>pyCarDisplay.sensors.imu_api module<a class="headerlink" href="#module-pyCarDisplay.sensors.imu_api" title="Permalink to this headline">¶</a></h2>
+<p>This file simulates an IMU sensor. Data must be loaded from kitti_data_loader_api.py
+and passed to this module.</p>
 <dl class="py class">
 <dt id="pyCarDisplay.sensors.imu_api.IMU">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.sensors.imu_api.</span></code><code class="sig-name descname"><span class="pre">IMU</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_covariance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/imu_api.html#IMU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.imu_api.IMU" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Initilie the IMU sensor.</p>
+<dl class="simple">
+<dt>data<span class="classifier">pd.DataFrame</span></dt><dd><p>Pandas DataFrame of IMU data.</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Verbosity flag. The default is True.</p>
+</dd>
+<dt>R_covariance<span class="classifier">float, optional</span></dt><dd><p>Covariance for the random error. The default is 0.1.</p>
+</dd>
+<dt>random_state<span class="classifier">bool, optional</span></dt><dd><p>random seed. The default is 42.</p>
+</dd>
+</dl>
+<p>None.</p>
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.imu_api.IMU.get_R">
 <code class="sig-name descname"><span class="pre">get_R</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/imu_api.html#IMU.get_R"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.imu_api.IMU.get_R" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the error covariance.</p>
+<dl class="simple">
+<dt>float</dt><dd><p>Error covariance.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.imu_api.IMU.get_avail_data">
 <code class="sig-name descname"><span class="pre">get_avail_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/imu_api.html#IMU.get_avail_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.imu_api.IMU.get_avail_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the available IMU features, i.e. column names.</p>
+<dl class="simple">
+<dt>list</dt><dd><p>names of the IMU columns.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.imu_api.IMU.get_column">
 <code class="sig-name descname"><span class="pre">get_column</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/imu_api.html#IMU.get_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.imu_api.IMU.get_column" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns all the frame data for one column.</p>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>column name.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>one column from the dataframe.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.imu_api.IMU.get_params">
 <code class="sig-name descname"><span class="pre">get_params</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/imu_api.html#IMU.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.imu_api.IMU.get_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the object variables.</p>
+<dl class="simple">
+<dt>dict</dt><dd><p>self variables.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.imu_api.IMU.read_sensor">
 <code class="sig-name descname"><span class="pre">read_sensor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advance_frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/imu_api.html#IMU.read_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.imu_api.IMU.read_sensor" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Simulates reading one IMU sensor data and increments the frame.</p>
+<dl class="simple">
+<dt>name<span class="classifier">str, optional</span></dt><dd><p>Specify to read specific IMU data. The default is None.</p>
+</dd>
+<dt>add_noise<span class="classifier">bool, optional</span></dt><dd><p>If True, error is added to the data. The default is True.</p>
+</dd>
+<dt>advance_frame<span class="classifier">bool, optional</span></dt><dd><p>If True, frame is advanced to the next one. The default is True.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>dict</dt><dd><p>{&quot;data&quot;: data, &quot;noise&quot;: noise, &quot;true&quot;: data-noise}.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.imu_api.IMU.set_frame">
 <code class="sig-name descname"><span class="pre">set_frame</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/imu_api.html#IMU.set_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.imu_api.IMU.set_frame" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>manually set the frame,</p>
+<dl class="simple">
+<dt>frame<span class="classifier">int</span></dt><dd><p>frame number.</p>
+</dd>
+</dl>
+<p>None.</p>
+</dd></dl>
 
 </dd></dl>
 

@@ -296,21 +296,37 @@ cropped_depth_images : list</p>
 </div>
 <div class="section" id="module-pyCarDisplay.utils.kitti_data_loader_api">
 <span id="pycardisplay-utils-kitti-data-loader-api-module"></span><h2>pyCarDisplay.utils.kitti_data_loader_api module<a class="headerlink" href="#module-pyCarDisplay.utils.kitti_data_loader_api" title="Permalink to this headline">¶</a></h2>
-<p>See config.py in the root directory to specify the path to the dataset.</p>
+<p>Parses the Kitti dataset's IMU data into a Pandas DataFrame format.</p>
 <dl class="py class">
 <dt id="pyCarDisplay.utils.kitti_data_loader_api.DataLoader">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.utils.kitti_data_loader_api.</span></code><code class="sig-name descname"><span class="pre">DataLoader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_lidar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_imu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/kitti_data_loader_api.html#DataLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.kitti_data_loader_api.DataLoader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>If path is empty string, path in the config file is used for the dataset.</p>
+<p>Initilize the parser.</p>
+<dl class="simple">
+<dt>path_lidar<span class="classifier">str, optional</span></dt><dd><p>path to the lidar data. The default is &quot;&quot;.</p>
+</dd>
+<dt>path_imu<span class="classifier">str, optional</span></dt><dd><p>path to the imu data. The default is &quot;&quot;.</p>
+</dd>
+</dl>
+<p>None.</p>
 <dl class="py method">
 <dt id="pyCarDisplay.utils.kitti_data_loader_api.DataLoader.get_params">
 <code class="sig-name descname"><span class="pre">get_params</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/kitti_data_loader_api.html#DataLoader.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.kitti_data_loader_api.DataLoader.get_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the object variables.</p>
+<dl class="simple">
+<dt>dict</dt><dd><p>self.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyCarDisplay.utils.kitti_data_loader_api.DataLoader.load_imu">
 <code class="sig-name descname"><span class="pre">load_imu</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/kitti_data_loader_api.html#DataLoader.load_imu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.kitti_data_loader_api.DataLoader.load_imu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns Pandas DataFrame of IMU data.</p>
+<dl class="simple">
+<dt>imu_df<span class="classifier">pd.DataFrame</span></dt><dd><p>IMU data.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -318,7 +334,11 @@ cropped_depth_images : list</p>
 <code class="sig-name descname"><span class="pre">load_lidar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/kitti_data_loader_api.html#DataLoader.load_lidar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.kitti_data_loader_api.DataLoader.load_lidar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns Pandas DataFrame of LiDaR data.</p>
 <dl class="simple">
-<dt>Paramters</dt><dd><p>sample_size: float, percent of the data to be returned.</p>
+<dt>sample_size<span class="classifier">float, optional</span></dt><dd><p>percent of the data to be returned. The default is 1.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>lidar_df<span class="classifier">pd.DataFrame</span></dt><dd><p>lidar data.</p>
 </dd>
 </dl>
 </dd></dl>

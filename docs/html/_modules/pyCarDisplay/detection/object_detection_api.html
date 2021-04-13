@@ -152,8 +152,14 @@
             
   <h1>Source code for pyCarDisplay.detection.object_detection_api</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This is the object detection module.</span>
 
-<span class="sd">TODO CITE</span>
+<span class="sd">This code is borrowed from sgrvinod&#39;s GitHub repository named</span>
+<span class="sd">a-PyTorch-Tutorial-to-Object-Detection, and modified to work with pyCarDisplay.</span>
+<span class="sd">It preserved the main functionality of the unmodified version.</span>
+
+<span class="sd">Reference: https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
 <span class="kn">from</span> <span class="nn">.__utils_obj_detection</span> <span class="kn">import</span> <span class="o">*</span>
@@ -162,32 +168,33 @@
 <span class="kn">from</span> <span class="nn">termcolor</span> <span class="kn">import</span> <span class="n">colored</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
+
 <div class="viewcode-block" id="ObjectDetection"><a class="viewcode-back" href="../../../pyCarDisplay.detection.html#pyCarDisplay.detection.object_detection_api.ObjectDetection">[docs]</a><span class="k">class</span> <span class="nc">ObjectDetection</span><span class="p">():</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">model_path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
-                 <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+                 <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
                  <span class="n">img_resize_size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
                  <span class="n">norm_mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span>
                  <span class="n">norm_std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">],</span>
                  <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span>
                  <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-
+<span class="sd">        Initilize the object detection class.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        model_path : str</span>
-<span class="sd">            DESCRIPTION.</span>
+<span class="sd">            path to the pre-trained PyTorch model.</span>
 <span class="sd">        verbose : bool</span>
-<span class="sd">            DESCRIPTION.</span>
-<span class="sd">        img_resize_size : TYPE, optional</span>
-<span class="sd">            DESCRIPTION. The default is (300, 300).</span>
-<span class="sd">        norm_mean : TYPE, optional</span>
-<span class="sd">            DESCRIPTION. The default is [0.485, 0.456, 0.406].</span>
-<span class="sd">        norm_std : TYPE, optional</span>
-<span class="sd">            DESCRIPTION. The default is [0.229, 0.224, 0.225].</span>
-<span class="sd">         : TYPE</span>
-<span class="sd">            DESCRIPTION.</span>
+<span class="sd">            Verbosity flag.</span>
+<span class="sd">        img_resize_size : tuple, optional</span>
+<span class="sd">            Image size during prediction. The default is (300, 300).</span>
+<span class="sd">        norm_mean : list, optional</span>
+<span class="sd">            model hyper-parameter. The default is [0.485, 0.456, 0.406].</span>
+<span class="sd">        norm_std : list, optional</span>
+<span class="sd">            model hyper-parameter. The default is [0.229, 0.224, 0.225].</span>
+<span class="sd">        device : str, optional</span>
+<span class="sd">            If &#39;gpu&#39;, model uses a CUDA device. The default is &quot;cpu&quot;.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -197,7 +204,7 @@
         <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;pwd&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span> <span class="o">=</span> <span class="n">model_path</span>
-            
+
         <span class="c1"># Use GPU if available</span>
         <span class="k">if</span> <span class="n">device</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
@@ -206,25 +213,25 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;No cuda device found!&quot;</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;Object detection is using: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="s2">&quot;yellow&quot;</span><span class="p">))</span>
-        
 
         <span class="c1"># Load model checkpoint</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;Object detection API is loading the model: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">),</span> <span class="s2">&quot;blue&quot;</span><span class="p">))</span>
-            
+            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;Object detection API is loading the model: &quot;</span> <span class="o">+</span>
+                          <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">),</span> <span class="s2">&quot;blue&quot;</span><span class="p">))</span>
+
         <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="n">start_epoch</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s1">&#39;Loaded checkpoint from epoch </span><span class="si">%d</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">start_epoch</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s1">&#39;Loaded checkpoint from epoch </span><span class="si">%d</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span>
+                          <span class="n">start_epoch</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-
 
         <span class="c1"># Transforms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resize</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">img_resize_size</span><span class="p">)</span>
@@ -233,47 +240,63 @@
                                               <span class="n">std</span><span class="o">=</span><span class="n">norm_std</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ObjectDetection.detect"><a class="viewcode-back" href="../../../pyCarDisplay.detection.html#pyCarDisplay.detection.object_detection_api.ObjectDetection.detect">[docs]</a>    <span class="k">def</span> <span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-               <span class="n">original_image</span><span class="p">:</span><span class="n">Image</span><span class="p">,</span>
+               <span class="n">original_image</span><span class="p">:</span> <span class="n">Image</span><span class="p">,</span>
                <span class="n">suppress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">min_score</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
                <span class="n">max_overlap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                <span class="n">top_k</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-
+<span class="sd">        Predicts the objects in the image using the pre-trained model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        original_image : str</span>
-<span class="sd">            DESCRIPTION.</span>
-<span class="sd">        suppress : list</span>
-<span class="sd">            DESCRIPTION.</span>
-<span class="sd">        min_score : TYPE, optional</span>
-<span class="sd">            DESCRIPTION. The default is 0.2.</span>
-<span class="sd">        max_overlap : TYPE, optional</span>
-<span class="sd">            DESCRIPTION. The default is 0.5.</span>
-<span class="sd">        top_k : TYPE, optional</span>
-<span class="sd">            DESCRIPTION. The default is 200.</span>
+<span class="sd">        original_image : Image</span>
+<span class="sd">            PIL image to be used for object detection.</span>
+<span class="sd">        suppress : TYPE, optional</span>
+<span class="sd">            DESCRIPTION. The default is None.</span>
+<span class="sd">        min_score : float, optional</span>
+<span class="sd">            min threshold for object to be classified. The default is 0.2.</span>
+<span class="sd">        max_overlap : float, optional</span>
+<span class="sd">            min threshold for object to be classified. The default is 0.5.</span>
+<span class="sd">        top_k : int, optional</span>
+<span class="sd">            how many objects to attempt to classify. The default is 200.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        TYPE</span>
-<span class="sd">            DESCRIPTION.</span>
+<span class="sd">        dict</span>
+<span class="sd">            Returns a dictionary in format: {&quot;annotated_image&quot;: annotated_image, &quot;box_info&quot;: box_info, &quot;detected&quot;: True}</span>
+<span class="sd">            box_info is in format: box_info = {&quot;text_size&quot;: text_sizes,&quot;box_location&quot;: box_locations}, where the values</span>
+<span class="sd">            are list of coordinates for the detection boxes.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__detect_helper</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">min_score</span><span class="o">=</span><span class="n">min_score</span><span class="p">,</span> <span class="n">max_overlap</span><span class="o">=</span><span class="n">max_overlap</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="n">top_k</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="n">suppress</span><span class="p">)</span> <span class="c1"># .show()</span></div>
-
+        <span class="c1"># .show()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__detect_helper</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">min_score</span><span class="o">=</span><span class="n">min_score</span><span class="p">,</span> <span class="n">max_overlap</span><span class="o">=</span><span class="n">max_overlap</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="n">top_k</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="n">suppress</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__detect_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original_image</span><span class="p">,</span> <span class="n">min_score</span><span class="p">,</span> <span class="n">max_overlap</span><span class="p">,</span> <span class="n">top_k</span><span class="p">,</span> <span class="n">suppress</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Detect objects in an image with a trained SSD300, and visualize the results.</span>
+<span class="sd">        Performs the prediction.</span>
 
-<span class="sd">        :param original_image: image, a PIL Image</span>
-<span class="sd">        :param min_score: minimum threshold for a detected box to be considered a match for a certain class</span>
-<span class="sd">        :param max_overlap: maximum overlap two boxes can have so that the one with the lower score is not suppressed via Non-Maximum Suppression (NMS)</span>
-<span class="sd">        :param top_k: if there are a lot of resulting detection across all classes, keep only the top &#39;k&#39;</span>
-<span class="sd">        :param suppress: classes that you know for sure cannot be in the image or you do not want in the image, a list</span>
-<span class="sd">        :return: {&quot;annotated_image&quot;:annotated_image, &quot;box_info&quot;:box_info}, annotated_image is a PIL Image</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        original_image : PIL.Image</span>
+<span class="sd">            Kitti dataset 1 frame image.</span>
+<span class="sd">        min_score : float</span>
+<span class="sd">            detection threshold.</span>
+<span class="sd">        max_overlap : float</span>
+<span class="sd">            detection threshold.</span>
+<span class="sd">        top_k : int</span>
+<span class="sd">            number of objects to search.</span>
+<span class="sd">        suppress : TYPE</span>
+<span class="sd">            DESCRIPTION.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Returns a dictionary in format: {&quot;annotated_image&quot;: annotated_image, &quot;box_info&quot;: box_info, &quot;detected&quot;: True}</span>
+<span class="sd">            box_info is in format: box_info = {&quot;text_size&quot;: text_sizes,&quot;box_location&quot;: box_locations}, where the values</span>
+<span class="sd">            are list of coordinates for the detection boxes.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Transform</span>
@@ -301,21 +324,22 @@
              <span class="n">original_image</span><span class="o">.</span><span class="n">height</span><span class="p">,</span>
              <span class="n">original_image</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
              <span class="n">original_image</span><span class="o">.</span><span class="n">height</span><span class="p">]</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="n">det_boxes</span> <span class="o">=</span> <span class="n">det_boxes</span> <span class="o">*</span> <span class="n">original_dims</span>
 
         <span class="c1"># Decode class integer labels</span>
-        <span class="n">det_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">rev_label_map</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">det_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+        <span class="n">det_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">rev_label_map</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+                      <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">det_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 
         <span class="c1"># If no objects found, the detected labels will be set to [&#39;0.&#39;], i.e. [&#39;background&#39;] in SSD300.detect_objects() in model.py</span>
         <span class="k">if</span> <span class="n">det_labels</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]:</span>
             <span class="c1"># Just return original image</span>
             <span class="n">box_info</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;text_size&quot;</span><span class="p">:[],</span>
-            <span class="s2">&quot;box_location&quot;</span><span class="p">:[]</span>
+                <span class="s2">&quot;text_size&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">&quot;box_location&quot;</span><span class="p">:</span> <span class="p">[]</span>
             <span class="p">}</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;annotated_image&quot;</span><span class="p">:</span><span class="n">original_image</span><span class="p">,</span> <span class="s2">&quot;box_info&quot;</span><span class="p">:</span><span class="n">box_info</span><span class="p">,</span> <span class="s2">&quot;detected&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;annotated_image&quot;</span><span class="p">:</span> <span class="n">original_image</span><span class="p">,</span> <span class="s2">&quot;box_info&quot;</span><span class="p">:</span> <span class="n">box_info</span><span class="p">,</span> <span class="s2">&quot;detected&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
 
         <span class="c1"># Annotate</span>
         <span class="n">annotated_image</span> <span class="o">=</span> <span class="n">original_image</span>
@@ -332,7 +356,8 @@
 
             <span class="c1"># Boxes</span>
             <span class="n">box_location</span> <span class="o">=</span> <span class="n">det_boxes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">box_location</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="n">label_color_map</span><span class="p">[</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">box_location</span><span class="p">,</span>
+                           <span class="n">outline</span><span class="o">=</span><span class="n">label_color_map</span><span class="p">[</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
             <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="mf">1.</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">box_location</span><span class="p">],</span> <span class="n">outline</span><span class="o">=</span><span class="n">label_color_map</span><span class="p">[</span>
                 <span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>  <span class="c1"># a second rectangle at an offset of 1 pixel to increase line thickness</span>
             <span class="c1"># draw.rectangle(xy=[l + 2. for l in box_location], outline=label_color_map[</span>
@@ -342,11 +367,13 @@
 
             <span class="c1"># Text</span>
             <span class="n">text_size</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
-            <span class="n">text_location</span> <span class="o">=</span> <span class="p">[</span><span class="n">box_location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">box_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">text_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">text_location</span> <span class="o">=</span> <span class="p">[</span><span class="n">box_location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">2.</span><span class="p">,</span>
+                             <span class="n">box_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">text_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
             <span class="n">textbox_location</span> <span class="o">=</span> <span class="p">[</span><span class="n">box_location</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">box_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">text_size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">box_location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">text_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">4.</span><span class="p">,</span>
                                 <span class="n">box_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
 
-            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">textbox_location</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">label_color_map</span><span class="p">[</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">textbox_location</span><span class="p">,</span>
+                           <span class="n">fill</span><span class="o">=</span><span class="n">label_color_map</span><span class="p">[</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
             <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">text_location</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
                       <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">)</span>
 
@@ -358,12 +385,11 @@
         <span class="c1"># the box information</span>
         <span class="n">box_info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">box_info</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;text_size&quot;</span><span class="p">:</span><span class="n">text_sizes</span><span class="p">,</span>
-            <span class="s2">&quot;box_location&quot;</span><span class="p">:</span><span class="n">box_locations</span>
-            <span class="p">}</span>
+            <span class="s2">&quot;text_size&quot;</span><span class="p">:</span> <span class="n">text_sizes</span><span class="p">,</span>
+            <span class="s2">&quot;box_location&quot;</span><span class="p">:</span> <span class="n">box_locations</span>
+        <span class="p">}</span>
 
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;annotated_image&quot;</span><span class="p">:</span><span class="n">annotated_image</span><span class="p">,</span> <span class="s2">&quot;box_info&quot;</span><span class="p">:</span><span class="n">box_info</span><span class="p">,</span> <span class="s2">&quot;detected&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">}</span></div>
-
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;annotated_image&quot;</span><span class="p">:</span> <span class="n">annotated_image</span><span class="p">,</span> <span class="s2">&quot;box_info&quot;</span><span class="p">:</span> <span class="n">box_info</span><span class="p">,</span> <span class="s2">&quot;detected&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
 </pre></div>
 
            </div>

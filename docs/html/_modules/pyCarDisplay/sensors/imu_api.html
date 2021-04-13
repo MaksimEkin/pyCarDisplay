@@ -152,16 +152,39 @@
             
   <h1>Source code for pyCarDisplay.sensors.imu_api</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-
+<span class="sd">This file simulates an IMU sensor. Data must be loaded from kitti_data_loader_api.py</span>
+<span class="sd">and passed to this module.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+
 <div class="viewcode-block" id="IMU"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU">[docs]</a><span class="k">class</span> <span class="nc">IMU</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">R_covariance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="s2">&quot;data should be type Pandas DataFrame&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initilie the IMU sensor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pd.DataFrame</span>
+<span class="sd">            Pandas DataFrame of IMU data.</span>
+<span class="sd">        verbose : bool, optional</span>
+<span class="sd">            Verbosity flag. The default is True.</span>
+<span class="sd">        R_covariance : float, optional</span>
+<span class="sd">            Covariance for the random error. The default is 0.1.</span>
+<span class="sd">        random_state : bool, optional</span>
+<span class="sd">            random seed. The default is 42.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="s2">&quot;data should be type Pandas DataFrame&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -173,55 +196,146 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initilized IMU&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current frame:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">))</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of frames:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">)))</span>
-            
+
 <div class="viewcode-block" id="IMU.get_R"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.get_R">[docs]</a>    <span class="k">def</span> <span class="nf">get_R</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the error covariance.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Error covariance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">R_covariance</span></div>
-            
+
 <div class="viewcode-block" id="IMU.get_avail_data"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.get_avail_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_avail_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> </div>
-        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the available IMU features, i.e. column names.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            names of the IMU columns.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="IMU.get_params"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the object variables.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            self variables.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-    
+
 <div class="viewcode-block" id="IMU.read_sensor"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.read_sensor">[docs]</a>    <span class="k">def</span> <span class="nf">read_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_noise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">advance_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates reading one IMU sensor data and increments the frame.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            Specify to read specific IMU data. The default is None.</span>
+<span class="sd">        add_noise : bool, optional</span>
+<span class="sd">            If True, error is added to the data. The default is True.</span>
+<span class="sd">        advance_frame : bool, optional</span>
+<span class="sd">            If True, frame is advanced to the next one. The default is True.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            {&quot;data&quot;: data, &quot;noise&quot;: noise, &quot;true&quot;: data-noise}.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Reached at the end of available number of frames. Reverting to frame 0. Number of frames: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">))</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s2">&quot;Reached at the end of available number of frames. Reverting to frame 0. Number of frames: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>
-        
+
         <span class="n">noise</span> <span class="o">=</span> <span class="mi">0</span>
-        
+
         <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            
+
             <span class="k">if</span> <span class="n">add_noise</span><span class="p">:</span>
-                <span class="n">num_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1"># -1 for the frame column</span>
+                <span class="n">num_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span><span class="p">)</span> <span class="o">-</span> \
+                    <span class="mi">1</span>  <span class="c1"># -1 for the frame column</span>
                 <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">R_covariance</span><span class="p">,</span> <span class="n">num_columns</span><span class="p">)</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s2">&quot;frame&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">noise</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s2">&quot;frame&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">noise</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s2">&quot;frame&quot;</span><span class="p">]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s2">&quot;frame&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__check_param</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">add_noise</span><span class="p">:</span>
                 <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">R_covariance</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">data</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">noise</span>
-        
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span> <span class="o">==</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">noise</span>
+
         <span class="k">if</span> <span class="n">advance_frame</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="s2">&quot;noise&quot;</span><span class="p">:</span> <span class="n">noise</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">-</span><span class="n">noise</span><span class="p">}</span></div>
-        
-<div class="viewcode-block" id="IMU.get_column"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.get_column">[docs]</a>    <span class="k">def</span> <span class="nf">get_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IMU.get_column"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.get_column">[docs]</a>    <span class="k">def</span> <span class="nf">get_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns all the frame data for one column.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            column name.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            one column from the dataframe.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__check_param</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)])</span></div>
-    
-<div class="viewcode-block" id="IMU.set_frame"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.set_frame">[docs]</a>    <span class="k">def</span> <span class="nf">set_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IMU.set_frame"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.imu_api.IMU.set_frame">[docs]</a>    <span class="k">def</span> <span class="nf">set_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        manually set the frame,</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        frame : int</span>
+<span class="sd">            frame number.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">frame</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span> <span class="ow">or</span> <span class="n">frame</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Frame has to be a positive intiger, and has to be less than the total number of available frames. Number of frames: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span></div>
-    
+
     <span class="k">def</span> <span class="nf">__check_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span><span class="p">,</span> <span class="s2">&quot;Parameter is not available in IMU. Parameters: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensures the requested name is available in the DataFrame</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            requested name.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span><span class="p">,</span> <span class="s2">&quot;Parameter is not available in IMU. Parameters: &quot;</span> <span class="o">+</span> \
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
