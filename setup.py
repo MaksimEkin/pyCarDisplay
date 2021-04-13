@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 import subprocess
 import pkg_resources
-__version__ = "0.0.0"
+__version__ = "0.0.1"
 
 # HELPER CLASS AND FUNCTIONS
 class BColors:
@@ -13,8 +13,8 @@ class BColors:
     FAIL = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'  
-    
+    UNDERLINE = '\033[4m'
+
 # enforce pip version
 pkg_resources.require(['pip >= 20.0.0'])
 
@@ -30,7 +30,7 @@ setup(
     name='pyCarDisplay',
     version=__version__,
 
-    author='Maksim E. Eren, Ryan Barron, Charles Varga, Wei Wang',
+    author='Ryan Barron, Maksim E. Eren, Charles Varga, and Wei Wang',
     author_email='meren1@umbc.edu',
     description='A car display.',
     long_description=LONG_DESCRIPTION,
@@ -40,9 +40,9 @@ setup(
     url='https://github.com/MaksimEkin/pyCarDisplay',
     packages=find_packages(),
     classifiers=[
-        'Development Status :: ' + str(__version__),
-        'Programming Language :: Python :: 3.8.5',
-        'Topic :: Automated Car :: Libraries'
+        'Development Status :: 3 - Alpha',
+        'Programming Language :: Python :: 3.8',
+        'Topic :: Software Development :: Libraries'
     ],
     python_requires='>=3.8.5',
     install_requires=INSTALL_REQUIRES,
@@ -50,6 +50,6 @@ setup(
     zip_safe=False
 )
 
-    
+
 # Done
 print(f'{BColors.OKGREEN}\tFinished installing.{BColors.ENDC}')

@@ -11,4 +11,4 @@
 # limitations under the License.
 """pyCarDisplay version."""
 
-__version__ = '0.0.0'
+__version__ = '0.0.1'
