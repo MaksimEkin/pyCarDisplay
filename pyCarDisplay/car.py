@@ -7,7 +7,7 @@ from .utils.kitti_data_loader_api import DataLoader
 
 from .sensors.image_processing_api import ImageProcessing
 from .sensors.imu_api import IMU
-#from .sensors.kalman_filter_api import KalmanFilter
+from .sensors.kalman_filter_api import KalmanFilter
 
 from .detection.object_detection_api import ObjectDetection
 from .detection.depth_detection_api import DepthDetection
@@ -152,6 +152,11 @@ class Car():
                                   verbose,
                                   R_covariance,
                                   random_state)
+
+            # Kalman Filter API -- depends on IMU sensor data
+            self.kalman_filters = [KalmanFilter() for x in range(len(list(self.imu_sensor.imu_data.columns)))]
+            self.kalman_data_points =  {'data':[0 for x in range(len(list(self.imu_sensor.imu_data.columns)))]}
+
         else:
             self.imu_sensor = None
 
@@ -238,15 +243,30 @@ class Car():
             if self.imu_sensor != None:
                 curr_imu_data = self.imu_sensor.read_sensor(
                     add_noise=self.add_noise, name=None)
+
+                print(self.imu_sensor.imu_data)
+                i = 0
+                for col in list(curr_imu_data['data'].columns):
+                    predict = self.kalman_filters[i].Predict(curr_imu_data['data'].col.values,
+                                                             self.kalman_data_points['data'][i],
+                                                             1)
+
+                    self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"].col.values, imu_data.R_covariance, 1)
+                    i+=1
+
             else:
                 curr_imu_data = {}
+
+
+
+
 
             # Display the current frame
             self.display_api.play(
                 detected_dictionary["annotated_image"],
                 depth_image,
                 curr_imu_data,
-                {'data': [45.456]},
+                self.kalman_data_points, #{'data': [45.456]}, # Kalman data
                 curr_frame,
                 self.verbose
             )
