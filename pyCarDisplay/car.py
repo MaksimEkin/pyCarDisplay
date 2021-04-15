@@ -49,8 +49,14 @@ class Car():
             If 'large', model uses a larger trained model but it will be slower. The default is "large".
         optimize : bool, optional
             If True, images are pre-processed for better depth detection. The default is True.
+        dpi : int, optional
+            Dots per inch. The default is 100.
+        alpha : double, optional
+            The alpha variable. The default is 0.6.
         img_resize_size : tuple, optional
             Size of the image when performing object detection. The default is (300, 300).
+        pixel_sizes : list, optional
+            The sizes of the pixels. The default is [1242, 375].
         norm_mean : list, optional
             Object detection hyper-parameter. The default is [0.485, 0.456, 0.406].
         norm_std : list, optional

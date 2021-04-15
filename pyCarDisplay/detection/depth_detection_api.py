@@ -1,5 +1,15 @@
 """
-Compute depth maps for images in the input folder.
+This is the depth detection module.
+
+We borrowed this code from the MiDaS GitHub repository, authored by intel-isl.
+We then modified the code to work with the pyCarDisplay library. This code
+obtains an image and turns it into a colorized heat map based on the depth
+of objects within the environment. Original functionality is preserved, but
+functionality is wrapped within a class with new additions.
+
+Reference:
+    “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].
+
 """
 import numpy as np
 import cv2
@@ -15,23 +25,42 @@ import io
 from PIL import Image
 
 
+
 class DepthDetection():
     def __init__(self, verbose: bool, model_path: str, model_type="large",
                  optimize=True, model=None, device="cpu", transform=None, dpi=100,
                  alpha=0.6, pixel_sizes=[1242, 375]):
         """
 
+        Initialize the depth detection class.
+
         Parameters
         ----------
-        verbose:Prints out information regarding API activity is set to True.
-        model_path:The path to the depth detection ML model file.
-        model_type:Set to either large or small. Option must match the file specified in model_path.
-        optimize:Currently does nothing.
-        model:If specified, defines the model to use for depth detection.
+        verbose : bool
+            Print out information regarding API activity.
+        model_path : str
+            The path to the pretrained model file.
+        model_type : str, optional
+            The type of model to use to detect depth. The default is "large".
+        optimize : bool, optional
+            Optimize the depth detection. The default is True.
+        model : None, optional
+            If passed in, this is the predefined model. The default is None.
+        device : str, optional
+            Use CUDA device if available. The default is "cpu".
+        transform : None, optional
+            Placeholder for the transform class variable. The default is None.
+        dpi : int, optional
+            Dots per inch. The default is 100.
+        alpha : double, optional
+            The alpha variable. The default is 0.6.
+        pixel_sizes : list, optional
+            The sizes of the pixels. The default is [1242, 375].
 
         Returns
         -------
         None.
+
         """
 
         self.model_path = model_path
@@ -87,11 +116,23 @@ class DepthDetection():
         )
 
     def run(self, verbose: bool, pil_image: Image, optimize=True):
-        """Run MiDaS to compute depth maps.
+        """
 
-        Args:
-            input_path (str): path to input folder
-            model_path (str): path to saved model
+
+        Parameters
+        ----------
+        verbose : bool
+            Print out information regarding API activitty.
+        pil_image : Image
+            The image to be evaluated.
+        optimize : bool, optional
+            Optimize the depth detection. The default is True.
+
+        Returns
+        -------
+        prediction : Image
+            An enhanced image with the colorized depth predictions of the objects within the environment.
+
         """
 
         self.model.to(self.device)
@@ -128,13 +169,15 @@ class DepthDetection():
 
         Parameters
         ----------
-        prediction : TYPE
-            DESCRIPTION.
+        prediction : Image
+            The depth predicitons of the objects withi the enviroment.
+        original_image : Image
+            The original image.
 
         Returns
         -------
-        TYPE
-            DESCRIPTION.
+        np.array()
+            A numpy array of the color values of each of the pixels in the image.
 
         """
 
