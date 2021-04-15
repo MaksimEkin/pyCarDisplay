@@ -144,6 +144,7 @@ class Car():
 
             # Kalman Filter API -- depends on IMU sensor data
             self.kalman_filters = [KalmanFilter() for x in range(len(list(self.imu_sensor.imu_data.columns)))]
+            print(self.kalman_filters)
             self.kalman_data_points =  {'data':[0 for x in range(len(list(self.imu_sensor.imu_data.columns)))]}
 
         else:
@@ -240,15 +241,16 @@ class Car():
                 curr_imu_data = self.imu_sensor.read_sensor(
                     add_noise=self.add_noise, name=None)
 
-                print(self.imu_sensor.imu_data)
-                i = 0
-                for col in list(curr_imu_data['data'].columns):
-                    predict = self.kalman_filters[i].Predict(curr_imu_data['data'].col.values,
+                print(curr_imu_data['data'])
+
+                for i, col in enumerate(list(curr_imu_data['data'].columns)):
+                    #print("col", col)
+                    #print("curr_imu_data['data'][col].values", curr_imu_data['data'][col].values[0])
+                    predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values,
                                                              self.kalman_data_points['data'][i],
                                                              1)
-
-                    self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"].col.values, imu_data.R_covariance, 1)
-                    i+=1
+                    #self.kalman_data_points['data'][i] = predict
+                    self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0], self.imu_sensor.R_covariance, predict)
 
             else:
                 curr_imu_data = {}

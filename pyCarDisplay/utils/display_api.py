@@ -124,7 +124,7 @@ class Display():
                 self.update_window(str(row) + "," + str(col), round(entry,2))
 
         for col, entry2 in enumerate(kalman_imu_data['data']):
-            self.update_window(str(4) + "," + str(col), round(entry2, 2))
+            self.update_window(str(3) + "," + str(col), entry2)
 
     def reset_depth_images(self, cropped_depth_images):
         """
