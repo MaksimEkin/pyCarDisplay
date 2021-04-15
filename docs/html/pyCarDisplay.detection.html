@@ -159,36 +159,71 @@
 </div>
 <div class="section" id="module-pyCarDisplay.detection.depth_detection_api">
 <span id="pycardisplay-detection-depth-detection-api-module"></span><h2>pyCarDisplay.detection.depth_detection_api module<a class="headerlink" href="#module-pyCarDisplay.detection.depth_detection_api" title="Permalink to this headline">¶</a></h2>
-<p>Compute depth maps for images in the input folder.</p>
+<p>This is the depth detection module.</p>
+<p>We borrowed this code from the MiDaS GitHub repository, authored by intel-isl.
+We then modified the code to work with the pyCarDisplay library. This code
+obtains an image and turns it into a colorized heat map based on the depth
+of objects within the environment. Original functionality is preserved, but
+functionality is wrapped within a class with new additions.</p>
+<dl class="simple">
+<dt>Reference:</dt><dd><p>“MiDaS,” Pytorch.org. [Online]. Available: <a class="reference external" href="https://pytorch.org/hub/intelisl_midas_v2/">https://pytorch.org/hub/intelisl_midas_v2/</a>. [Accessed: 27-Mar-2021].</p>
+</dd>
+</dl>
 <dl class="py class">
 <dt id="pyCarDisplay.detection.depth_detection_api.DepthDetection">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.detection.depth_detection_api.</span></code><code class="sig-name descname"><span class="pre">DepthDetection</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'large'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1242,</span> <span class="pre">375]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/depth_detection_api.html#DepthDetection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.depth_detection_api.DepthDetection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>verbose:Prints out information regarding API activity is set to True.
-model_path:The path to the depth detection ML model file.
-model_type:Set to either large or small. Option must match the file specified in model_path.
-optimize:Currently does nothing.
-model:If specified, defines the model to use for depth detection.</p>
+<p>Initialize the depth detection class.</p>
+<dl class="simple">
+<dt>verbose<span class="classifier">bool</span></dt><dd><p>Print out information regarding API activity.</p>
+</dd>
+<dt>model_path<span class="classifier">str</span></dt><dd><p>The path to the pretrained model file.</p>
+</dd>
+<dt>model_type<span class="classifier">str, optional</span></dt><dd><p>The type of model to use to detect depth. The default is "large".</p>
+</dd>
+<dt>optimize<span class="classifier">bool, optional</span></dt><dd><p>Optimize the depth detection. The default is True.</p>
+</dd>
+<dt>model<span class="classifier">None, optional</span></dt><dd><p>If passed in, this is the predefined model. The default is None.</p>
+</dd>
+<dt>device<span class="classifier">str, optional</span></dt><dd><p>Use CUDA device if available. The default is "cpu".</p>
+</dd>
+<dt>transform<span class="classifier">None, optional</span></dt><dd><p>Placeholder for the transform class variable. The default is None.</p>
+</dd>
+<dt>dpi<span class="classifier">int, optional</span></dt><dd><p>Dots per inch. The default is 100.</p>
+</dd>
+<dt>alpha<span class="classifier">double, optional</span></dt><dd><p>The alpha variable. The default is 0.6.</p>
+</dd>
+<dt>pixel_sizes<span class="classifier">list, optional</span></dt><dd><p>The sizes of the pixels. The default is [1242, 375].</p>
+</dd>
+</dl>
 <p>None.</p>
 <dl class="py method">
 <dt id="pyCarDisplay.detection.depth_detection_api.DepthDetection.convert_to_heat_map">
 <code class="sig-name descname"><span class="pre">convert_to_heat_map</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/depth_detection_api.html#DepthDetection.convert_to_heat_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.depth_detection_api.DepthDetection.convert_to_heat_map" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
-<dt>prediction<span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+<dt>prediction<span class="classifier">Image</span></dt><dd><p>The depth predicitons of the objects withi the enviroment.</p>
+</dd>
+<dt>original_image<span class="classifier">Image</span></dt><dd><p>The original image.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>TYPE</dt><dd><p>DESCRIPTION.</p>
+<dt>np.array()</dt><dd><p>A numpy array of the color values of each of the pixels in the image.</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt id="pyCarDisplay.detection.depth_detection_api.DepthDetection.run">
 <code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">verbose:</span> <span class="pre">bool</span></em>, <em class="sig-param"><span class="pre">pil_image:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'/opt/anaconda3/envs/pyCarDisplay/lib/python3.8/site-packages/Pillow-8.1.2-py3.8-macosx-10.9-x86_64.egg/PIL/Image.py'&gt;</span></em>, <em class="sig-param"><span class="pre">optimize=True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/detection/depth_detection_api.html#DepthDetection.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.detection.depth_detection_api.DepthDetection.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run MiDaS to compute depth maps.</p>
+<dd><dl class="simple">
+<dt>verbose<span class="classifier">bool</span></dt><dd><p>Print out information regarding API activitty.</p>
+</dd>
+<dt>pil_image<span class="classifier">Image</span></dt><dd><p>The image to be evaluated.</p>
+</dd>
+<dt>optimize<span class="classifier">bool, optional</span></dt><dd><p>Optimize the depth detection. The default is True.</p>
+</dd>
+</dl>
 <dl class="simple">
-<dt>Args:</dt><dd><p>input_path (str): path to input folder
-model_path (str): path to saved model</p>
+<dt>prediction<span class="classifier">Image</span></dt><dd><p>An enhanced image with the colorized depth predictions of the objects within the environment.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -199,7 +234,7 @@ model_path (str): path to saved model</p>
 <p>This is the object detection module.</p>
 <p>This code is borrowed from sgrvinod's GitHub repository named
 a-PyTorch-Tutorial-to-Object-Detection, and modified to work with pyCarDisplay.
-It preserves the original functionality, but wrapped around a class.</p>
+It preserves the original functionality, but is wrapped around a class.</p>
 <dl class="simple">
 <dt>Reference:</dt><dd><p>Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. <a class="reference external" href="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection">https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection</a></p>
 </dd>
@@ -210,15 +245,15 @@ It preserves the original functionality, but wrapped around a class.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Initilize the object detection class.</p>
 <dl class="simple">
-<dt>model_path<span class="classifier">str</span></dt><dd><p>path to the pre-trained PyTorch model.</p>
+<dt>model_path<span class="classifier">str</span></dt><dd><p>Path to the pre-trained PyTorch model.</p>
 </dd>
 <dt>verbose<span class="classifier">bool</span></dt><dd><p>Verbosity flag.</p>
 </dd>
 <dt>img_resize_size<span class="classifier">tuple, optional</span></dt><dd><p>Image size during prediction. The default is (300, 300).</p>
 </dd>
-<dt>norm_mean<span class="classifier">list, optional</span></dt><dd><p>model hyper-parameter. The default is [0.485, 0.456, 0.406].</p>
+<dt>norm_mean<span class="classifier">list, optional</span></dt><dd><p>Model hyper-parameter. The default is [0.485, 0.456, 0.406].</p>
 </dd>
-<dt>norm_std<span class="classifier">list, optional</span></dt><dd><p>model hyper-parameter. The default is [0.229, 0.224, 0.225].</p>
+<dt>norm_std<span class="classifier">list, optional</span></dt><dd><p>Model hyper-parameter. The default is [0.229, 0.224, 0.225].</p>
 </dd>
 <dt>device<span class="classifier">str, optional</span></dt><dd><p>If 'gpu', model uses a CUDA device. The default is "cpu".</p>
 </dd>
@@ -233,17 +268,17 @@ It preserves the original functionality, but wrapped around a class.</p>
 </dd>
 <dt>suppress<span class="classifier">TYPE, optional</span></dt><dd><p>DESCRIPTION. The default is None.</p>
 </dd>
-<dt>min_score<span class="classifier">float, optional</span></dt><dd><p>min threshold for object to be classified. The default is 0.2.</p>
+<dt>min_score<span class="classifier">float, optional</span></dt><dd><p>Minimum threshold for object to be classified. The default is 0.2.</p>
 </dd>
-<dt>max_overlap<span class="classifier">float, optional</span></dt><dd><p>min threshold for object to be classified. The default is 0.5.</p>
+<dt>max_overlap<span class="classifier">float, optional</span></dt><dd><p>Minimum threshold for object to be classified. The default is 0.5.</p>
 </dd>
-<dt>top_k<span class="classifier">int, optional</span></dt><dd><p>how many objects to attempt to classify. The default is 200.</p>
+<dt>top_k<span class="classifier">int, optional</span></dt><dd><p>How many objects to attempt to classify. The default is 200.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>dict</dt><dd><p>Returns a dictionary in format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}
-box_info is in format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values
-are list of coordinates for the detection boxes.</p>
+<dt>dict</dt><dd><p>Returns a dictionary in the following format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}
+box_info is in the following format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values
+are a list of coordinates for the detection boxes.</p>
 </dd>
 </dl>
 </dd></dl>

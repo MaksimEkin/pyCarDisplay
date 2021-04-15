@@ -137,7 +137,17 @@
         </label>
         <h1>Source code for pyCarDisplay.detection.depth_detection_api</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""</span>
-<span class="sd">Compute depth maps for images in the input folder.</span>
+<span class="sd">This is the depth detection module.</span>
+
+<span class="sd">We borrowed this code from the MiDaS GitHub repository, authored by intel-isl.</span>
+<span class="sd">We then modified the code to work with the pyCarDisplay library. This code</span>
+<span class="sd">obtains an image and turns it into a colorized heat map based on the depth</span>
+<span class="sd">of objects within the environment. Original functionality is preserved, but</span>
+<span class="sd">functionality is wrapped within a class with new additions.</span>
+
+<span class="sd">Reference:</span>
+<span class="sd">    “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].</span>
+
 <span class="sd">"""</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
@@ -153,23 +163,42 @@
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 
+
 <div class="viewcode-block" id="DepthDetection"><a class="viewcode-back" href="../../../pyCarDisplay.detection.html#pyCarDisplay.detection.depth_detection_api.DepthDetection">[docs]</a><span class="k">class</span> <span class="nc">DepthDetection</span><span class="p">():</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">"large"</span><span class="p">,</span>
                  <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
                  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">pixel_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">1242</span><span class="p">,</span> <span class="mi">375</span><span class="p">]):</span>
         <span class="sd">"""</span>
 
+<span class="sd">        Initialize the depth detection class.</span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        verbose:Prints out information regarding API activity is set to True.</span>
-<span class="sd">        model_path:The path to the depth detection ML model file.</span>
-<span class="sd">        model_type:Set to either large or small. Option must match the file specified in model_path.</span>
-<span class="sd">        optimize:Currently does nothing.</span>
-<span class="sd">        model:If specified, defines the model to use for depth detection.</span>
+<span class="sd">        verbose : bool</span>
+<span class="sd">            Print out information regarding API activity.</span>
+<span class="sd">        model_path : str</span>
+<span class="sd">            The path to the pretrained model file.</span>
+<span class="sd">        model_type : str, optional</span>
+<span class="sd">            The type of model to use to detect depth. The default is "large".</span>
+<span class="sd">        optimize : bool, optional</span>
+<span class="sd">            Optimize the depth detection. The default is True.</span>
+<span class="sd">        model : None, optional</span>
+<span class="sd">            If passed in, this is the predefined model. The default is None.</span>
+<span class="sd">        device : str, optional</span>
+<span class="sd">            Use CUDA device if available. The default is "cpu".</span>
+<span class="sd">        transform : None, optional</span>
+<span class="sd">            Placeholder for the transform class variable. The default is None.</span>
+<span class="sd">        dpi : int, optional</span>
+<span class="sd">            Dots per inch. The default is 100.</span>
+<span class="sd">        alpha : double, optional</span>
+<span class="sd">            The alpha variable. The default is 0.6.</span>
+<span class="sd">        pixel_sizes : list, optional</span>
+<span class="sd">            The sizes of the pixels. The default is [1242, 375].</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        None.</span>
+
 <span class="sd">        """</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span> <span class="o">=</span> <span class="n">model_path</span>
@@ -225,11 +254,23 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="DepthDetection.run"><a class="viewcode-back" href="../../../pyCarDisplay.detection.html#pyCarDisplay.detection.depth_detection_api.DepthDetection.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">pil_image</span><span class="p">:</span> <span class="n">Image</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">"""Run MiDaS to compute depth maps.</span>
+        <span class="sd">"""</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            input_path (str): path to input folder</span>
-<span class="sd">            model_path (str): path to saved model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        verbose : bool</span>
+<span class="sd">            Print out information regarding API activitty.</span>
+<span class="sd">        pil_image : Image</span>
+<span class="sd">            The image to be evaluated.</span>
+<span class="sd">        optimize : bool, optional</span>
+<span class="sd">            Optimize the depth detection. The default is True.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        prediction : Image</span>
+<span class="sd">            An enhanced image with the colorized depth predictions of the objects within the environment.</span>
+
 <span class="sd">        """</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -266,13 +307,15 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        prediction : TYPE</span>
-<span class="sd">            DESCRIPTION.</span>
+<span class="sd">        prediction : Image</span>
+<span class="sd">            The depth predicitons of the objects withi the enviroment.</span>
+<span class="sd">        original_image : Image</span>
+<span class="sd">            The original image.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        TYPE</span>
-<span class="sd">            DESCRIPTION.</span>
+<span class="sd">        np.array()</span>
+<span class="sd">            A numpy array of the color values of each of the pixels in the image.</span>
 
 <span class="sd">        """</span>
 

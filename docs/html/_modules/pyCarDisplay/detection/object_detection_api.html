@@ -141,7 +141,7 @@
 
 <span class="sd">This code is borrowed from sgrvinod's GitHub repository named</span>
 <span class="sd">a-PyTorch-Tutorial-to-Object-Detection, and modified to work with pyCarDisplay.</span>
-<span class="sd">It preserves the original functionality, but wrapped around a class.</span>
+<span class="sd">It preserves the original functionality, but is wrapped around a class.</span>
 
 <span class="sd">Reference:</span>
 <span class="sd">    Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection</span>
@@ -170,15 +170,15 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        model_path : str</span>
-<span class="sd">            path to the pre-trained PyTorch model.</span>
+<span class="sd">            Path to the pre-trained PyTorch model.</span>
 <span class="sd">        verbose : bool</span>
 <span class="sd">            Verbosity flag.</span>
 <span class="sd">        img_resize_size : tuple, optional</span>
 <span class="sd">            Image size during prediction. The default is (300, 300).</span>
 <span class="sd">        norm_mean : list, optional</span>
-<span class="sd">            model hyper-parameter. The default is [0.485, 0.456, 0.406].</span>
+<span class="sd">            Model hyper-parameter. The default is [0.485, 0.456, 0.406].</span>
 <span class="sd">        norm_std : list, optional</span>
-<span class="sd">            model hyper-parameter. The default is [0.229, 0.224, 0.225].</span>
+<span class="sd">            Model hyper-parameter. The default is [0.229, 0.224, 0.225].</span>
 <span class="sd">        device : str, optional</span>
 <span class="sd">            If 'gpu', model uses a CUDA device. The default is "cpu".</span>
 
@@ -241,18 +241,18 @@
 <span class="sd">        suppress : TYPE, optional</span>
 <span class="sd">            DESCRIPTION. The default is None.</span>
 <span class="sd">        min_score : float, optional</span>
-<span class="sd">            min threshold for object to be classified. The default is 0.2.</span>
+<span class="sd">            Minimum threshold for object to be classified. The default is 0.2.</span>
 <span class="sd">        max_overlap : float, optional</span>
-<span class="sd">            min threshold for object to be classified. The default is 0.5.</span>
+<span class="sd">            Minimum threshold for object to be classified. The default is 0.5.</span>
 <span class="sd">        top_k : int, optional</span>
-<span class="sd">            how many objects to attempt to classify. The default is 200.</span>
+<span class="sd">            How many objects to attempt to classify. The default is 200.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
-<span class="sd">            Returns a dictionary in format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}</span>
-<span class="sd">            box_info is in format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values</span>
-<span class="sd">            are list of coordinates for the detection boxes.</span>
+<span class="sd">            Returns a dictionary in the following format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}</span>
+<span class="sd">            box_info is in the following format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values</span>
+<span class="sd">            are a list of coordinates for the detection boxes.</span>
 
 <span class="sd">        """</span>
 
@@ -268,20 +268,20 @@
 <span class="sd">        original_image : PIL.Image</span>
 <span class="sd">            Kitti dataset 1 frame image.</span>
 <span class="sd">        min_score : float</span>
-<span class="sd">            detection threshold.</span>
+<span class="sd">            Detection threshold.</span>
 <span class="sd">        max_overlap : float</span>
-<span class="sd">            detection threshold.</span>
+<span class="sd">            Detection threshold.</span>
 <span class="sd">        top_k : int</span>
-<span class="sd">            number of objects to search.</span>
+<span class="sd">            Number of objects to search.</span>
 <span class="sd">        suppress : TYPE</span>
 <span class="sd">            DESCRIPTION.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
-<span class="sd">            Returns a dictionary in format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}</span>
-<span class="sd">            box_info is in format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values</span>
-<span class="sd">            are list of coordinates for the detection boxes.</span>
+<span class="sd">            Returns a dictionary in the following format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}</span>
+<span class="sd">            box_info is in the following format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values</span>
+<span class="sd">            are a list of coordinates for the detection boxes.</span>
 
 <span class="sd">        """</span>
 
