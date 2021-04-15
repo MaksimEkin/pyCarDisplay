@@ -1,167 +1,152 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-
-<!DOCTYPE html>
-<html class="writer-html5" lang="Python" >
-<head>
-  <meta charset="utf-8" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>pyCarDisplay.detection.object_detection_api &mdash; pyCarDisplay 1.0.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
+    <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
+        <title>pyCarDisplay.detection.object_detection_api - pyCarDisplay 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="../../../_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../_static/pygments_dark.css">
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="../../../_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
     
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
 
-    
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
-</head>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
 
-<body class="wy-body-for-nav">
 
-   
-  <div class="wy-grid-for-nav">
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="../../../index.html" class="icon icon-home"> pyCarDisplay
-          
-
-          
-          </a>
-
-          
-            
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">pyCarDisplay 0.0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  
+  
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">pyCarDisplay</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../modules.html">pyCarDisplay</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pyCarDisplay.html">pyCarDisplay package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pyCarDisplay.detection.html">pyCarDisplay.detection package</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pyCarDisplay.detection.midas.html">pyCarDisplay.detection.midas package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pyCarDisplay.sensors.html">pyCarDisplay.sensors package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pyCarDisplay.utils.html">pyCarDisplay.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
-        
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">pyCarDisplay</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>pyCarDisplay.detection.object_detection_api</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-      </li>
-    
-  </ul>
-
-  
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
-  <h1>Source code for pyCarDisplay.detection.object_detection_api</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <h1>Source code for pyCarDisplay.detection.object_detection_api</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
 <span class="sd">This is the object detection module.</span>
 
-<span class="sd">This code is borrowed from sgrvinod&#39;s GitHub repository named</span>
+<span class="sd">This code is borrowed from sgrvinod's GitHub repository named</span>
 <span class="sd">a-PyTorch-Tutorial-to-Object-Detection, and modified to work with pyCarDisplay.</span>
-<span class="sd">It preserved the main functionality of the unmodified version.</span>
+<span class="sd">It preserves the original functionality, but wrapped around a class.</span>
 
 <span class="sd">Reference:</span>
 <span class="sd">    Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
 <span class="kn">from</span> <span class="nn">.__utils_obj_detection</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageDraw</span><span class="p">,</span> <span class="n">ImageFont</span>
@@ -177,9 +162,9 @@
                  <span class="n">img_resize_size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
                  <span class="n">norm_mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span>
                  <span class="n">norm_std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">],</span>
-                 <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span>
+                 <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span>
                  <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Initilize the object detection class.</span>
 
 <span class="sd">        Parameters</span>
@@ -195,42 +180,42 @@
 <span class="sd">        norm_std : list, optional</span>
 <span class="sd">            model hyper-parameter. The default is [0.229, 0.224, 0.225].</span>
 <span class="sd">        device : str, optional</span>
-<span class="sd">            If &#39;gpu&#39;, model uses a CUDA device. The default is &quot;cpu&quot;.</span>
+<span class="sd">            If 'gpu', model uses a CUDA device. The default is "cpu".</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        None.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;pwd&quot;</span><span class="p">))</span>
+<span class="sd">        """</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"pwd"</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span> <span class="o">=</span> <span class="n">model_path</span>
 
         <span class="c1"># Use GPU if available</span>
-        <span class="k">if</span> <span class="n">device</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">device</span> <span class="o">==</span> <span class="s2">"cpu"</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">"cuda"</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;No cuda device found!&quot;</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">"No cuda device found!"</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;Object detection is using: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="s2">&quot;yellow&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">"Object detection is using: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="s2">"yellow"</span><span class="p">))</span>
 
         <span class="c1"># Load model checkpoint</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;Object detection API is loading the model: &quot;</span> <span class="o">+</span>
-                          <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">),</span> <span class="s2">&quot;blue&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">"Object detection API is loading the model: "</span> <span class="o">+</span>
+                          <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">),</span> <span class="s2">"blue"</span><span class="p">))</span>
 
         <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">start_epoch</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">start_epoch</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s1">'epoch'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s1">&#39;Loaded checkpoint from epoch </span><span class="si">%d</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span>
-                          <span class="n">start_epoch</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s1">'Loaded checkpoint from epoch </span><span class="si">%d</span><span class="s1">.</span><span class="se">\n</span><span class="s1">'</span> <span class="o">%</span>
+                          <span class="n">start_epoch</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">))</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s1">'model'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
@@ -246,7 +231,7 @@
                <span class="n">min_score</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
                <span class="n">max_overlap</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                <span class="n">top_k</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Predicts the objects in the image using the pre-trained model.</span>
 
 <span class="sd">        Parameters</span>
@@ -265,17 +250,17 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
-<span class="sd">            Returns a dictionary in format: {&quot;annotated_image&quot;: annotated_image, &quot;box_info&quot;: box_info, &quot;detected&quot;: True}</span>
-<span class="sd">            box_info is in format: box_info = {&quot;text_size&quot;: text_sizes,&quot;box_location&quot;: box_locations}, where the values</span>
+<span class="sd">            Returns a dictionary in format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}</span>
+<span class="sd">            box_info is in format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values</span>
 <span class="sd">            are list of coordinates for the detection boxes.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># .show()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__detect_helper</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">min_score</span><span class="o">=</span><span class="n">min_score</span><span class="p">,</span> <span class="n">max_overlap</span><span class="o">=</span><span class="n">max_overlap</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="n">top_k</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="n">suppress</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__detect_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original_image</span><span class="p">,</span> <span class="n">min_score</span><span class="p">,</span> <span class="n">max_overlap</span><span class="p">,</span> <span class="n">top_k</span><span class="p">,</span> <span class="n">suppress</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Performs the prediction.</span>
 
 <span class="sd">        Parameters</span>
@@ -294,11 +279,11 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
-<span class="sd">            Returns a dictionary in format: {&quot;annotated_image&quot;: annotated_image, &quot;box_info&quot;: box_info, &quot;detected&quot;: True}</span>
-<span class="sd">            box_info is in format: box_info = {&quot;text_size&quot;: text_sizes,&quot;box_location&quot;: box_locations}, where the values</span>
+<span class="sd">            Returns a dictionary in format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}</span>
+<span class="sd">            box_info is in format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values</span>
 <span class="sd">            are list of coordinates for the detection boxes.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># Transform</span>
         <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">original_image</span><span class="p">)))</span>
@@ -317,7 +302,7 @@
                                                                       <span class="n">top_k</span><span class="o">=</span><span class="n">top_k</span><span class="p">)</span>
 
         <span class="c1"># Move detections to the CPU</span>
-        <span class="n">det_boxes</span> <span class="o">=</span> <span class="n">det_boxes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+        <span class="n">det_boxes</span> <span class="o">=</span> <span class="n">det_boxes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">'cpu'</span><span class="p">)</span>
 
         <span class="c1"># Transform to original image dimensions</span>
         <span class="n">original_dims</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span>
@@ -331,16 +316,16 @@
 
         <span class="c1"># Decode class integer labels</span>
         <span class="n">det_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">rev_label_map</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
-                      <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">det_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+                      <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">det_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">'cpu'</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 
-        <span class="c1"># If no objects found, the detected labels will be set to [&#39;0.&#39;], i.e. [&#39;background&#39;] in SSD300.detect_objects() in model.py</span>
-        <span class="k">if</span> <span class="n">det_labels</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]:</span>
+        <span class="c1"># If no objects found, the detected labels will be set to ['0.'], i.e. ['background'] in SSD300.detect_objects() in model.py</span>
+        <span class="k">if</span> <span class="n">det_labels</span> <span class="o">==</span> <span class="p">[</span><span class="s1">'background'</span><span class="p">]:</span>
             <span class="c1"># Just return original image</span>
             <span class="n">box_info</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;text_size&quot;</span><span class="p">:</span> <span class="p">[],</span>
-                <span class="s2">&quot;box_location&quot;</span><span class="p">:</span> <span class="p">[]</span>
+                <span class="s2">"text_size"</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">"box_location"</span><span class="p">:</span> <span class="p">[]</span>
             <span class="p">}</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;annotated_image&quot;</span><span class="p">:</span> <span class="n">original_image</span><span class="p">,</span> <span class="s2">&quot;box_info&quot;</span><span class="p">:</span> <span class="n">box_info</span><span class="p">,</span> <span class="s2">&quot;detected&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"annotated_image"</span><span class="p">:</span> <span class="n">original_image</span><span class="p">,</span> <span class="s2">"box_info"</span><span class="p">:</span> <span class="n">box_info</span><span class="p">,</span> <span class="s2">"detected"</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
 
         <span class="c1"># Annotate</span>
         <span class="n">annotated_image</span> <span class="o">=</span> <span class="n">original_image</span>
@@ -375,7 +360,7 @@
 
             <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">textbox_location</span><span class="p">,</span>
                            <span class="n">fill</span><span class="o">=</span><span class="n">label_color_map</span><span class="p">[</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
-            <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">text_location</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+            <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">text_location</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">det_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">fill</span><span class="o">=</span><span class="s1">'white'</span><span class="p">,</span>
                       <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">)</span>
 
             <span class="n">box_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">box_location</span><span class="p">)</span>
@@ -386,54 +371,41 @@
         <span class="c1"># the box information</span>
         <span class="n">box_info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">box_info</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;text_size&quot;</span><span class="p">:</span> <span class="n">text_sizes</span><span class="p">,</span>
-            <span class="s2">&quot;box_location&quot;</span><span class="p">:</span> <span class="n">box_locations</span>
+            <span class="s2">"text_size"</span><span class="p">:</span> <span class="n">text_sizes</span><span class="p">,</span>
+            <span class="s2">"box_location"</span><span class="p">:</span> <span class="n">box_locations</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;annotated_image&quot;</span><span class="p">:</span> <span class="n">annotated_image</span><span class="p">,</span> <span class="s2">&quot;box_info&quot;</span><span class="p">:</span> <span class="n">box_info</span><span class="p">,</span> <span class="s2">&quot;detected&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"annotated_image"</span><span class="p">:</span> <span class="n">annotated_image</span><span class="p">,</span> <span class="s2">"box_info"</span><span class="p">:</span> <span class="n">box_info</span><span class="p">,</span> <span class="s2">"detected"</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
 </pre></div>
-
-           </div>
-           
-          </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Ryan Barron, Maksim Eren, Charles Varga, Wei Wang.
-
-    </p>
-  </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
-</footer>
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
         </div>
-      </div>
 
-    </section>
-
-  </div>
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-  
-  
-    
-   
-
-</body>
+        <div class="related-information">
+              Copyright &#169; 2021, Ryan Barron, Maksim Eren, Charles Varga, Wei Wang
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

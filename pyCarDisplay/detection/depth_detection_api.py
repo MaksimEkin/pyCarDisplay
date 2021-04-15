@@ -1,24 +1,24 @@
 """
 Compute depth maps for images in the input folder.
 """
-from torchvision import transforms
-from PIL import Image, ImageDraw, ImageFont
 import numpy as np
-import matplotlib
 import cv2
-import os
-import glob
 import torch
-import argparse
 from torchvision.transforms import Compose
 from .midas.midas_net import MidasNet
 from .midas.midas_net_custom import MidasNet_small
 from .midas.transforms import Resize, NormalizeImage, PrepareForNet
 import sys
 from termcolor import colored
+import matplotlib.pyplot as plt
+import io
+from PIL import Image
+
 
 class DepthDetection():
-    def __init__(self, verbose:bool, model_path:str, model_type="large", optimize=True, model=None, device="cpu", transform=None):
+    def __init__(self, verbose: bool, model_path: str, model_type="large",
+                 optimize=True, model=None, device="cpu", transform=None, dpi=100,
+                 alpha=0.6, pixel_sizes=[1242, 375]):
         """
 
         Parameters
@@ -28,7 +28,7 @@ class DepthDetection():
         model_type:Set to either large or small. Option must match the file specified in model_path.
         optimize:Currently does nothing.
         model:If specified, defines the model to use for depth detection.
-        
+
         Returns
         -------
         None.
@@ -38,7 +38,10 @@ class DepthDetection():
         self.model_type = model_type
         self.optimize = optimize
         self.verbose = verbose
-        
+        self.dpi = dpi
+        self.alpha = alpha
+        self.pixel_sizes = pixel_sizes
+
         # select device
         # Use GPU if available
         if device == "cpu":
@@ -48,7 +51,7 @@ class DepthDetection():
                 self.device = torch.device("cuda")
             else:
                 sys.exit("No cuda device found!")
-        
+
         if self.verbose:
             print(colored("Depth detection is using: " + str(self.device), "yellow"))
 
@@ -57,11 +60,13 @@ class DepthDetection():
             self.model = MidasNet(model_path, non_negative=True)
             self.net_w, self.net_h = 384, 384
         elif model_type == "small":
-            self.model = MidasNet_small(model_path, features=64, backbone="efficientnet_lite3", exportable=True, non_negative=True, blocks={'expand': True})
-            self.net_w, self.net_h = 256, 256 # Self-ize these variables
+            self.model = MidasNet_small(model_path, features=64, backbone="efficientnet_lite3",
+                                        exportable=True, non_negative=True, blocks={'expand': True})
+            self.net_w, self.net_h = 256, 256  # Self-ize these variables
         else:
             if verbose:
-                print(f"model_type '{model_type}' not implemented, use: --model_type large")
+                print(
+                    f"model_type '{model_type}' not implemented, use: --model_type large")
             assert False
 
         self.transform = Compose(
@@ -75,12 +80,13 @@ class DepthDetection():
                     resize_method="upper_bound",
                     image_interpolation_method=cv2.INTER_CUBIC,
                 ),
-                NormalizeImage(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                NormalizeImage(mean=[0.485, 0.456, 0.406],
+                               std=[0.229, 0.224, 0.225]),
                 PrepareForNet(),
             ]
         )
 
-    def run(self, verbose:bool, pil_image:Image, optimize=True):
+    def run(self, verbose: bool, pil_image: Image, optimize=True):
         """Run MiDaS to compute depth maps.
 
         Args:
@@ -92,20 +98,20 @@ class DepthDetection():
 
         num_images = 1
 
-        pil_image=np.array(pil_image)
+        pil_arr_image = np.array(pil_image)
 
-        img_input = self.transform({"image": pil_image})["image"]
+        img_input = self.transform({"image": pil_arr_image})["image"]
 
         with torch.no_grad():
             sample = torch.from_numpy(img_input).to(self.device).unsqueeze(0)
-            if optimize==True and self.device == torch.device("cuda"):
-                sample = sample.to(memory_format=torch.channels_last)  
+            if optimize == True and self.device == torch.device("cuda"):
+                sample = sample.to(memory_format=torch.channels_last)
                 sample = sample.half()
             prediction = self.model.forward(sample)
             prediction = (
                 torch.nn.functional.interpolate(
                     prediction.unsqueeze(1),
-                    size=pil_image.shape[:2],
+                    size=pil_arr_image.shape[:2],
                     mode="bicubic",
                     align_corners=False,
                 )
@@ -113,5 +119,36 @@ class DepthDetection():
                 .cpu()
                 .numpy()
             )
-            
-        return prediction
+
+        return Image.fromarray(self.convert_to_heat_map(prediction, pil_image))
+
+    def convert_to_heat_map(self, prediction, original_image):
+        """
+
+
+        Parameters
+        ----------
+        prediction : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        """
+
+        plt.ioff()
+
+        fig, ax = plt.subplots(figsize=(self.pixel_sizes[0]/self.dpi, self.pixel_sizes[1]/self.dpi), dpi=self.dpi)
+        figure = ax.imshow(original_image)
+        figure = ax.imshow(prediction, alpha=self.alpha, cmap='nipy_spectral')
+
+        plt.tight_layout()
+        plt.ion()
+
+        buf = io.BytesIO()
+        fig.savefig(buf)
+        buf.seek(0)
+
+        return np.array(Image.open(buf))
