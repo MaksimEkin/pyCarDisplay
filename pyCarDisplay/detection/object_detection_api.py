@@ -8,7 +8,6 @@ It preserves the original functionality, but is wrapped around a class.
 Reference:
     Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
 
-
 Original license from a-PyTorch-Tutorial-to-Object-Detection is below.
 
 MIT License
