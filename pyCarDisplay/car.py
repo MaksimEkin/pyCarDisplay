@@ -21,7 +21,8 @@ class Car():
 
     def __init__(self, car_images_path: str, imu_sensor_path="", lidar_sensor_path="",
                  object_detection_model_path="", depth_detection_model_path="",
-                 depth_detection_model_type="large", optimize=True, img_resize_size=(300, 300),
+                 depth_detection_model_type="large", optimize=True, dpi=100, alpha=0.6,
+                 img_resize_size=(300, 300), pixel_sizes=[1242, 375],
                  norm_mean=[0.485, 0.456, 0.406], norm_std=[0.229, 0.224, 0.225],
                  R_covariance=0.1, add_noise=True, IMU_name=None, gui_speed=1,
                  theme="DarkGrey1", image_extension="png", random_state=42,
@@ -120,7 +121,11 @@ class Car():
             self.depth_detection_api = DepthDetection(self.verbose,
                                                       depth_detection_model_path,
                                                       depth_detection_model_type,
-                                                      device=device
+                                                      device=device,
+                                                      optimize=optimize,
+                                                      dpi=dpi,
+                                                      pixel_sizes=pixel_sizes,
+                                                      alpha=alpha
                                                       )
         else:
             self.depth_detection_api = None
@@ -219,16 +224,9 @@ class Car():
             if self.depth_detection_api != None:
                 depth_image = self.depth_detection_api.run(
                     self.verbose, image, True)
-                depth_min = depth_image.min()
-                depth_max = depth_image.max()
-                max_val = (2 * (81)) - 1
-                out = max_val * (depth_image - depth_min) / \
-                    (depth_max - depth_min)
-                #pil_depth_image = Image.fromarray(np.uint8(cm.gist_earth(np.log2(out))*255), 'RGBA')
-                pil_depth_image = Image.fromarray(np.log2(out), 'RGBA')
 
             else:
-                pil_depth_image = image
+                depth_image = image
 
             # read IMU sensor data
             if self.imu_sensor != None:
@@ -240,8 +238,7 @@ class Car():
             # Display the current frame
             self.display_api.play(
                 detected_dictionary["annotated_image"],
-                # cropped_depth_images,
-                pil_depth_image,
+                depth_image,
                 curr_imu_data,
                 {'data': [45.456]},
                 curr_frame,
