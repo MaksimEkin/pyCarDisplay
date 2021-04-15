@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
-        <title>pyCarDisplay.detection.midas.blocks - pyCarDisplay 0.0.1 documentation</title>
+        <title>pyCarDisplay.detection.midas.blocks - pyCarDisplay 0.0.2 documentation</title>
       <link rel="stylesheet" href="../../../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css">
@@ -86,7 +86,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">pyCarDisplay 0.0.1 documentation</div></a>
+      <a href="../../../../index.html"><div class="brand">pyCarDisplay 0.0.2 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -100,7 +100,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
   
   
-  <span class="sidebar-brand-text">pyCarDisplay 0.0.1 documentation</span>
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.2 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -136,21 +136,51 @@
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
         <h1>Source code for pyCarDisplay.detection.midas.blocks</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span></span><span class="sd">"""</span>
+
+<span class="sd">Reference:</span>
+<span class="sd">    “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].</span>
+
+<span class="sd">Original license from MiDaS code is below.</span>
+
+<span class="sd">MIT License</span>
+
+<span class="sd">Copyright (c) 2019 Intel ISL (Intel Intelligent Systems Lab)</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="sd">of this software and associated documentation files (the "Software"), to deal</span>
+<span class="sd">in the Software without restriction, including without limitation the rights</span>
+<span class="sd">to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="sd">copies of the Software, and to permit persons to whom the Software is</span>
+<span class="sd">furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all</span>
+<span class="sd">copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="sd">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="sd">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="sd">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="sd">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="sd">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="sd">SOFTWARE.</span>
+
+<span class="sd">"""</span>
+<span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 
 
 <span class="k">def</span> <span class="nf">_make_encoder</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">use_pretrained</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">exportable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">backbone</span> <span class="o">==</span> <span class="s2">"resnext101_wsl"</span><span class="p">:</span>
         <span class="n">pretrained</span> <span class="o">=</span> <span class="n">_make_pretrained_resnext101_wsl</span><span class="p">(</span><span class="n">use_pretrained</span><span class="p">)</span>
-        <span class="n">scratch</span> <span class="o">=</span> <span class="n">_make_scratch</span><span class="p">([</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2048</span><span class="p">],</span> <span class="n">features</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">)</span>     <span class="c1"># efficientnet_lite3  </span>
+        <span class="n">scratch</span> <span class="o">=</span> <span class="n">_make_scratch</span><span class="p">([</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2048</span><span class="p">],</span> <span class="n">features</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">)</span>     <span class="c1"># efficientnet_lite3</span>
     <span class="k">elif</span> <span class="n">backbone</span> <span class="o">==</span> <span class="s2">"efficientnet_lite3"</span><span class="p">:</span>
         <span class="n">pretrained</span> <span class="o">=</span> <span class="n">_make_pretrained_efficientnet_lite3</span><span class="p">(</span><span class="n">use_pretrained</span><span class="p">,</span> <span class="n">exportable</span><span class="o">=</span><span class="n">exportable</span><span class="p">)</span>
-        <span class="n">scratch</span> <span class="o">=</span> <span class="n">_make_scratch</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">384</span><span class="p">],</span> <span class="n">features</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">)</span>  <span class="c1"># efficientnet_lite3     </span>
+        <span class="n">scratch</span> <span class="o">=</span> <span class="n">_make_scratch</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">384</span><span class="p">],</span> <span class="n">features</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">)</span>  <span class="c1"># efficientnet_lite3</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Backbone '</span><span class="si">{</span><span class="n">backbone</span><span class="si">}</span><span class="s2">' not implemented"</span><span class="p">)</span>
         <span class="k">assert</span> <span class="kc">False</span>
-        
+
     <span class="k">return</span> <span class="n">pretrained</span><span class="p">,</span> <span class="n">scratch</span>
 
 
@@ -204,7 +234,7 @@
     <span class="n">pretrained</span><span class="o">.</span><span class="n">layer4</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">effnet</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">9</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">pretrained</span>
-    
+
 
 <span class="k">def</span> <span class="nf">_make_resnet_backbone</span><span class="p">(</span><span class="n">resnet</span><span class="p">):</span>
     <span class="n">pretrained</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">()</span>
@@ -354,7 +384,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
             <span class="n">features</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span>
         <span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
             <span class="n">features</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span>
         <span class="p">)</span>
@@ -376,12 +406,12 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tensor: output</span>
 <span class="sd">        """</span>
-        
+
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
             <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-       
+
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
@@ -416,12 +446,12 @@
         <span class="n">out_features</span> <span class="o">=</span> <span class="n">features</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
             <span class="n">out_features</span> <span class="o">=</span> <span class="n">features</span><span class="o">//</span><span class="mi">2</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">out_conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">resConfUnit1</span> <span class="o">=</span> <span class="n">ResidualConvUnit_custom</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">activation</span><span class="p">,</span> <span class="n">bn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resConfUnit2</span> <span class="o">=</span> <span class="n">ResidualConvUnit_custom</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">activation</span><span class="p">,</span> <span class="n">bn</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">skip_add</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">FloatFunctional</span><span class="p">()</span>
 
 <div class="viewcode-block" id="FeatureFusionBlock_custom.forward"><a class="viewcode-back" href="../../../../pyCarDisplay.detection.midas.html#pyCarDisplay.detection.midas.blocks.FeatureFusionBlock_custom.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">xs</span><span class="p">):</span>
@@ -446,7 +476,6 @@
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_conv</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">output</span></div></div>
-
 </pre></div>
       </article>
       <footer>
