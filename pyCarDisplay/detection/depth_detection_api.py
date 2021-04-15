@@ -2,8 +2,10 @@
 This is the depth detection module.
 
 We borrowed this code from the MiDaS GitHub repository, authored by intel-isl.
-We then modified the code to work with the pyCarDisplay library. Original
-functionality is preserved, but functionality is wrapped within a class.
+We then modified the code to work with the pyCarDisplay library. This code
+obtains an image and turns it into a colorized heat map based on the depth
+of objects within the environment. Original functionality is preserved, but
+functionality is wrapped within a class with new additions.
 
 Reference:
     “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].
@@ -29,6 +31,7 @@ class DepthDetection():
                  optimize=True, model=None, device="cpu", transform=None, dpi=100,
                  alpha=0.6, pixel_sizes=[1242, 375]):
         """
+
         Initialize the depth detection class.
 
         Parameters
@@ -47,6 +50,12 @@ class DepthDetection():
             Use CUDA device if available. The default is "cpu".
         transform : None, optional
             Placeholder for the transform class variable. The default is None.
+        dpi : int, optional
+            Dots per inch. The default is 100.
+        alpha : double, optional
+            The alpha variable. The default is 0.6.
+        pixel_sizes : list, optional
+            The sizes of the pixels. The default is [1242, 375].
 
         Returns
         -------
@@ -160,13 +169,15 @@ class DepthDetection():
 
         Parameters
         ----------
-        prediction : TYPE
-            DESCRIPTION.
+        prediction : Image
+            The depth predicitons of the objects withi the enviroment.
+        original_image : Image
+            The original image.
 
         Returns
         -------
-        TYPE
-            DESCRIPTION.
+        np.array()
+            A numpy array of the color values of each of the pixels in the image.
 
         """
 
