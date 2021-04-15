@@ -8,6 +8,10 @@
 
 <br>
 
+![](img/example.png)
+
+<br>
+
 Python Library for Simulating Autonomous Vehicle: pyCarDisplay.
 pyCarDisplay is developed to read the Kitti dataset, and simulate an automated car.
 It can perform object detection, depth detection, IMU sensor simulation, Kalman Filtering,
