@@ -1,6 +1,33 @@
 """MidashNet: Network for monocular depth estimation trained by mixing several datasets.
 This file contains code that is adapted from
 https://github.com/thomasjpfan/pytorch_refinenet/blob/master/pytorch_refinenet/refinenet/refinenet_4cascade.py
+
+Reference:
+    “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].
+
+Original license from MiDaS code is below.
+
+MIT License
+
+Copyright (c) 2019 Intel ISL (Intel Intelligent Systems Lab)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 import torch
 import torch.nn as nn
@@ -27,7 +54,7 @@ class MidasNet_small(BaseModel):
         super(MidasNet_small, self).__init__()
 
         use_pretrained = False if path else True
-                
+
         self.channels_last = channels_last
         self.blocks = blocks
         self.backbone = backbone
@@ -47,15 +74,15 @@ class MidasNet_small(BaseModel):
             features4=features*8
 
         self.pretrained, self.scratch = _make_encoder(self.backbone, features, use_pretrained, groups=self.groups, expand=self.expand, exportable=exportable)
-  
-        self.scratch.activation = nn.ReLU(False)    
+
+        self.scratch.activation = nn.ReLU(False)
 
         self.scratch.refinenet4 = FeatureFusionBlock_custom(features4, self.scratch.activation, deconv=False, bn=False, expand=self.expand, align_corners=align_corners)
         self.scratch.refinenet3 = FeatureFusionBlock_custom(features3, self.scratch.activation, deconv=False, bn=False, expand=self.expand, align_corners=align_corners)
         self.scratch.refinenet2 = FeatureFusionBlock_custom(features2, self.scratch.activation, deconv=False, bn=False, expand=self.expand, align_corners=align_corners)
         self.scratch.refinenet1 = FeatureFusionBlock_custom(features1, self.scratch.activation, deconv=False, bn=False, align_corners=align_corners)
 
-        
+
         self.scratch.output_conv = nn.Sequential(
             nn.Conv2d(features, features//2, kernel_size=3, stride=1, padding=1, groups=self.groups),
             Interpolate(scale_factor=2, mode="bilinear"),
@@ -65,7 +92,7 @@ class MidasNet_small(BaseModel):
             nn.ReLU(True) if non_negative else nn.Identity(),
             nn.Identity(),
         )
-        
+
         if path:
             self.load(path)
 
@@ -88,7 +115,7 @@ class MidasNet_small(BaseModel):
         layer_2 = self.pretrained.layer2(layer_1)
         layer_3 = self.pretrained.layer3(layer_2)
         layer_4 = self.pretrained.layer4(layer_3)
-        
+
         layer_1_rn = self.scratch.layer1_rn(layer_1)
         layer_2_rn = self.scratch.layer2_rn(layer_2)
         layer_3_rn = self.scratch.layer3_rn(layer_3)
@@ -99,7 +126,7 @@ class MidasNet_small(BaseModel):
         path_3 = self.scratch.refinenet3(path_4, layer_3_rn)
         path_2 = self.scratch.refinenet2(path_3, layer_2_rn)
         path_1 = self.scratch.refinenet1(path_2, layer_1_rn)
-        
+
         out = self.scratch.output_conv(path_1)
 
         return torch.squeeze(out, dim=1)
