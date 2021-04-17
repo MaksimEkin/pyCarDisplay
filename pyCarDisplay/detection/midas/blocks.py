@@ -1,3 +1,33 @@
+"""
+
+Reference:
+    “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].
+
+Original license from MiDaS code is below.
+
+MIT License
+
+Copyright (c) 2019 Intel ISL (Intel Intelligent Systems Lab)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+"""
 import torch
 import torch.nn as nn
 
@@ -5,14 +35,14 @@ import torch.nn as nn
 def _make_encoder(backbone, features, use_pretrained, groups=1, expand=False, exportable=True):
     if backbone == "resnext101_wsl":
         pretrained = _make_pretrained_resnext101_wsl(use_pretrained)
-        scratch = _make_scratch([256, 512, 1024, 2048], features, groups=groups, expand=expand)     # efficientnet_lite3  
+        scratch = _make_scratch([256, 512, 1024, 2048], features, groups=groups, expand=expand)     # efficientnet_lite3
     elif backbone == "efficientnet_lite3":
         pretrained = _make_pretrained_efficientnet_lite3(use_pretrained, exportable=exportable)
-        scratch = _make_scratch([32, 48, 136, 384], features, groups=groups, expand=expand)  # efficientnet_lite3     
+        scratch = _make_scratch([32, 48, 136, 384], features, groups=groups, expand=expand)  # efficientnet_lite3
     else:
         print(f"Backbone '{backbone}' not implemented")
         assert False
-        
+
     return pretrained, scratch
 
 
@@ -66,7 +96,7 @@ def _make_efficientnet_backbone(effnet):
     pretrained.layer4 = nn.Sequential(*effnet.blocks[5:9])
 
     return pretrained
-    
+
 
 def _make_resnet_backbone(resnet):
     pretrained = nn.Module()
@@ -216,7 +246,7 @@ class ResidualConvUnit_custom(nn.Module):
         self.conv1 = nn.Conv2d(
             features, features, kernel_size=3, stride=1, padding=1, bias=True, groups=self.groups
         )
-        
+
         self.conv2 = nn.Conv2d(
             features, features, kernel_size=3, stride=1, padding=1, bias=True, groups=self.groups
         )
@@ -238,12 +268,12 @@ class ResidualConvUnit_custom(nn.Module):
         Returns:
             tensor: output
         """
-        
+
         out = self.activation(x)
         out = self.conv1(out)
         if self.bn==True:
             out = self.bn1(out)
-       
+
         out = self.activation(out)
         out = self.conv2(out)
         if self.bn==True:
@@ -278,12 +308,12 @@ class FeatureFusionBlock_custom(nn.Module):
         out_features = features
         if self.expand==True:
             out_features = features//2
-        
+
         self.out_conv = nn.Conv2d(features, out_features, kernel_size=1, stride=1, padding=0, bias=True, groups=1)
 
         self.resConfUnit1 = ResidualConvUnit_custom(features, activation, bn)
         self.resConfUnit2 = ResidualConvUnit_custom(features, activation, bn)
-        
+
         self.skip_add = nn.quantized.FloatFunctional()
 
     def forward(self, *xs):
@@ -308,4 +338,3 @@ class FeatureFusionBlock_custom(nn.Module):
         output = self.out_conv(output)
 
         return output
-

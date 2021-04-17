@@ -3,10 +3,34 @@ This is the object detection module.
 
 This code is borrowed from sgrvinod's GitHub repository named
 a-PyTorch-Tutorial-to-Object-Detection, and modified to work with pyCarDisplay.
-It preserves the original functionality, but wrapped around a class.
+It preserves the original functionality, but is wrapped around a class.
 
 Reference:
     Vinodababu, S. (n.d.). A-PyTorch-Tutorial-to-Object-Detection. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection
+
+Original license from a-PyTorch-Tutorial-to-Object-Detection is below.
+
+MIT License
+
+Copyright (c) 2019 Sagar Vinodababu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 """
 from torchvision import transforms
@@ -32,15 +56,15 @@ class ObjectDetection():
         Parameters
         ----------
         model_path : str
-            path to the pre-trained PyTorch model.
+            Path to the pre-trained PyTorch model.
         verbose : bool
             Verbosity flag.
         img_resize_size : tuple, optional
             Image size during prediction. The default is (300, 300).
         norm_mean : list, optional
-            model hyper-parameter. The default is [0.485, 0.456, 0.406].
+            Model hyper-parameter. The default is [0.485, 0.456, 0.406].
         norm_std : list, optional
-            model hyper-parameter. The default is [0.229, 0.224, 0.225].
+            Model hyper-parameter. The default is [0.229, 0.224, 0.225].
         device : str, optional
             If 'gpu', model uses a CUDA device. The default is "cpu".
 
@@ -103,18 +127,18 @@ class ObjectDetection():
         suppress : TYPE, optional
             DESCRIPTION. The default is None.
         min_score : float, optional
-            min threshold for object to be classified. The default is 0.2.
+            Minimum threshold for object to be classified. The default is 0.2.
         max_overlap : float, optional
-            min threshold for object to be classified. The default is 0.5.
+            Minimum threshold for object to be classified. The default is 0.5.
         top_k : int, optional
-            how many objects to attempt to classify. The default is 200.
+            How many objects to attempt to classify. The default is 200.
 
         Returns
         -------
         dict
-            Returns a dictionary in format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}
-            box_info is in format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values
-            are list of coordinates for the detection boxes.
+            Returns a dictionary in the following format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}
+            box_info is in the following format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values
+            are a list of coordinates for the detection boxes.
 
         """
 
@@ -130,20 +154,20 @@ class ObjectDetection():
         original_image : PIL.Image
             Kitti dataset 1 frame image.
         min_score : float
-            detection threshold.
+            Detection threshold.
         max_overlap : float
-            detection threshold.
+            Detection threshold.
         top_k : int
-            number of objects to search.
+            Number of objects to search.
         suppress : TYPE
             DESCRIPTION.
 
         Returns
         -------
         dict
-            Returns a dictionary in format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}
-            box_info is in format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values
-            are list of coordinates for the detection boxes.
+            Returns a dictionary in the following format: {"annotated_image": annotated_image, "box_info": box_info, "detected": True}
+            box_info is in the following format: box_info = {"text_size": text_sizes,"box_location": box_locations}, where the values
+            are a list of coordinates for the detection boxes.
 
         """
 

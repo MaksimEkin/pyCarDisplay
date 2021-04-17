@@ -1,163 +1,178 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-
-<!DOCTYPE html>
-<html class="writer-html5" lang="Python" >
-<head>
-  <meta charset="utf-8" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>pyCarDisplay.detection.midas.transforms &mdash; pyCarDisplay 1.0.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
+    <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
+        <title>pyCarDisplay.detection.midas.transforms - pyCarDisplay 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="../../../../_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css">
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
+
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="../../../../_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
     
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
 
-    
-    <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" /> 
-</head>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
 
-<body class="wy-body-for-nav">
 
-   
-  <div class="wy-grid-for-nav">
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="../../../../index.html" class="icon icon-home"> pyCarDisplay
-          
-
-          
-          </a>
-
-          
-            
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">pyCarDisplay 0.0.2 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+  
+  
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.2 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">pyCarDisplay</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules.html">pyCarDisplay</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pyCarDisplay.html">pyCarDisplay package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../pyCarDisplay.detection.html">pyCarDisplay.detection package</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label for="toctree-checkbox-3"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../pyCarDisplay.detection.midas.html">pyCarDisplay.detection.midas package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pyCarDisplay.sensors.html">pyCarDisplay.sensors package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pyCarDisplay.utils.html">pyCarDisplay.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
-            
-          
-        </div>
-        
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../../index.html">pyCarDisplay</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../../index.html">Module code</a> &raquo;</li>
-        
-      <li>pyCarDisplay.detection.midas.transforms</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-      </li>
-    
-  </ul>
-
-  
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
-  <h1>Source code for pyCarDisplay.detection.midas.transforms</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <h1>Source code for pyCarDisplay.detection.midas.transforms</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+
+<span class="sd">Reference:</span>
+<span class="sd">    “MiDaS,” Pytorch.org. [Online]. Available: https://pytorch.org/hub/intelisl_midas_v2/. [Accessed: 27-Mar-2021].</span>
+
+<span class="sd">Original license from MiDaS code is below.</span>
+
+<span class="sd">MIT License</span>
+
+<span class="sd">Copyright (c) 2019 Intel ISL (Intel Intelligent Systems Lab)</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="sd">of this software and associated documentation files (the "Software"), to deal</span>
+<span class="sd">in the Software without restriction, including without limitation the rights</span>
+<span class="sd">to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="sd">copies of the Software, and to permit persons to whom the Software is</span>
+<span class="sd">furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all</span>
+<span class="sd">copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="sd">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="sd">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="sd">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="sd">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="sd">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="sd">SOFTWARE.</span>
+
+<span class="sd">"""</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">math</span>
 
 
 <div class="viewcode-block" id="apply_min_size"><a class="viewcode-back" href="../../../../pyCarDisplay.detection.midas.html#pyCarDisplay.detection.midas.transforms.apply_min_size">[docs]</a><span class="k">def</span> <span class="nf">apply_min_size</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">image_interpolation_method</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_AREA</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Rezise the sample to ensure the given size. Keeps aspect ratio.</span>
+    <span class="sd">"""Rezise the sample to ensure the given size. Keeps aspect ratio.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        sample (dict): sample</span>
@@ -165,8 +180,8 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple: new size</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;disparity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"disparity"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">sample</span>
@@ -181,26 +196,26 @@
     <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="c1"># resize</span>
-    <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
-        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">image_interpolation_method</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">image_interpolation_method</span>
     <span class="p">)</span>
 
-    <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;disparity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
-        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;disparity&quot;</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s2">"disparity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">"disparity"</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span>
     <span class="p">)</span>
-    <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
-        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
         <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
         <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Resize"><a class="viewcode-back" href="../../../../pyCarDisplay.detection.midas.html#pyCarDisplay.detection.midas.transforms.Resize">[docs]</a><span class="k">class</span> <span class="nc">Resize</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Resize sample to given size (width, height).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">"""Resize sample to given size (width, height).</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -209,10 +224,10 @@
         <span class="n">resize_target</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">keep_aspect_ratio</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">ensure_multiple_of</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">resize_method</span><span class="o">=</span><span class="s2">&quot;lower_bound&quot;</span><span class="p">,</span>
+        <span class="n">resize_method</span><span class="o">=</span><span class="s2">"lower_bound"</span><span class="p">,</span>
         <span class="n">image_interpolation_method</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_AREA</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Init.</span>
+        <span class="sd">"""Init.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            width (int): desired output width</span>
@@ -224,17 +239,17 @@
 <span class="sd">            keep_aspect_ratio (bool, optional):</span>
 <span class="sd">                True: Keep the aspect ratio of the input sample.</span>
 <span class="sd">                Output sample might not have the given width and height, and</span>
-<span class="sd">                resize behaviour depends on the parameter &#39;resize_method&#39;.</span>
+<span class="sd">                resize behaviour depends on the parameter 'resize_method'.</span>
 <span class="sd">                Defaults to False.</span>
 <span class="sd">            ensure_multiple_of (int, optional):</span>
 <span class="sd">                Output width and height is constrained to be multiple of this parameter.</span>
 <span class="sd">                Defaults to 1.</span>
 <span class="sd">            resize_method (str, optional):</span>
-<span class="sd">                &quot;lower_bound&quot;: Output will be at least as large as the given size.</span>
-<span class="sd">                &quot;upper_bound&quot;: Output will be at max as large as the given size. (Output size might be smaller than given size.)</span>
-<span class="sd">                &quot;minimal&quot;: Scale as least as possible.  (Output size might be smaller than given size.)</span>
-<span class="sd">                Defaults to &quot;lower_bound&quot;.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">                "lower_bound": Output will be at least as large as the given size.</span>
+<span class="sd">                "upper_bound": Output will be at max as large as the given size. (Output size might be smaller than given size.)</span>
+<span class="sd">                "minimal": Scale as least as possible.  (Output size might be smaller than given size.)</span>
+<span class="sd">                Defaults to "lower_bound".</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">=</span> <span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__height</span> <span class="o">=</span> <span class="n">height</span>
 
@@ -261,7 +276,7 @@
         <span class="n">scale_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">/</span> <span class="n">width</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__keep_aspect_ratio</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">&quot;lower_bound&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">"lower_bound"</span><span class="p">:</span>
                 <span class="c1"># scale such that output size is lower bound</span>
                 <span class="k">if</span> <span class="n">scale_width</span> <span class="o">&gt;</span> <span class="n">scale_height</span><span class="p">:</span>
                     <span class="c1"># fit width</span>
@@ -269,7 +284,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># fit height</span>
                     <span class="n">scale_width</span> <span class="o">=</span> <span class="n">scale_height</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">&quot;upper_bound&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">"upper_bound"</span><span class="p">:</span>
                 <span class="c1"># scale such that output size is upper bound</span>
                 <span class="k">if</span> <span class="n">scale_width</span> <span class="o">&lt;</span> <span class="n">scale_height</span><span class="p">:</span>
                     <span class="c1"># fit width</span>
@@ -277,7 +292,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># fit height</span>
                     <span class="n">scale_width</span> <span class="o">=</span> <span class="n">scale_height</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">&quot;minimal&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">"minimal"</span><span class="p">:</span>
                 <span class="c1"># scale as least as possbile</span>
                 <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scale_width</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scale_height</span><span class="p">):</span>
                     <span class="c1"># fit width</span>
@@ -287,147 +302,134 @@
                     <span class="n">scale_width</span> <span class="o">=</span> <span class="n">scale_height</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;resize_method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span><span class="si">}</span><span class="s2"> not implemented&quot;</span>
+                    <span class="sa">f</span><span class="s2">"resize_method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span><span class="si">}</span><span class="s2"> not implemented"</span>
                 <span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">&quot;lower_bound&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">"lower_bound"</span><span class="p">:</span>
             <span class="n">new_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constrain_to_multiple_of</span><span class="p">(</span>
                 <span class="n">scale_height</span> <span class="o">*</span> <span class="n">height</span><span class="p">,</span> <span class="n">min_val</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__height</span>
             <span class="p">)</span>
             <span class="n">new_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constrain_to_multiple_of</span><span class="p">(</span>
                 <span class="n">scale_width</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">min_val</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__width</span>
             <span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">&quot;upper_bound&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">"upper_bound"</span><span class="p">:</span>
             <span class="n">new_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constrain_to_multiple_of</span><span class="p">(</span>
                 <span class="n">scale_height</span> <span class="o">*</span> <span class="n">height</span><span class="p">,</span> <span class="n">max_val</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__height</span>
             <span class="p">)</span>
             <span class="n">new_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constrain_to_multiple_of</span><span class="p">(</span>
                 <span class="n">scale_width</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">max_val</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__width</span>
             <span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">&quot;minimal&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span> <span class="o">==</span> <span class="s2">"minimal"</span><span class="p">:</span>
             <span class="n">new_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constrain_to_multiple_of</span><span class="p">(</span><span class="n">scale_height</span> <span class="o">*</span> <span class="n">height</span><span class="p">)</span>
             <span class="n">new_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constrain_to_multiple_of</span><span class="p">(</span><span class="n">scale_width</span> <span class="o">*</span> <span class="n">width</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;resize_method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span><span class="si">}</span><span class="s2"> not implemented&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"resize_method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__resize_method</span><span class="si">}</span><span class="s2"> not implemented"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="n">new_width</span><span class="p">,</span> <span class="n">new_height</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
         <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_size</span><span class="p">(</span>
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="p">)</span>
 
         <span class="c1"># resize sample</span>
-        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">],</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">],</span>
             <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span>
             <span class="n">interpolation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__image_interpolation_method</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resize_target</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;disparity&quot;</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
-                <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;disparity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
-                    <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;disparity&quot;</span><span class="p">],</span>
+            <span class="k">if</span> <span class="s2">"disparity"</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+                <span class="n">sample</span><span class="p">[</span><span class="s2">"disparity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+                    <span class="n">sample</span><span class="p">[</span><span class="s2">"disparity"</span><span class="p">],</span>
                     <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span>
                     <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span><span class="p">,</span>
                 <span class="p">)</span>
 
-            <span class="k">if</span> <span class="s2">&quot;depth&quot;</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
-                <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
-                    <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">],</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span>
+            <span class="k">if</span> <span class="s2">"depth"</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+                <span class="n">sample</span><span class="p">[</span><span class="s2">"depth"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+                    <span class="n">sample</span><span class="p">[</span><span class="s2">"depth"</span><span class="p">],</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span>
                 <span class="p">)</span>
 
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
-                <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+                <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
                 <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span>
                 <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">sample</span></div>
 
 
 <div class="viewcode-block" id="NormalizeImage"><a class="viewcode-back" href="../../../../pyCarDisplay.detection.midas.html#pyCarDisplay.detection.midas.transforms.NormalizeImage">[docs]</a><span class="k">class</span> <span class="nc">NormalizeImage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Normlize image by given mean and std.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">"""Normlize image by given mean and std.</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__mean</span> <span class="o">=</span> <span class="n">mean</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__std</span> <span class="o">=</span> <span class="n">std</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
-        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mean</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__std</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mean</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__std</span>
 
         <span class="k">return</span> <span class="n">sample</span></div>
 
 
 <div class="viewcode-block" id="PrepareForNet"><a class="viewcode-back" href="../../../../pyCarDisplay.detection.midas.html#pyCarDisplay.detection.midas.transforms.PrepareForNet">[docs]</a><span class="k">class</span> <span class="nc">PrepareForNet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Prepare sample for usage as network input.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">"""Prepare sample for usage as network input.</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;mask&quot;</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">"mask"</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">])</span>
 
-        <span class="k">if</span> <span class="s2">&quot;disparity&quot;</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
-            <span class="n">disparity</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;disparity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;disparity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">disparity</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"disparity"</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+            <span class="n">disparity</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"disparity"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"disparity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">disparity</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;depth&quot;</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
-            <span class="n">depth</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-            <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"depth"</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+            <span class="n">depth</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"depth"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">sample</span><span class="p">[</span><span class="s2">"depth"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">sample</span></div>
 </pre></div>
-
-           </div>
-           
-          </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Ryan Barron, Maksim Eren, Charles Varga, Wei Wang.
-
-    </p>
-  </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
-</footer>
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
         </div>
-      </div>
 
-    </section>
-
-  </div>
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-  
-  
-    
-   
-
-</body>
+        <div class="related-information">
+              Copyright &#169; 2021, Ryan Barron, Maksim Eren, Charles Varga, Wei Wang
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

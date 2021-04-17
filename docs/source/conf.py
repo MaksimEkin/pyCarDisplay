@@ -23,7 +23,7 @@ copyright = '2021, Ryan Barron, Maksim Eren, Charles Varga, Wei Wang'
 author = 'Ryan Barron, Maksim Eren, Charles Varga, Wei Wang'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = '0.0.2'
 
 
 # -- General configuration ---------------------------------------------------
