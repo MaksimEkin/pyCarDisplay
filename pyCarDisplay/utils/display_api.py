@@ -124,7 +124,8 @@ class Display():
                 self.update_window(str(row) + "," + str(col), round(entry,2))
 
         for col, entry2 in enumerate(kalman_imu_data['data']):
-            self.update_window(str(3) + "," + str(col), entry2)
+            if col != 30:
+                self.update_window(str(3) + "," + str(col), str(entry2)[1:len(str(entry2))-1])
 
     def reset_depth_images(self, cropped_depth_images):
         """
@@ -208,7 +209,7 @@ class Display():
         """
 
         self.verbose = verbose
-        
+
         # check if pause or play were clicked or if window closed
         """May need to relocate this"""
         event, values = self.window.read(timeout=1)

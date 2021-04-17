@@ -246,17 +246,17 @@ class Car():
                 for i, col in enumerate(list(curr_imu_data['data'].columns)):
                     #print("col", col)
                     #print("curr_imu_data['data'][col].values", curr_imu_data['data'][col].values[0])
-                    predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values,
-                                                             self.kalman_data_points['data'][i],
-                                                             1)
-                    #self.kalman_data_points['data'][i] = predict
-                    self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0], self.imu_sensor.R_covariance, predict)
+                    predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
+                                                             self.kalman_data_points['data'][i], #PREVIOUS DATA POINT
+                                                             1) # DELTA TIME
+
+                    #set next data points based on the prediction, senssor and covariance
+                    self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
+                                                                                        self.imu_sensor.R_covariance,
+                                                                                        predict)
 
             else:
                 curr_imu_data = {}
-
-
-
 
 
             # Display the current frame
