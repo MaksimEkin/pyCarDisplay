@@ -245,19 +245,33 @@ class Car():
                 curr_imu_data = self.imu_sensor.read_sensor(
                     add_noise=self.add_noise, name=None)
 
-                print(curr_imu_data['data'])
-
+                print("self.kalman_data_points=", self.kalman_data_points)
                 for i, col in enumerate(list(curr_imu_data['data'].columns)):
-                    #print("col", col)
-                    #print("curr_imu_data['data'][col].values", curr_imu_data['data'][col].values[0])
+
+                    if curr_frame > 0:
+                        print("Sensor read=", curr_imu_data['data'][col].values[0])
+                        print("previous data point=", self.kalman_data_points['data'][i])
+                        #print("previous data point=", self.kalman_data_points['data'][i][0])
+
+
                     predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
                                                              self.kalman_data_points['data'][i], #PREVIOUS DATA POINT
-                                                             1) # DELTA TIME
+                                                             .9) # DELTA TIME
 
                     #set next data points based on the prediction, senssor and covariance
                     self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
                                                                                         self.imu_sensor.R_covariance,
-                                                                                        predict)
+                                                                                        predict)[0]
+                    if curr_frame > 0:
+
+                        print("Sensor read=", curr_imu_data['data'][col].values[0])
+                        print("imu_sensor.R_covariance=", self.imu_sensor.R_covariance)
+                        print("predict=", predict)
+
+                        print("update=", self.kalman_data_points['data'][i])
+                        input()
+
+
 
             else:
                 curr_imu_data = {}
