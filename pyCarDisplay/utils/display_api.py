@@ -125,7 +125,7 @@ class Display():
 
         for col, entry2 in enumerate(kalman_imu_data['data']):
             if col != 30:
-                self.update_window(str(3) + "," + str(col), str(entry2)[1:len(str(entry2))-1])
+                self.update_window(str(3) + "," + str(col), round(entry2,2))
 
     def reset_depth_images(self, cropped_depth_images):
         """
@@ -159,7 +159,7 @@ class Display():
         row_names = ["data", "noise", "true", "Kalman"]
 
         header =  [[sg.Text("", size=(6,1))] + [sg.Text(h, size=(6,1)) for h in headings]]
-        input_rows = [[sg.Text(row_names[row], size=(6,1))] + [sg.Input(size=(6,1), pad=(8,0), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
+        input_rows = [[sg.Text(row_names[row], size=(6,1))] + [sg.Input(size=(6,1), pad=(7,0), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
 
         elements =  [
             [sg.ProgressBar(self.total_frames, orientation='h', size=(50, 5), key='progressbar')],
