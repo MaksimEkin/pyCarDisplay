@@ -251,7 +251,6 @@ class Car():
                     if curr_frame > 0:
                         print("Sensor read=", curr_imu_data['data'][col].values[0])
                         print("previous data point=", self.kalman_data_points['data'][i])
-                        #print("previous data point=", self.kalman_data_points['data'][i][0])
 
 
                     predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
