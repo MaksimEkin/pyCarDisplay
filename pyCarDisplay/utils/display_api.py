@@ -158,8 +158,8 @@ class Display():
 
         row_names = ["data", "noise", "true", "Kalman"]
 
-        header =  [[sg.Text("", size=(6,1))] + [sg.Text(h, size=(6,1)) for h in headings]]
-        input_rows = [[sg.Text(row_names[row], size=(6,1))] + [sg.Input(size=(6,1), pad=(7,0), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
+        header =  [[sg.Text(" ", size=(6,1))] + [sg.Text(h, size=(6,1), pad=(8.5,0)) for h in headings]]
+        input_rows = [[sg.Text(row_names[row], size=(6,1))] + [sg.Input(size=(6,1), pad=(8.5,1), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
 
         elements =  [
             [sg.ProgressBar(self.total_frames, orientation='h', size=(50, 5), key='progressbar')],
