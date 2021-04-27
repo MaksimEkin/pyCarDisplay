@@ -155,11 +155,12 @@ class Car():
 
             # Kalman Filter API -- depends on IMU sensor data
             self.kalman_filters = [KalmanFilter() for x in range(len(list(self.imu_sensor.imu_data.columns)))]
-            print(self.kalman_filters)
             self.kalman_data_points =  {'data':[0 for x in range(len(list(self.imu_sensor.imu_data.columns)))]}
 
         else:
             self.imu_sensor = None
+            self.kalman_filters = []
+            self.kalman_data_points =  {'data':[]}
 
         # Image processing API
         self.img_processing_api = ImageProcessing(
@@ -245,12 +246,7 @@ class Car():
                 curr_imu_data = self.imu_sensor.read_sensor(
                     add_noise=self.add_noise, name=None)
 
-                print("self.kalman_data_points=", self.kalman_data_points)
                 for i, col in enumerate(list(curr_imu_data['data'].columns)):
-
-                    if curr_frame > 0:
-                        print("Sensor read=", curr_imu_data['data'][col].values[0])
-                        print("previous data point=", self.kalman_data_points['data'][i])
 
 
                     predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
@@ -261,14 +257,6 @@ class Car():
                     self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
                                                                                         self.imu_sensor.R_covariance,
                                                                                         predict)[0]
-                    if curr_frame > 0:
-
-                        print("Sensor read=", curr_imu_data['data'][col].values[0])
-                        print("imu_sensor.R_covariance=", self.imu_sensor.R_covariance)
-                        print("predict=", predict)
-
-                        print("update=", self.kalman_data_points['data'][i])
-                        input()
 
 
 

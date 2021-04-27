@@ -219,7 +219,6 @@ class Display():
         #self.reset_depth_images(cropped_depth_images)
 
         # update main display_api with detected objects
-        #annotated_image.show()
         with io.BytesIO() as output:
             annotated_image.save(output, format="PNG")
             contents = output.getvalue()
