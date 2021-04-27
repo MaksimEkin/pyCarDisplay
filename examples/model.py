@@ -35,6 +35,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 """
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 from torch import nn
 from pyCarDisplay.detection.__utils_obj_detection import *
 import torch.nn.functional as F
