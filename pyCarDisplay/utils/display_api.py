@@ -121,10 +121,11 @@ class Display():
                     df = df.T
 
             for col, entry in enumerate(list(df.iloc[0].values)):
-                self.update_window(str(row) + "," + str(col), round(entry,2))
+                if col < 30:
+                    self.update_window(str(row) + "," + str(col), round(entry,2))
 
         for col, entry2 in enumerate(kalman_imu_data['data']):
-            if col != 30:
+            if col < 30:
                 self.update_window(str(3) + "," + str(col), round(entry2,2))
 
     def reset_depth_images(self, cropped_depth_images):
