@@ -48,13 +48,13 @@ class Display():
 
         Returns
         -------
-            image_element: Pysimple Gui image element
+        image_element: Pysimple Gui image element
 
         """
         image_element = sg.Image(path, key=key)
         return image_element
 
-    def update_window(self, key, data1, data2=''):
+    def update_window(self, key, data1, size_in=''):
         """
         Changes the displyed element to show updated information
 
@@ -64,32 +64,32 @@ class Display():
             locates the app element in the window to change
         data1 : str
             value to set the element with
-        data2 : str
+        size_in : str of image dimensions
 
         Returns
         -------
         None
         """
 
-        if data2:
-            self.window.FindElement(key).Update(data=data1, size=data2)
+        if size_in:
+            self.window.FindElement(key).Update(data=data1, size=size_in)
         else:
             self.window.FindElement(key).Update(data1)
 
-    def depth_images_update(self, cropped_depth_images):
+    def depth_images_update(self, depth_detection_image):
         """
         Iterates the cropped image list and updates the display with the predefined limit on image count
 
         Parameters
         ----------
-        cropped_depth_images : list
+        depth_detection_image : list
             list of PIL images cropped from the depth detection image
 
         Returns
         -------
         None
         """
-        for num, detected_image in enumerate(cropped_depth_images):
+        for num, detected_image in enumerate(depth_detection_image):
 
             if num < self.cropped_img_displayed:
                 self.update_window("IMG" + str(num + 1), self.format_pil_img(detected_image), detected_image.size)
@@ -106,8 +106,8 @@ class Display():
 
         Parameters
         ----------
-        imu_data :
-        kalman_imu_data :
+        imu_data : data frame containing sensor reads
+        kalman_imu_data : data frame containing updated kalman filter information
 
         Returns
         -------
@@ -128,12 +128,12 @@ class Display():
             if col < 30:
                 self.update_window(str(3) + "," + str(col), round(entry2,2))
 
-    def reset_depth_images(self, cropped_depth_images):
+    def reset_depth_images(self, depth_detection_image):
         """
         Iterates all of the cropped image elements in the window and sets them to empty
         Parameters
         ----------
-        cropped_depth_images : list
+        depth_detection_image : depth detection image
 
         Returns
         -------
@@ -165,15 +165,9 @@ class Display():
         elements =  [
             [sg.ProgressBar(self.total_frames, orientation='h', size=(50, 5), key='progressbar')],
             [sg.Text("Frame: 1", size=(50, 1), key="frame")],
-            #[sg.Text("True Speed:" + " " * 30 + str(self.speed), key="speed")],
-            #[sg.Text("Kalman speed:"+ " " * 20 + str(self.speed), key="kspeed")],
             [sg.Text("\t\t"), self.img("", "IMG")],
             [sg.Text("\t\t"), self.img("", "IMG1")],
-            [sg.Text("\t\t"), self.img("", "IMG2"),
-                self.img("", "IMG3"),
-                self.img("", "IMG4"),
-                self.img("", "IMG5")
-            ],
+            [sg.Text("\t\t"), self.img("", "IMG2")],
         ] + header + input_rows
 
         return elements
@@ -188,7 +182,7 @@ class Display():
         """
         self.window.close()
 
-    def play(self, annotated_image: Image, cropped_depth_images: Image, imu_data: pd.DataFrame,
+    def play(self, annotated_image: Image, depth_detection_image: Image, imu_data: pd.DataFrame,
              kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, kalman_plot:Image):
         """
         Takes in autonomous car information and displays the images from the object and depth detection moddels,and
@@ -196,11 +190,11 @@ class Display():
 
         Parameters
         ----------
-        annotated_image : Image
-        cropped_depth_images : Image
-        imu_data :
-        kalman_imu_data :
-        frame : int
+        annotated_image : Image of detected objects annotated
+        depth_detection_image : Image of depth data
+        imu_data : data frame containing sensor reads
+        kalman_imu_data : data frame containing updated kalman filter information
+        frame : int of pictture frame
         verbose : bool
 
         Returns
@@ -211,11 +205,7 @@ class Display():
         self.verbose = verbose
 
         # check if pause or play were clicked or if window closed
-        """May need to relocate this"""
         event, values = self.window.read(timeout=1)
-
-        # Reset objects no longer detected in frame
-        #self.reset_depth_images(cropped_depth_images)
 
         # update main display_api with detected objects
         with io.BytesIO() as output:
@@ -224,9 +214,9 @@ class Display():
         self.update_window("IMG", contents, annotated_image.size)
 
         with io.BytesIO() as output:
-            cropped_depth_images.save(output, format="PNG")
+            depth_detection_image.save(output, format="PNG")
             contents = output.getvalue()
-        self.update_window("IMG1", contents, cropped_depth_images.size)
+        self.update_window("IMG1", contents, depth_detection_image.size)
 
         # current picture frame
         self.update_window("frame", "Frame: " + str(frame))
