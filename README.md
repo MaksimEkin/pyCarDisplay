@@ -20,9 +20,9 @@ and display the results on a GUI.
 
 ## Installation
 ```shell
-pip install pyCarDisplay
+pip install pyCarDisplay # TODO: Upload to PyPi
 ```
-or
+or install from source
 
 ```shell
 git clone https://github.com/MaksimEkin/pyCarDisplay
