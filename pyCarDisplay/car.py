@@ -154,8 +154,8 @@ class Car():
                                   random_state)
 
             # Kalman Filter API -- depends on IMU sensor data
-            self.kalman_filters = [KalmanFilter() for x in range(len(list(self.imu_sensor.imu_data.columns)))]
-            self.kalman_data_points =  {'data':[0 for x in range(len(list(self.imu_sensor.imu_data.columns)))]}
+            self.kalman_filters = [KalmanFilter() for x in range(len(list(self.imu_sensor.imu_data.columns))-1 )]
+            self.kalman_data_points =  {'data':[0 for x in range(len(list(self.imu_sensor.imu_data.columns))-1 )]}
 
         else:
             self.imu_sensor = None
@@ -248,16 +248,15 @@ class Car():
 
                 for i, col in enumerate(list(curr_imu_data['data'].columns)):
 
+                    if col != "time_delta":
+                        predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
+                                                                 self.kalman_data_points['data'][i], #PREVIOUS DATA POINT
+                                                                 curr_imu_data['data']["time_delta"].values[0]/60) # DELTA TIME
 
-                    predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
-                                                             self.kalman_data_points['data'][i], #PREVIOUS DATA POINT
-                                                             .9) # DELTA TIME
-
-                    #set next data points based on the prediction, senssor and covariance
-                    self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
-                                                                                        self.imu_sensor.R_covariance,
-                                                                                        predict)[0]
-
+                        #set next data points based on the prediction, senssor and covariance
+                        self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
+                                                                                            self.imu_sensor.R_covariance,
+                                                                                            predict)[0]
 
 
             else:

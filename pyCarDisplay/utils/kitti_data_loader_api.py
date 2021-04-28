@@ -86,7 +86,7 @@ class DataLoader(object):
 
         if timestamps[-1] == "":
             timestamps = timestamps[:-1] # remove empty line
-        
+
         # turn timestamps into datetime object
         timestamps_obj = list()
         for t in timestamps:
@@ -97,7 +97,7 @@ class DataLoader(object):
                 date_time_obj = datetime.strptime(t, '%Y-%m-%d %H:%M:%S.%f')
 
             timestamps_obj.append(date_time_obj)
-            
+
         # calculate the time between each measurement
         differences = list()
         differences.append(0)
@@ -107,10 +107,10 @@ class DataLoader(object):
             differences.append((timestamps_obj[ii+1] - obj).total_seconds())
 
         # get all IMU data in the data directory
-        lidar_data = glob.glob(str(self.path_imu)+"*.txt")
+        imu_information = glob.glob(str(self.path_imu)+"*.txt")
 
         imu_df = pd.DataFrame()
-        for frame, file in enumerate(lidar_data):
+        for frame, file in enumerate(imu_information):
             temp = pd.read_csv(str(file), header=None,
                                delimiter=r"\s+", names=self.imu_columns)
             temp['frame'] = frame
