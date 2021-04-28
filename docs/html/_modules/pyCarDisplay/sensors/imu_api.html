@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
-        <title>pyCarDisplay.sensors.imu_api - pyCarDisplay 0.0.2 documentation</title>
+        <title>pyCarDisplay.sensors.imu_api - pyCarDisplay 0.0.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../_static/pygments_dark.css">
@@ -86,7 +86,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">pyCarDisplay 0.0.2 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">pyCarDisplay 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -100,7 +100,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   
-  <span class="sidebar-brand-text">pyCarDisplay 0.0.2 documentation</span>
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -171,6 +171,7 @@
         <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span>
             <span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="s2">"data should be type Pandas DataFrame"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span> <span class="o">=</span> <span class="n">data</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">params_avail</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>

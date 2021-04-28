@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
-        <title>pyCarDisplay.sensors.kalman_filter_api - pyCarDisplay 0.0.2 documentation</title>
+        <title>pyCarDisplay.sensors.kalman_filter_api - pyCarDisplay 0.0.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../_static/pygments_dark.css">
@@ -86,7 +86,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">pyCarDisplay 0.0.2 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">pyCarDisplay 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -100,7 +100,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   
-  <span class="sidebar-brand-text">pyCarDisplay 0.0.2 documentation</span>
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -136,14 +136,33 @@
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
         <h1>Source code for pyCarDisplay.sensors.kalman_filter_api</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="KalmanFilter"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter">[docs]</a><span></span><span class="k">class</span> <span class="nc">KalmanFilter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+<span></span><span class="sd">"""</span>
+
+<span class="sd">"""</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="viewcode-block" id="KalmanFilter"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter">[docs]</a><span class="k">class</span> <span class="nc">KalmanFilter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""</span>
+
+<span class="sd">    """</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">F</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">P</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">=</span> <span class="n">H</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">F</span> <span class="o">=</span> <span class="n">F</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
 
 <div class="viewcode-block" id="KalmanFilter.Predict"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Predict">[docs]</a>    <span class="k">def</span> <span class="nf">Predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acceleration</span><span class="p">,</span> <span class="n">speed_previous</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="sd">"""</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        acceleration :</span>
+<span class="sd">        speed_previous :</span>
+<span class="sd">        delta_time :</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        """</span>
         <span class="c1"># Prediction Model: speed = F * previous speed + acceleration * delata_time</span>
         <span class="n">speed_predict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span> <span class="o">*</span> <span class="n">speed_previous</span> <span class="o">+</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">delta_time</span>
 
@@ -153,6 +172,18 @@
         <span class="k">return</span> <span class="n">speed_predict</span></div>
 
 <div class="viewcode-block" id="KalmanFilter.Update"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Update">[docs]</a>    <span class="k">def</span> <span class="nf">Update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed_data_from_sensor</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">speed_predict</span><span class="p">):</span>
+        <span class="sd">"""</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        speed_data_from_sensor :</span>
+<span class="sd">        R :</span>
+<span class="sd">        speed_predict :</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        """</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">speed_data_from_sensor</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">*</span> <span class="n">speed_predict</span>
         <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">+</span> <span class="n">R</span>
         <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">*</span> <span class="n">S</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>

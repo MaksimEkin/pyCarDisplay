@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
-        <title>pyCarDisplay.car - pyCarDisplay 0.0.2 documentation</title>
+        <title>pyCarDisplay.car - pyCarDisplay 0.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css">
@@ -86,7 +86,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">pyCarDisplay 0.0.2 documentation</div></a>
+      <a href="../../index.html"><div class="brand">pyCarDisplay 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -100,7 +100,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">pyCarDisplay 0.0.2 documentation</span>
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -142,10 +142,11 @@
 
 <span class="kn">from</span> <span class="nn">.utils.display_api</span> <span class="kn">import</span> <span class="n">Display</span>
 <span class="kn">from</span> <span class="nn">.utils.kitti_data_loader_api</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">.utils.create_plot</span> <span class="kn">import</span> <span class="n">KalmanPlot</span>
 
 <span class="kn">from</span> <span class="nn">.sensors.image_processing_api</span> <span class="kn">import</span> <span class="n">ImageProcessing</span>
 <span class="kn">from</span> <span class="nn">.sensors.imu_api</span> <span class="kn">import</span> <span class="n">IMU</span>
-<span class="c1">#from .sensors.kalman_filter_api import KalmanFilter</span>
+<span class="kn">from</span> <span class="nn">.sensors.kalman_filter_api</span> <span class="kn">import</span> <span class="n">KalmanFilter</span>
 
 <span class="kn">from</span> <span class="nn">.detection.object_detection_api</span> <span class="kn">import</span> <span class="n">ObjectDetection</span>
 <span class="kn">from</span> <span class="nn">.detection.depth_detection_api</span> <span class="kn">import</span> <span class="n">DepthDetection</span>
@@ -164,7 +165,7 @@
                  <span class="n">norm_mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">norm_std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">],</span>
                  <span class="n">R_covariance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">add_noise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">IMU_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gui_speed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">theme</span><span class="o">=</span><span class="s2">"DarkGrey1"</span><span class="p">,</span> <span class="n">image_extension</span><span class="o">=</span><span class="s2">"png"</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">):</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">,</span> <span class="n">track_n_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">plot_column</span><span class="o">=</span><span class="s2">"af"</span><span class="p">):</span>
         <span class="sd">"""</span>
 <span class="sd">        Initilize the Car class.</span>
 
@@ -217,6 +218,10 @@
 <span class="sd">        device : str, optional</span>
 <span class="sd">            If 'gpu' passed, ML modules will use the GPU. The default is "cpu".</span>
 <span class="sd">            CUDA device must be available.</span>
+<span class="sd">        track_n_frames : int, optional</span>
+<span class="sd">            How many frames to track in the Kalman plot. The default is 10.</span>
+<span class="sd">        plot_column : str, optional</span>
+<span class="sd">            Which IMU column to plot in the Kalman plot. The default is "af".</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -280,6 +285,9 @@
                 <span class="nb">print</span><span class="p">(</span><span class="n">colored</span><span class="p">(</span><span class="s2">"Loading the IMU data..."</span><span class="p">,</span> <span class="s2">"blue"</span><span class="p">))</span>
             <span class="n">imu_df</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">path_imu</span><span class="o">=</span><span class="n">imu_sensor_path</span><span class="p">,</span>
                                 <span class="n">path_lidar</span><span class="o">=</span><span class="n">lidar_sensor_path</span><span class="p">)</span><span class="o">.</span><span class="n">load_imu</span><span class="p">()</span>
+            
+            <span class="k">if</span> <span class="n">plot_column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">imu_df</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">"Kalman plot column is not in the IMU data."</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">imu_df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
@@ -290,8 +298,15 @@
                                   <span class="n">verbose</span><span class="p">,</span>
                                   <span class="n">R_covariance</span><span class="p">,</span>
                                   <span class="n">random_state</span><span class="p">)</span>
+
+            <span class="c1"># Kalman Filter API -- depends on IMU sensor data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kalman_filters</span> <span class="o">=</span> <span class="p">[</span><span class="n">KalmanFilter</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_sensor</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span> <span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kalman_data_points</span> <span class="o">=</span>  <span class="p">{</span><span class="s1">'data'</span><span class="p">:[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_sensor</span><span class="o">.</span><span class="n">imu_data</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span> <span class="p">)]}</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">imu_sensor</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kalman_filters</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kalman_data_points</span> <span class="o">=</span>  <span class="p">{</span><span class="s1">'data'</span><span class="p">:[]}</span>
 
         <span class="c1"># Image processing API</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">img_processing_api</span> <span class="o">=</span> <span class="n">ImageProcessing</span><span class="p">(</span>
@@ -313,6 +328,11 @@
 
         <span class="c1"># Display API</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_api</span> <span class="o">=</span> <span class="n">Display</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gui_speed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_frames</span><span class="p">,</span> <span class="n">theme</span><span class="p">)</span>
+        
+        
+        <span class="c1"># Kalman Filter Plot generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kalman_plot_api</span> <span class="o">=</span> <span class="n">KalmanPlot</span><span class="p">(</span><span class="n">img_resize_size</span><span class="p">,</span> <span class="n">pixel_sizes</span><span class="p">,</span> <span class="n">dpi</span><span class="p">,</span> <span class="n">track_n_frames</span><span class="p">,</span> <span class="n">plot_column</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_column</span> <span class="o">=</span> <span class="n">plot_column</span>
 
 <div class="viewcode-block" id="Car.set_frame"><a class="viewcode-back" href="../../pyCarDisplay.html#pyCarDisplay.car.Car.set_frame">[docs]</a>    <span class="k">def</span> <span class="nf">set_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">"""</span>
@@ -373,20 +393,44 @@
                 <span class="n">depth_image</span> <span class="o">=</span> <span class="n">image</span>
 
             <span class="c1"># read IMU sensor data</span>
+            <span class="n">save_predict</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_sensor</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">curr_imu_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_sensor</span><span class="o">.</span><span class="n">read_sensor</span><span class="p">(</span>
                     <span class="n">add_noise</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_noise</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">curr_imu_data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+
+                    <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s2">"time_delta"</span><span class="p">:</span>
+                        <span class="n">predict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kalman_filters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">Predict</span><span class="p">(</span><span class="n">curr_imu_data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="c1">#SESNSOR READ</span>
+                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">kalman_data_points</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="c1">#PREVIOUS DATA POINT</span>
+                                                                 <span class="n">curr_imu_data</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s2">"time_delta"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">60</span><span class="p">)</span> <span class="c1"># DELTA TIME</span>
+
+                        <span class="c1">#set next data points based on the prediction, senssor and covariance</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">kalman_data_points</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kalman_filters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="n">curr_imu_data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                                                            <span class="bp">self</span><span class="o">.</span><span class="n">imu_sensor</span><span class="o">.</span><span class="n">R_covariance</span><span class="p">,</span>
+                                                                                            <span class="n">predict</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="c1"># get the index for forward acceleration  </span>
+                    <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_column</span><span class="p">:</span>
+                        <span class="n">save_predict</span> <span class="o">=</span> <span class="n">predict</span>
+
+
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">curr_imu_data</span> <span class="o">=</span> <span class="p">{}</span>
 
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">imu_sensor</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">kalman_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kalman_plot_api</span><span class="o">.</span><span class="n">gen_plot</span><span class="p">(</span><span class="n">save_predict</span><span class="p">,</span> <span class="n">curr_imu_data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">kalman_plot</span> <span class="o">=</span> <span class="n">image</span>
+            
             <span class="c1"># Display the current frame</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">display_api</span><span class="o">.</span><span class="n">play</span><span class="p">(</span>
                 <span class="n">detected_dictionary</span><span class="p">[</span><span class="s2">"annotated_image"</span><span class="p">],</span>
                 <span class="n">depth_image</span><span class="p">,</span>
                 <span class="n">curr_imu_data</span><span class="p">,</span>
-                <span class="p">{</span><span class="s1">'data'</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.456</span><span class="p">]},</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">kalman_data_points</span><span class="p">,</span> <span class="c1">#{'data': [45.456]}, # Kalman data</span>
                 <span class="n">curr_frame</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                <span class="n">kalman_plot</span>
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">display_api</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>

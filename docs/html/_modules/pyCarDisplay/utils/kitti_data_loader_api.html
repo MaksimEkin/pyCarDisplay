@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
-        <title>pyCarDisplay.utils.kitti_data_loader_api - pyCarDisplay 0.0.2 documentation</title>
+        <title>pyCarDisplay.utils.kitti_data_loader_api - pyCarDisplay 0.0.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="../../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../_static/pygments_dark.css">
@@ -86,7 +86,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">pyCarDisplay 0.0.2 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">pyCarDisplay 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -100,7 +100,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   
-  <span class="sidebar-brand-text">pyCarDisplay 0.0.2 documentation</span>
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -143,6 +143,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 
 <div class="viewcode-block" id="DataLoader"><a class="viewcode-back" href="../../../pyCarDisplay.utils.html#pyCarDisplay.utils.kitti_data_loader_api.DataLoader">[docs]</a><span class="k">class</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -215,15 +216,43 @@
 <span class="sd">            IMU data.</span>
 
 <span class="sd">        """</span>
+        <span class="c1"># load the timestamps</span>
+        <span class="n">time_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_imu</span><span class="p">)</span><span class="o">+</span> <span class="s2">"../timestamps.txt"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">time_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">timestamps</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">time_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">timestamps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
+            <span class="n">timestamps</span> <span class="o">=</span> <span class="n">timestamps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># remove empty line</span>
+
+        <span class="c1"># turn timestamps into datetime object</span>
+        <span class="n">timestamps_obj</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">timestamps</span><span class="p">:</span>
+            <span class="n">cut</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">6</span>
+            <span class="k">if</span> <span class="n">cut</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">date_time_obj</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">t</span><span class="p">[:</span><span class="o">-</span><span class="n">cut</span><span class="p">],</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">'</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">date_time_obj</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">'</span><span class="p">)</span>
+
+            <span class="n">timestamps_obj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">date_time_obj</span><span class="p">)</span>
+
+        <span class="c1"># calculate the time between each measurement</span>
+        <span class="n">differences</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">differences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">timestamps_obj</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ii</span><span class="o">+</span><span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">timestamps_obj</span><span class="p">):</span>
+                <span class="k">break</span>
+            <span class="n">differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">timestamps_obj</span><span class="p">[</span><span class="n">ii</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
 
         <span class="c1"># get all IMU data in the data directory</span>
-        <span class="n">lidar_data</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_imu</span><span class="p">)</span><span class="o">+</span><span class="s2">"*.txt"</span><span class="p">)</span>
+        <span class="n">imu_information</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_imu</span><span class="p">)</span><span class="o">+</span><span class="s2">"*.txt"</span><span class="p">)</span>
 
         <span class="n">imu_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lidar_data</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imu_information</span><span class="p">):</span>
             <span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                                <span class="n">delimiter</span><span class="o">=</span><span class="sa">r</span><span class="s2">"\s+"</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">imu_columns</span><span class="p">)</span>
             <span class="n">temp</span><span class="p">[</span><span class="s1">'frame'</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
+            <span class="n">temp</span><span class="p">[</span><span class="s1">'time_delta'</span><span class="p">]</span> <span class="o">=</span> <span class="n">differences</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span>
             <span class="n">imu_df</span> <span class="o">=</span> <span class="n">imu_df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">imu_data</span> <span class="o">=</span> <span class="n">imu_df</span>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="pyCarDisplay.detection package" href="pyCarDisplay.detection.html" /><link rel="prev" title="pyCarDisplay" href="modules.html" />
 
     <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
-        <title>pyCarDisplay package - pyCarDisplay 0.0.2 documentation</title>
+        <title>pyCarDisplay package - pyCarDisplay 0.0.3 documentation</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
     <link rel="stylesheet" href="_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
@@ -86,7 +86,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">pyCarDisplay 0.0.2 documentation</div></a>
+      <a href="index.html"><div class="brand">pyCarDisplay 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
@@ -100,7 +100,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">pyCarDisplay 0.0.2 documentation</span>
+  <span class="sidebar-brand-text">pyCarDisplay 0.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -187,7 +187,7 @@
 <p>All of the Car operations are controlled from this file.</p>
 <dl class="py class">
 <dt id="pyCarDisplay.car.Car">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.car.</span></code><code class="sig-name descname"><span class="pre">Car</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">car_images_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imu_sensor_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lidar_sensor_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_detection_model_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_detection_model_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_detection_model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'large'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_resize_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(300,</span> <span class="pre">300)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1242,</span> <span class="pre">375]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.485,</span> <span class="pre">0.456,</span> <span class="pre">0.406]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.229,</span> <span class="pre">0.224,</span> <span class="pre">0.225]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_covariance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IMU_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gui_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DarkGrey1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/car.html#Car"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.car.Car" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.car.</span></code><code class="sig-name descname"><span class="pre">Car</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">car_images_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imu_sensor_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lidar_sensor_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_detection_model_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_detection_model_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_detection_model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'large'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_resize_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(300,</span> <span class="pre">300)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1242,</span> <span class="pre">375]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.485,</span> <span class="pre">0.456,</span> <span class="pre">0.406]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.229,</span> <span class="pre">0.224,</span> <span class="pre">0.225]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_covariance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IMU_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gui_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DarkGrey1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_n_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'af'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/car.html#Car"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.car.Car" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Initilize the Car class.</p>
 <dl class="simple">
@@ -238,6 +238,10 @@ Used when reading the images from the path.</p>
 <dt>device<span class="classifier">str, optional</span></dt><dd><p>If 'gpu' passed, ML modules will use the GPU. The default is "cpu".
 CUDA device must be available.</p>
 </dd>
+<dt>track_n_frames<span class="classifier">int, optional</span></dt><dd><p>How many frames to track in the Kalman plot. The default is 10.</p>
+</dd>
+<dt>plot_column<span class="classifier">str, optional</span></dt><dd><p>Which IMU column to plot in the Kalman plot. The default is "af".</p>
+</dd>
 </dl>
 <p>None.</p>
 <dl class="py method">
@@ -280,7 +284,7 @@ the simulation is invoked from this file.</p>
 <p>Initilize the CarDisplay class. This class passes the below
 parameters to the Car class.</p>
 <p>The initlization also sets up the environment variables.</p>
-<dl class="simple">
+<dl>
 <dt>car_images_path<span class="classifier">str</span></dt><dd><p>Path to the Kitti dataset image frames.</p>
 </dd>
 <dt>imu_sensor_path<span class="classifier">str, optional</span></dt><dd><p>Path to the Kitti dataset IMU sensor data. The default is "".
@@ -294,15 +298,25 @@ If not provided, object detection is not performed.</p>
 </dd>
 <dt>depth_detection_model_path<span class="classifier">str, optional</span></dt><dd><p>Path to the trained PyTorch depth detection model. The default is "".</p>
 </dd>
-<dt>depth_detection_model_type<span class="classifier">str, optional</span></dt><dd><p>If 'large', model uses a larger trained model but it will be slower. The default is "large".</p>
-</dd>
+<dt>depth_detection_model_type<span class="classifier">str, optional</span></dt><dd><blockquote>
+<div><p>If 'large', model uses a larger trained model but it will be slower. The default is "large".</p>
+</div></blockquote>
+<dl class="simple">
 <dt>optimize<span class="classifier">bool, optional</span></dt><dd><p>If True, images are pre-processed for better depth detection. The default is True.</p>
 </dd>
+<dt>dpi<span class="classifier">int, optional</span></dt><dd><p>Dots per inch. The default is 100.</p>
+</dd>
+<dt>alpha<span class="classifier">double, optional</span></dt><dd><p>The alpha variable. The default is 0.6.</p>
+</dd>
 <dt>img_resize_size<span class="classifier">tuple, optional</span></dt><dd><p>Size of the image when performing object detection. The default is (300, 300).</p>
+</dd>
+<dt>pixel_sizes<span class="classifier">list, optional</span></dt><dd><p>The sizes of the pixels. The default is [1242, 375].</p>
 </dd>
 <dt>norm_mean<span class="classifier">list, optional</span></dt><dd><p>Object detection hyper-parameter. The default is [0.485, 0.456, 0.406].</p>
 </dd>
 <dt>norm_std<span class="classifier">list, optional</span></dt><dd><p>Object detection hyper-parameter. The default is [0.229, 0.224, 0.225].</p>
+</dd>
+</dl>
 </dd>
 <dt>R_covariance<span class="classifier">float, optional</span></dt><dd><p>Error covariance for IMU data. The default is 0.1.</p>
 </dd>
@@ -321,6 +335,10 @@ Used when reading the images from the path.</p>
 </dd>
 <dt>device<span class="classifier">str, optional</span></dt><dd><p>If 'gpu' passed, ML modules will use the GPU. The default is "cpu".
 CUDA device must be available.</p>
+</dd>
+<dt>track_n_frames<span class="classifier">int, optional</span></dt><dd><p>How many frames to track in the Kalman plot. The default is 10.</p>
+</dd>
+<dt>plot_column<span class="classifier">str, optional</span></dt><dd><p>Which IMU column to plot in the Kalman plot. The default is "af".</p>
 </dd>
 </dl>
 <p>None.</p>
