@@ -73,6 +73,10 @@ class CarDisplay():
         device : str, optional
             If 'gpu' passed, ML modules will use the GPU. The default is "cpu".
             CUDA device must be available.
+        track_n_frames : int, optional
+            How many frames to track in the Kalman plot. The default is 10.
+        plot_column : str, optional
+            Which IMU column to plot in the Kalman plot. The default is "af".
             
         Returns
         -------

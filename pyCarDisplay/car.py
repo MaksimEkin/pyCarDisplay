@@ -27,7 +27,7 @@ class Car():
                  norm_mean=[0.485, 0.456, 0.406], norm_std=[0.229, 0.224, 0.225],
                  R_covariance=0.1, add_noise=True, IMU_name=None, gui_speed=1,
                  theme="DarkGrey1", image_extension="png", random_state=42,
-                 verbose=False, device="cpu"):
+                 verbose=False, device="cpu", track_n_frames=10, plot_column="af"):
         """
         Initilize the Car class.
 
@@ -80,6 +80,10 @@ class Car():
         device : str, optional
             If 'gpu' passed, ML modules will use the GPU. The default is "cpu".
             CUDA device must be available.
+        track_n_frames : int, optional
+            How many frames to track in the Kalman plot. The default is 10.
+        plot_column : str, optional
+            Which IMU column to plot in the Kalman plot. The default is "af".
 
         Returns
         -------
@@ -143,6 +147,9 @@ class Car():
                 print(colored("Loading the IMU data...", "blue"))
             imu_df = DataLoader(path_imu=imu_sensor_path,
                                 path_lidar=lidar_sensor_path).load_imu()
+            
+            if plot_column not in list(imu_df.columns):
+                sys.exit("Kalman plot column is not in the IMU data.")
 
             if self.verbose:
                 print(imu_df.info())
@@ -186,7 +193,8 @@ class Car():
         
         
         # Kalman Filter Plot generator
-        self.kalman_plot_api = KalmanPlot(img_resize_size, pixel_sizes, dpi)
+        self.kalman_plot_api = KalmanPlot(img_resize_size, pixel_sizes, dpi, track_n_frames, plot_column)
+        self.plot_column = plot_column
 
     def set_frame(self, frame: int):
         """
@@ -247,7 +255,7 @@ class Car():
                 depth_image = image
 
             # read IMU sensor data
-            af_predict = 0
+            save_predict = 0
             if self.imu_sensor != None:
                 curr_imu_data = self.imu_sensor.read_sensor(
                     add_noise=self.add_noise, name=None)
@@ -264,17 +272,17 @@ class Car():
                                                                                             self.imu_sensor.R_covariance,
                                                                                             predict)[0]
                     # get the index for forward acceleration  
-                    if col == "af":
-                        af_predict = predict
+                    if col == self.plot_column:
+                        save_predict = predict
 
 
             else:
                 curr_imu_data = {}
 
             if self.imu_sensor != None:
-                kalman_plot = self.kalman_plot_api.gen_plot(af_predict, curr_imu_data["data"]["af"].values[0])
+                kalman_plot = self.kalman_plot_api.gen_plot(save_predict, curr_imu_data["data"][self.plot_column].values[0])
             else:
-                kalman_plot = ''
+                kalman_plot = image
             
             # Display the current frame
             self.display_api.play(
