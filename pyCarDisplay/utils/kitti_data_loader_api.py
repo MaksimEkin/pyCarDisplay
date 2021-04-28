@@ -5,6 +5,7 @@ Parses the Kitti dataset's IMU data into a Pandas DataFrame format.
 import pandas as pd
 import numpy as np
 import glob
+import datetime
 
 
 class DataLoader(object):

@@ -246,30 +246,28 @@ class Car():
                 curr_imu_data = self.imu_sensor.read_sensor(
                     add_noise=self.add_noise, name=None)
 
-                for i, col in enumerate(list(curr_imu_data['data'].columns)):
 
+                print("curr_imu_data = ",curr_imu_data)
+                for i, col in enumerate(list(curr_imu_data['data'].columns)):
 
                     predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
                                                              self.kalman_data_points['data'][i], #PREVIOUS DATA POINT
-                                                             .9) # DELTA TIME
+                                                             .005) # DELTA TIME
 
                     #set next data points based on the prediction, senssor and covariance
                     self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
                                                                                         self.imu_sensor.R_covariance,
                                                                                         predict)[0]
 
-
-
             else:
                 curr_imu_data = {}
-
 
             # Display the current frame
             self.display_api.play(
                 detected_dictionary["annotated_image"],
                 depth_image,
                 curr_imu_data,
-                self.kalman_data_points, #{'data': [45.456]}, # Kalman data
+                self.kalman_data_points,
                 curr_frame,
                 self.verbose
             )
