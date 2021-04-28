@@ -261,6 +261,7 @@ and passed to this module.</p>
 <dt id="pyCarDisplay.sensors.kalman_filter_api.KalmanFilter">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyCarDisplay.sensors.kalman_filter_api.</span></code><code class="sig-name descname"><span class="pre">KalmanFilter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">F</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/kalman_filter_api.html#KalmanFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Initialize the Kalman filter data</p>
 <p>P : covariance of the observation noise
 H : observation model
 F : state-transition model
@@ -268,17 +269,31 @@ Q : covariance of the process noise</p>
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Predict">
 <code class="sig-name descname"><span class="pre">Predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">acceleration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_previous</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/kalman_filter_api.html#KalmanFilter.Predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>acceleration : new data reading
-speed_previous : previous data point
-delta_time : change in time from last sensor reading</p>
-<p>speed_predict : predicted data output</p>
+<dd><p>Initialize the Kalman filter data</p>
+<dl class="simple">
+<dt>P<span class="classifier">int</span></dt><dd><p>covariance of the observation noise</p>
+</dd>
+<dt>H<span class="classifier">int</span></dt><dd><p>observation model</p>
+</dd>
+<dt>F<span class="classifier">int</span></dt><dd><p>state-transition model</p>
+</dd>
+<dt>Q<span class="classifier">float</span></dt><dd><p>covariance of the process noise</p>
+</dd>
+</dl>
+<p>None</p>
 </dd></dl>
 <dl class="py method">
 <dt id="pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Update">
 <code class="sig-name descname"><span class="pre">Update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">speed_data_from_sensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_predict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/sensors/kalman_filter_api.html#KalmanFilter.Update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Update" title="Permalink to this definition">¶</a></dt>
-<dd><p>speed_data_from_sensor : sensor data read
-R : covariance
-speed_predict : predicted datapoint</p>
+<dd><p>Update kalman filter variables and dat**apoint</p>
+<dl class="simple">
+<dt>speed_data_from_sensor<span class="classifier">float</span></dt><dd><p>sensor data read</p>
+</dd>
+<dt>R<span class="classifier">float</span></dt><dd><p>covariance</p>
+</dd>
+<dt>speed_predict<span class="classifier">float</span></dt><dd><p>predicted datapoint</p>
+</dd>
+</dl>
 <p>speed_fused : data point thathas been filtered</p>
 </dd></dl>
 </dd></dl>

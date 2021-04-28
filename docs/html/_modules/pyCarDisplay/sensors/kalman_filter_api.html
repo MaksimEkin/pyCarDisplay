@@ -145,7 +145,8 @@
 <div class="viewcode-block" id="KalmanFilter"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter">[docs]</a><span class="k">class</span> <span class="nc">KalmanFilter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">F</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="sd">"""</span>
-
+<span class="sd">        Initialize the Kalman filter data</span>
+<span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        P : covariance of the observation noise</span>
@@ -164,16 +165,22 @@
 
 <div class="viewcode-block" id="KalmanFilter.Predict"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Predict">[docs]</a>    <span class="k">def</span> <span class="nf">Predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acceleration</span><span class="p">,</span> <span class="n">speed_previous</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
         <span class="sd">"""</span>
+<span class="sd">        Initialize the Kalman filter data</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        acceleration : new data reading</span>
-<span class="sd">        speed_previous : previous data point</span>
-<span class="sd">        delta_time : change in time from last sensor reading</span>
+<span class="sd">        P : int</span>
+<span class="sd">            covariance of the observation noise</span>
+<span class="sd">        H : int</span>
+<span class="sd">            observation model</span>
+<span class="sd">        F : int</span>
+<span class="sd">            state-transition model</span>
+<span class="sd">        Q : float</span>
+<span class="sd">            covariance of the process noise</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        speed_predict : predicted data output</span>
+<span class="sd">        None</span>
 <span class="sd">        """</span>
         <span class="c1"># Prediction Model: speed = F * previous speed + acceleration * delata_time</span>
         <span class="n">speed_predict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span> <span class="o">*</span> <span class="n">speed_previous</span> <span class="o">+</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">delta_time</span>
@@ -185,12 +192,16 @@
 
 <div class="viewcode-block" id="KalmanFilter.Update"><a class="viewcode-back" href="../../../pyCarDisplay.sensors.html#pyCarDisplay.sensors.kalman_filter_api.KalmanFilter.Update">[docs]</a>    <span class="k">def</span> <span class="nf">Update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed_data_from_sensor</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">speed_predict</span><span class="p">):</span>
         <span class="sd">"""</span>
+<span class="sd">        Update kalman filter variables and dat**apoint</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        speed_data_from_sensor : sensor data read</span>
-<span class="sd">        R : covariance</span>
-<span class="sd">        speed_predict : predicted datapoint</span>
+<span class="sd">        speed_data_from_sensor : float</span>
+<span class="sd">            sensor data read</span>
+<span class="sd">        R : float</span>
+<span class="sd">            covariance</span>
+<span class="sd">        speed_predict : float</span>
+<span class="sd">            predicted datapoint</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
