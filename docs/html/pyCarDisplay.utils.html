@@ -169,10 +169,10 @@ for images and environmental observations</p>
 </dd></dl>
 <dl class="py method">
 <dt id="pyCarDisplay.utils.display_api.Display.depth_images_update">
-<code class="sig-name descname"><span class="pre">depth_images_update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cropped_depth_images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.depth_images_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.depth_images_update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">depth_images_update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_detection_image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.depth_images_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.depth_images_update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterates the cropped image list and updates the display with the predefined limit on image count</p>
 <dl class="simple">
-<dt>cropped_depth_images<span class="classifier">list</span></dt><dd><p>list of PIL images cropped from the depth detection image</p>
+<dt>depth_detection_image<span class="classifier">list</span></dt><dd><p>list of PIL images cropped from the depth detection image</p>
 </dd>
 </dl>
 <p>None</p>
@@ -187,8 +187,8 @@ for images and environmental observations</p>
 <dt id="pyCarDisplay.utils.display_api.Display.grid_update">
 <code class="sig-name descname"><span class="pre">grid_update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imu_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kalman_imu_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.grid_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.grid_update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the tabled grid with all of the updated Inertial Measurment Unit (IMU) Data and Kalman filter data</p>
-<p>imu_data :
-kalman_imu_data :</p>
+<p>imu_data : data frame containing sensor reads
+kalman_imu_data : data frame containing updated kalman filter information</p>
 <p>None</p>
 </dd></dl>
 <dl class="py method">
@@ -201,30 +201,28 @@ kalman_imu_data :</p>
 <dt>key<span class="classifier">str</span></dt><dd><p>name to find the image in the application window.</p>
 </dd>
 </dl>
-<blockquote>
-<div><p>image_element: Pysimple Gui image element</p>
-</div></blockquote>
+<p>image_element: Pysimple Gui image element</p>
 </dd></dl>
 <dl class="py method">
 <dt id="pyCarDisplay.utils.display_api.Display.play">
-<code class="sig-name descname"><span class="pre">play</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">annotated_image:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'/opt/anaconda3/envs/pyCarDisplay/lib/python3.8/site-packages/Pillow-8.1.2-py3.8-macosx-10.9-x86_64.egg/PIL/Image.py'&gt;</span></em>, <em class="sig-param"><span class="pre">cropped_depth_images:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'/opt/anaconda3/envs/pyCarDisplay/lib/python3.8/site-packages/Pillow-8.1.2-py3.8-macosx-10.9-x86_64.egg/PIL/Image.py'&gt;</span></em>, <em class="sig-param"><span class="pre">imu_data:</span> <span class="pre">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="pre">kalman_imu_data:</span> <span class="pre">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="pre">frame:</span> <span class="pre">int</span></em>, <em class="sig-param"><span class="pre">verbose:</span> <span class="pre">bool</span></em>, <em class="sig-param"><span class="pre">kalman_plot:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'/opt/anaconda3/envs/pyCarDisplay/lib/python3.8/site-packages/Pillow-8.1.2-py3.8-macosx-10.9-x86_64.egg/PIL/Image.py'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.play" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">play</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">annotated_image:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'/opt/anaconda3/envs/pyCarDisplay/lib/python3.8/site-packages/Pillow-8.1.2-py3.8-macosx-10.9-x86_64.egg/PIL/Image.py'&gt;</span></em>, <em class="sig-param"><span class="pre">depth_detection_image:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'/opt/anaconda3/envs/pyCarDisplay/lib/python3.8/site-packages/Pillow-8.1.2-py3.8-macosx-10.9-x86_64.egg/PIL/Image.py'&gt;</span></em>, <em class="sig-param"><span class="pre">imu_data:</span> <span class="pre">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="pre">kalman_imu_data:</span> <span class="pre">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="pre">frame:</span> <span class="pre">int</span></em>, <em class="sig-param"><span class="pre">verbose:</span> <span class="pre">bool</span></em>, <em class="sig-param"><span class="pre">kalman_plot:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'/opt/anaconda3/envs/pyCarDisplay/lib/python3.8/site-packages/Pillow-8.1.2-py3.8-macosx-10.9-x86_64.egg/PIL/Image.py'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.play" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes in autonomous car information and displays the images from the object and depth detection moddels,and
 other data about travel path</p>
-<p>annotated_image : Image
-cropped_depth_images : Image
-imu_data :
-kalman_imu_data :
-frame : int
+<p>annotated_image : Image of detected objects annotated
+depth_detection_image : Image of depth data
+imu_data : data frame containing sensor reads
+kalman_imu_data : data frame containing updated kalman filter information
+frame : int of pictture frame
 verbose : bool</p>
 <p>None</p>
 </dd></dl>
 <dl class="py method">
 <dt id="pyCarDisplay.utils.display_api.Display.reset_depth_images">
-<code class="sig-name descname"><span class="pre">reset_depth_images</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cropped_depth_images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.reset_depth_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.reset_depth_images" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">reset_depth_images</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_detection_image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.reset_depth_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.reset_depth_images" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterates all of the cropped image elements in the window and sets them to empty
 Parameters
 ----------
-cropped_depth_images : list</p>
+depth_detection_image : depth detection image</p>
 <p>None</p>
 </dd></dl>
 <dl class="py method">
@@ -233,7 +231,7 @@ cropped_depth_images : list</p>
 <dd></dd></dl>
 <dl class="py method">
 <dt id="pyCarDisplay.utils.display_api.Display.update_window">
-<code class="sig-name descname"><span class="pre">update_window</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.update_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.update_window" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">update_window</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyCarDisplay/utils/display_api.html#Display.update_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCarDisplay.utils.display_api.Display.update_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes the displyed element to show updated information</p>
 <dl class="simple">
 <dt>key<span class="classifier">str</span></dt><dd><p>locates the app element in the window to change</p>
@@ -241,7 +239,7 @@ cropped_depth_images : list</p>
 <dt>data1<span class="classifier">str</span></dt><dd><p>value to set the element with</p>
 </dd>
 </dl>
-<p>data2 : str</p>
+<p>size_in : str of image dimensions</p>
 <p>None</p>
 </dd></dl>
 </dd></dl>
