@@ -9,6 +9,20 @@ from PIL import Image
 class KalmanPlot():
     
     def __init__(self, img_resize_size=(300, 300), pixel_sizes=[1242, 375], dpi=100):
+        """
+        Initilize the KalmanPlot class.
+        
+        Parameters
+        ----------
+        
+        img_resize_size : tuple, optional
+            Size of the image when performing object detection. The default is (300, 300).
+        pixel_sizes : list, optional
+            The sizes of the pixels. The default is [1242, 375].
+        dpi : int, optional
+            Dots per inch. The default is 100.
+        """
+        
         self.kalman_predictions = list()
         self.true_values = list()
         self.img_resize_size = img_resize_size
@@ -38,4 +52,5 @@ class KalmanPlot():
         buf = io.BytesIO()
         plt.savefig(buf)
         buf.seek(0)
-        return np.array(Image.open(buf))
+        
+        return Image.fromarray(np.array(Image.open(buf)))

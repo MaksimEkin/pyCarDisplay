@@ -275,7 +275,7 @@ class Car():
                 kalman_plot = self.kalman_plot_api.gen_plot(af_predict, curr_imu_data["data"]["af"].values[0])
             else:
                 kalman_plot = ''
-
+            
             # Display the current frame
             self.display_api.play(
                 detected_dictionary["annotated_image"],
