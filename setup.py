@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 import subprocess
 import pkg_resources
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 # HELPER CLASS AND FUNCTIONS
 class BColors:
