@@ -168,10 +168,8 @@ class Display():
             #[sg.Text("True Speed:" + " " * 30 + str(self.speed), key="speed")],
             #[sg.Text("Kalman speed:"+ " " * 20 + str(self.speed), key="kspeed")],
             [sg.Text("\t\t"), self.img("", "IMG")],
-            [
-                sg.Text("\t\t"),
-                self.img("", "IMG1"),
-                self.img("", "IMG2"),
+            [sg.Text("\t\t"), self.img("", "IMG1")],
+            [sg.Text("\t\t"), self.img("", "IMG2"),
                 self.img("", "IMG3"),
                 self.img("", "IMG4"),
                 self.img("", "IMG5")
@@ -235,5 +233,10 @@ class Display():
 
         # current Speed and Kalman speed updated with api data
         self.grid_update(imu_data, kalman_imu_data)
-    
+
+        with io.BytesIO() as output:
+            kalman_plot.save(output, format="PNG")
+            contents = output.getvalue()
+        self.update_window("IMG2", contents, kalman_plot.size)
+
         self.progress_bar.UpdateBar(frame + 1)
