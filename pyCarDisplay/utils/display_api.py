@@ -191,7 +191,7 @@ class Display():
         self.window.close()
 
     def play(self, annotated_image: Image, cropped_depth_images: Image, imu_data: pd.DataFrame,
-             kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, ):
+             kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, kalman_plot:Image):
         """
         Takes in autonomous car information and displays the images from the object and depth detection moddels,and
         other data about travel path
@@ -235,5 +235,5 @@ class Display():
 
         # current Speed and Kalman speed updated with api data
         self.grid_update(imu_data, kalman_imu_data)
-
+    
         self.progress_bar.UpdateBar(frame + 1)

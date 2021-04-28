@@ -4,6 +4,7 @@ All of the Car operations are controlled from this file.
 
 from .utils.display_api import Display
 from .utils.kitti_data_loader_api import DataLoader
+from .utils.create_plot import KalmanPlot
 
 from .sensors.image_processing_api import ImageProcessing
 from .sensors.imu_api import IMU
@@ -182,6 +183,10 @@ class Car():
 
         # Display API
         self.display_api = Display(self.gui_speed, self.total_frames, theme)
+        
+        
+        # Kalman Filter Plot generator
+        self.kalman_plot_api = KalmanPlot(img_resize_size, pixel_sizes, dpi)
 
     def set_frame(self, frame: int):
         """
@@ -242,6 +247,7 @@ class Car():
                 depth_image = image
 
             # read IMU sensor data
+            af_predict = 0
             if self.imu_sensor != None:
                 curr_imu_data = self.imu_sensor.read_sensor(
                     add_noise=self.add_noise, name=None)
@@ -257,11 +263,18 @@ class Car():
                         self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
                                                                                             self.imu_sensor.R_covariance,
                                                                                             predict)[0]
+                    # get the index for forward acceleration  
+                    if col == "af":
+                        af_predict = predict
 
 
             else:
                 curr_imu_data = {}
 
+            if self.imu_sensor != None:
+                kalman_plot = self.kalman_plot_api(af_predict, curr_imu_data["data"]["af"].values[0])
+            else:
+                kalman_plot = ''
 
             # Display the current frame
             self.display_api.play(
@@ -270,7 +283,8 @@ class Car():
                 curr_imu_data,
                 self.kalman_data_points, #{'data': [45.456]}, # Kalman data
                 curr_frame,
-                self.verbose
+                self.verbose,
+                kalman_plot
             )
 
         self.display_api.end()
