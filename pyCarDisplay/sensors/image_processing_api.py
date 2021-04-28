@@ -3,13 +3,15 @@
 import glob
 from PIL import Image
 
-class ImageProcessing():
-    def __init__(self, car_images_path:str, image_extension="png"):
-        self.images_directory = car_images_path
-        self.all_images_path = glob.glob(str(self.images_directory)+"*."+str(image_extension))
-        self.all_images_path.sort(key = lambda x: x.split("/")[-1].split('.')[0])
 
-    def take_picture(self, frame:int):
+class ImageProcessing():
+    def __init__(self, car_images_path: str, image_extension="png"):
+        self.images_directory = car_images_path
+        self.all_images_path = glob.glob(
+            str(self.images_directory)+"*."+str(image_extension))
+        self.all_images_path.sort(key=lambda x: x.split("/")[-1].split('.')[0])
+
+    def take_picture(self, frame: int):
         return Image.open(self.all_images_path[frame], mode='r').convert('RGB')
 
     def synch_objDet_depDet_data(box_locations, depth_image):
@@ -25,10 +27,11 @@ class ImageProcessing():
         """
 
         croped_depth_images = []
-    
+
         if box_locations:
             for box in box_locations:
                 x, y, h, w = box
-                croped_depth_images.append(depth_image.copy().crop((x, y, x + w, y + h)))
+                croped_depth_images.append(
+                    depth_image.copy().crop((x, y, x + w, y + h)))
 
         return cropped_depth_images

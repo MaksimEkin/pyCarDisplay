@@ -33,7 +33,7 @@ class IMU:
         assert type(
             data) is pd.DataFrame, "data should be type Pandas DataFrame"
         self.imu_data = data
-        
+
         self.num_frames = len(self.imu_data.frame.unique())
         self.params_avail = list(self.imu_data.columns.values)
         self.frame = 0

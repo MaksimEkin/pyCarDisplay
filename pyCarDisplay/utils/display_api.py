@@ -6,13 +6,14 @@ import pandas as pd
 from PIL import Image
 import io
 
+
 class Display():
     """
     Creates and updates the application window created with PySimpleGui using the Autonomous vehicle information
     for images and environmental observations
     """
 
-    def __init__(self, speed: int, total_frames: int, theme:str):
+    def __init__(self, speed: int, total_frames: int, theme: str):
         """
         Initializes the display class
 
@@ -32,7 +33,8 @@ class Display():
         self.verbose = False
         # Create the window
         self.theme = sg.theme(theme)
-        self.window = sg.Window("Autonomous Vehicle Object & Distance Detection", self.define_layout())
+        self.window = sg.Window(
+            "Autonomous Vehicle Object & Distance Detection", self.define_layout())
         self.progress_bar = self.window['progressbar']
 
     def img(self, path, key):
@@ -92,8 +94,8 @@ class Display():
         for num, detected_image in enumerate(depth_detection_image):
 
             if num < self.cropped_img_displayed:
-                self.update_window("IMG" + str(num + 1), self.format_pil_img(detected_image), detected_image.size)
-
+                self.update_window(
+                    "IMG" + str(num + 1), self.format_pil_img(detected_image), detected_image.size)
 
     def speed_update(self, imu_data, kalman_imu_data):
         if self.verbose:
@@ -114,7 +116,7 @@ class Display():
         None
         """
 
-        for row,(key, df) in enumerate(imu_data.items()):
+        for row, (key, df) in enumerate(imu_data.items()):
             if not isinstance(df, pd.DataFrame):
                 df = pd.DataFrame(df)
                 if key == "noise":
@@ -122,11 +124,12 @@ class Display():
 
             for col, entry in enumerate(list(df.iloc[0].values)):
                 if col < 30:
-                    self.update_window(str(row) + "," + str(col), round(entry,2))
+                    self.update_window(
+                        str(row) + "," + str(col), round(entry, 2))
 
         for col, entry2 in enumerate(kalman_imu_data['data']):
             if col < 30:
-                self.update_window(str(3) + "," + str(col), round(entry2,2))
+                self.update_window(str(3) + "," + str(col), round(entry2, 2))
 
     def reset_depth_images(self, depth_detection_image):
         """
@@ -153,17 +156,20 @@ class Display():
         """
 
         headings = ['lat', 'lon', 'alt', 'roll',
-        'pitch', 'yaw', 'vn', 've','vf', 'vl', 'vu', 'ax', 'ay', 'az',
-        'af', 'al', 'au', 'wx', 'wy', 'wz', 'wf', 'wl', 'wu', 'pos_accuracy',
-        'vel_accuracy', 'navstat', 'numsats', 'posmode', 'velmode', 'orimode']
+                    'pitch', 'yaw', 'vn', 've', 'vf', 'vl', 'vu', 'ax', 'ay', 'az',
+                    'af', 'al', 'au', 'wx', 'wy', 'wz', 'wf', 'wl', 'wu', 'pos_accuracy',
+                    'vel_accuracy', 'navstat', 'numsats', 'posmode', 'velmode', 'orimode']
 
         row_names = ["data", "noise", "true", "Kalman"]
 
-        header =  [[sg.Text(" ", size=(6,1))] + [sg.Text(h, size=(6,1), pad=(1,0)) for h in headings]]
-        input_rows = [[sg.Text(row_names[row], size=(6,1))] + [sg.Input(size=(6,1), pad=(1,1), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
+        header = [[sg.Text(" ", size=(6, 1))] +
+                  [sg.Text(h, size=(6, 1), pad=(1, 0)) for h in headings]]
+        input_rows = [[sg.Text(row_names[row], size=(6, 1))] + [sg.Input(size=(6, 1), pad=(
+            1, 1), key=str(row)+","+str(col)) for col in range(len(headings))] for row in range(4)]
 
-        elements =  [
-            [sg.ProgressBar(self.total_frames, orientation='h', size=(50, 5), key='progressbar')],
+        elements = [
+            [sg.ProgressBar(self.total_frames, orientation='h',
+                            size=(50, 5), key='progressbar')],
             [sg.Text("Frame: 1", size=(50, 1), key="frame")],
             [sg.Text("\t\t"), self.img("", "IMG")],
             [sg.Text("\t\t"), self.img("", "IMG1")],
@@ -183,7 +189,7 @@ class Display():
         self.window.close()
 
     def play(self, annotated_image: Image, depth_detection_image: Image, imu_data: pd.DataFrame,
-             kalman_imu_data: pd.DataFrame, frame: int, verbose:bool, kalman_plot:Image):
+             kalman_imu_data: pd.DataFrame, frame: int, verbose: bool, kalman_plot: Image):
         """
         Takes in autonomous car information and displays the images from the object and depth detection moddels,and
         other data about travel path

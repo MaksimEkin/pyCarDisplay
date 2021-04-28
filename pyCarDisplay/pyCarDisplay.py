@@ -77,7 +77,7 @@ class CarDisplay():
             How many frames to track in the Kalman plot. The default is 10.
         plot_column : str, optional
             Which IMU column to plot in the Kalman plot. The default is "af".
-            
+
         Returns
         -------
         None.

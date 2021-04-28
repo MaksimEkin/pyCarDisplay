@@ -147,7 +147,7 @@ class Car():
                 print(colored("Loading the IMU data...", "blue"))
             imu_df = DataLoader(path_imu=imu_sensor_path,
                                 path_lidar=lidar_sensor_path).load_imu()
-            
+
             if plot_column not in list(imu_df.columns):
                 sys.exit("Kalman plot column is not in the IMU data.")
 
@@ -162,13 +162,15 @@ class Car():
                                   random_state)
 
             # Kalman Filter API -- depends on IMU sensor data
-            self.kalman_filters = [KalmanFilter() for x in range(len(list(self.imu_sensor.imu_data.columns))-1 )]
-            self.kalman_data_points =  {'data':[0 for x in range(len(list(self.imu_sensor.imu_data.columns))-1 )]}
+            self.kalman_filters = [KalmanFilter() for x in range(
+                len(list(self.imu_sensor.imu_data.columns))-1)]
+            self.kalman_data_points = {'data': [0 for x in range(
+                len(list(self.imu_sensor.imu_data.columns))-1)]}
 
         else:
             self.imu_sensor = None
             self.kalman_filters = []
-            self.kalman_data_points =  {'data':[]}
+            self.kalman_data_points = {'data': []}
 
         # Image processing API
         self.img_processing_api = ImageProcessing(
@@ -190,10 +192,10 @@ class Car():
 
         # Display API
         self.display_api = Display(self.gui_speed, self.total_frames, theme)
-        
-        
+
         # Kalman Filter Plot generator
-        self.kalman_plot_api = KalmanPlot(img_resize_size, pixel_sizes, dpi, track_n_frames, plot_column)
+        self.kalman_plot_api = KalmanPlot(
+            img_resize_size, pixel_sizes, dpi, track_n_frames, plot_column)
         self.plot_column = plot_column
 
     def set_frame(self, frame: int):
@@ -263,33 +265,34 @@ class Car():
                 for i, col in enumerate(list(curr_imu_data['data'].columns)):
 
                     if col != "time_delta":
-                        predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0], #SESNSOR READ
-                                                                 self.kalman_data_points['data'][i], #PREVIOUS DATA POINT
-                                                                 curr_imu_data['data']["time_delta"].values[0]/60) # DELTA TIME
+                        predict = self.kalman_filters[i].Predict(curr_imu_data['data'][col].values[0],  # SESNSOR READ
+                                                                 # PREVIOUS DATA POINT
+                                                                 self.kalman_data_points['data'][i],
+                                                                 curr_imu_data['data']["time_delta"].values[0]/60)  # DELTA TIME
 
-                        #set next data points based on the prediction, senssor and covariance
+                        # set next data points based on the prediction, senssor and covariance
                         self.kalman_data_points['data'][i] = self.kalman_filters[i].Update(curr_imu_data["data"][col].values[0],
-                                                                                            self.imu_sensor.R_covariance,
-                                                                                            predict)[0]
-                    # get the index for forward acceleration  
+                                                                                           self.imu_sensor.R_covariance,
+                                                                                           predict)[0]
+                    # get the index for forward acceleration
                     if col == self.plot_column:
                         save_predict = predict
-
 
             else:
                 curr_imu_data = {}
 
             if self.imu_sensor != None:
-                kalman_plot = self.kalman_plot_api.gen_plot(save_predict, curr_imu_data["data"][self.plot_column].values[0])
+                kalman_plot = self.kalman_plot_api.gen_plot(
+                    save_predict, curr_imu_data["data"][self.plot_column].values[0])
             else:
                 kalman_plot = image
-            
+
             # Display the current frame
             self.display_api.play(
                 detected_dictionary["annotated_image"],
                 depth_image,
                 curr_imu_data,
-                self.kalman_data_points, #{'data': [45.456]}, # Kalman data
+                self.kalman_data_points,  # {'data': [45.456]}, # Kalman data
                 curr_frame,
                 self.verbose,
                 kalman_plot

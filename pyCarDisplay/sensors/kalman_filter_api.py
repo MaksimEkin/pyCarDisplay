@@ -2,8 +2,10 @@
 Kalman filter definition to smooth out noise in sensor readings
 """
 import numpy as np
+
+
 class KalmanFilter(object):
-    def __init__(self, P = 1, H = 1, F = 1, Q = 0.1):
+    def __init__(self, P=1, H=1, F=1, Q=0.1):
         """
 
         Parameters

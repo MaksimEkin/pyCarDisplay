@@ -49,7 +49,6 @@ import io
 from PIL import Image
 
 
-
 class DepthDetection():
     def __init__(self, verbose: bool, model_path: str, model_type="large",
                  optimize=True, model=None, device="cpu", transform=None, dpi=100,
@@ -207,7 +206,8 @@ class DepthDetection():
 
         plt.ioff()
 
-        fig, ax = plt.subplots(figsize=(self.pixel_sizes[0]/self.dpi, self.pixel_sizes[1]/self.dpi), dpi=self.dpi)
+        fig, ax = plt.subplots(figsize=(
+            self.pixel_sizes[0]/self.dpi, self.pixel_sizes[1]/self.dpi), dpi=self.dpi)
         figure = ax.imshow(original_image)
         figure = ax.imshow(prediction, alpha=self.alpha, cmap='nipy_spectral')
 

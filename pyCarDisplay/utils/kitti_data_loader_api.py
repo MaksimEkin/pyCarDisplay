@@ -79,20 +79,21 @@ class DataLoader(object):
 
         """
         # load the timestamps
-        time_file = open(str(self.path_imu)+ "../timestamps.txt", "r")
+        time_file = open(str(self.path_imu) + "../timestamps.txt", "r")
         content = time_file.read()
         timestamps = content.split("\n")
         time_file.close()
 
         if timestamps[-1] == "":
-            timestamps = timestamps[:-1] # remove empty line
+            timestamps = timestamps[:-1]  # remove empty line
 
         # turn timestamps into datetime object
         timestamps_obj = list()
         for t in timestamps:
             cut = len(t.split(".")[-1]) - 6
             if cut > 0:
-                date_time_obj = datetime.strptime(t[:-cut], '%Y-%m-%d %H:%M:%S.%f')
+                date_time_obj = datetime.strptime(
+                    t[:-cut], '%Y-%m-%d %H:%M:%S.%f')
             else:
                 date_time_obj = datetime.strptime(t, '%Y-%m-%d %H:%M:%S.%f')
 
