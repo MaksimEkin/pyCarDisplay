@@ -272,7 +272,7 @@ class Car():
                 curr_imu_data = {}
 
             if self.imu_sensor != None:
-                kalman_plot = self.kalman_plot_api(af_predict, curr_imu_data["data"]["af"].values[0])
+                kalman_plot = self.kalman_plot_api.gen_plot(af_predict, curr_imu_data["data"]["af"].values[0])
             else:
                 kalman_plot = ''
 

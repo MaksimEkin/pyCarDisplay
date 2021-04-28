@@ -25,16 +25,17 @@ class KalmanPlot():
         
         plt.ioff()
         
-        plt.figure(figsize=(self.pixel_sizes[0]/self.dpi), dpi=self.dpi)
+        plt.figure(figsize=(self.pixel_sizes[0]/self.dpi, self.pixel_sizes[1]/self.dpi), dpi=self.dpi)
         plot = plt.plot(self.kalman_predictions, label='Kalman signal')
         plot = plt.plot(self.true_values, label='Ground truth')
         
-        plt.legend(fontsizeint="large")
+        plt.title("Kalman Plot for Forward Acceleration", fontsize="large")
+        plt.legend(fontsize="large")
         plt.tight_layout()
         
         plt.ion()
         
         buf = io.BytesIO()
-        fig.savefig(buf)
+        plt.savefig(buf)
         buf.seek(0)
         return np.array(Image.open(buf))
