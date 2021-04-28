@@ -5,6 +5,7 @@ Parses the Kitti dataset's IMU data into a Pandas DataFrame format.
 import pandas as pd
 import numpy as np
 import glob
+from datetime import datetime
 
 
 class DataLoader(object):
@@ -77,6 +78,33 @@ class DataLoader(object):
             IMU data.
 
         """
+        # load the timestamps
+        time_file = open(str(self.path_imu)+ "../timestamps.txt", "r")
+        content = time_file.read()
+        timestamps = content.split("\n")
+        time_file.close()
+
+        if timestamps[-1] == "":
+            timestamps = timestamps[:-1] # remove empty line
+        
+        # turn timestamps into datetime object
+        timestamps_obj = list()
+        for t in timestamps:
+            cut = len(t.split(".")[-1]) - 6
+            if cut > 0:
+                date_time_obj = datetime.strptime(t[:-cut], '%Y-%m-%d %H:%M:%S.%f')
+            else:
+                date_time_obj = datetime.strptime(t, '%Y-%m-%d %H:%M:%S.%f')
+
+            timestamps_obj.append(date_time_obj)
+            
+        # calculate the time between each measurement
+        differences = list()
+        differences.append(0)
+        for ii, obj in enumerate(timestamps_obj):
+            if ii+1 == len(timestamps_obj):
+                break
+            differences.append((timestamps_obj[ii+1] - obj).total_seconds())
 
         # get all IMU data in the data directory
         lidar_data = glob.glob(str(self.path_imu)+"*.txt")
@@ -86,6 +114,7 @@ class DataLoader(object):
             temp = pd.read_csv(str(file), header=None,
                                delimiter=r"\s+", names=self.imu_columns)
             temp['frame'] = frame
+            temp['time_delta'] = differences[frame]
             imu_df = imu_df.append(temp)
 
         self.imu_data = imu_df
