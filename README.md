@@ -59,6 +59,10 @@ display = CarDisplay(
 display.start()
 ```
 
+<br>
+
+![](img/vid3.gif)
+
 ## Dependencies
 ```console
 numpy>=1.20.1
