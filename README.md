@@ -62,7 +62,7 @@ display.start()
 <br>
 
 <div align="center", style="font-size: 50px">
-![](img/vid3.gif)
+    <img src="img/vid3.gif"></img>
 </div>
 
 ## Dependencies
