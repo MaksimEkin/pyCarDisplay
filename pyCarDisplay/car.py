@@ -16,6 +16,7 @@ from PIL import Image
 import sys
 import numpy as np
 from termcolor import colored
+import time
 
 
 class Car():
@@ -27,7 +28,7 @@ class Car():
                  norm_mean=[0.485, 0.456, 0.406], norm_std=[0.229, 0.224, 0.225],
                  R_covariance=0.1, add_noise=True, IMU_name=None, gui_speed=1,
                  theme="DarkGrey1", image_extension="png", random_state=42,
-                 verbose=False, device="cpu", track_n_frames=10, plot_column="af"):
+                 verbose=False, device="cpu", track_n_frames=10, plot_column="af",testing=False):
         """
         Initilize the Car class.
 
@@ -84,6 +85,8 @@ class Car():
             How many frames to track in the Kalman plot. The default is 10.
         plot_column : str, optional
             Which IMU column to plot in the Kalman plot. The default is "af".
+        testing: bool, optional
+            If True, statistics about the experiment are logged.
 
         Returns
         -------
@@ -96,7 +99,9 @@ class Car():
         self.verbose = verbose
         self.add_noise = add_noise
         self.gui_speed = gui_speed
-
+        self.start_time = None
+        self.testing = testing
+        
         # Print the settings
         if self.verbose:
             print(colored("Car configurations:\n" +
@@ -231,6 +236,10 @@ class Car():
         None. Displays GUI.
 
         """
+        # save the start time
+        self.start_time = time.time()
+        # save the execution time on each iteration
+        iterations_finish_times = list()
 
         # if verbose is being changed
         if verbose != None:
@@ -297,6 +306,16 @@ class Car():
                 self.verbose,
                 kalman_plot
             )
+            iterations_finish_times.append(time.time())
 
         self.display_api.end()
-        return -1
+        
+        if self.testing:
+            execution_time = (time.time() - self.start_time)
+            return {
+                "execution_time":execution_time, 
+                "num_frames": len(self.path_to_all_images),
+                "iterations_finish_times":iterations_finish_times
+            }
+        else:
+            return 0
